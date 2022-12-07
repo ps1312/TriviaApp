@@ -1,5 +1,4 @@
 ## Trivia App
----
 
 ### Scenario: Player answers trivia questions
 ```
@@ -19,7 +18,7 @@ Then the app should display the score summary
 - Story:
 As a player
 I want to replay the trivia after finishing it
-So I can test myself against my previous try
+So I can challenge myself against my previous try
 
 - Acceptance criteria:
 Given the player finishes a game
