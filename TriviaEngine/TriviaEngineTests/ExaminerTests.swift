@@ -19,12 +19,8 @@ class Examiner {
         self.questionsLoader = questionsLoader
     }
 
-    func prepare() throws {
-        questions = try questionsLoader.load()
-    }
-
     func start() throws -> Question {
-        try prepare()
+        questions = try questionsLoader.load()
 
         if questions.isEmpty {
             throw NoQuestionsAvailable()
@@ -41,19 +37,19 @@ class ExaminerTests: XCTestCase {
         XCTAssertFalse(sut.hasQuestions)
     }
 
-    func test_prepare_messagesQuestionsLoader() {
+    func test_start_messagesQuestionsLoader() {
         let (sut, spy) = makeSUT()
 
-        try? sut.prepare()
+        _ = try? sut.start()
 
         XCTAssertEqual(spy.loadCallCount, 1)
     }
 
-    func test_prepare_throwsErrorWhenLoadingFails() {
+    func test_start_throwsErrorWhenLoadingQuestionsFails() {
         let (sut, spy) = makeSUT()
         spy.completeLoadWithError()
 
-        XCTAssertThrowsError(try sut.prepare())
+        XCTAssertThrowsError(try sut.start())
     }
 
     func test_start_presentsFirstQuestion() {
