@@ -43,8 +43,14 @@ class Examiner {
         return questions.removeFirst()
     }
 
-    func respond(_ question: Question, with answer: Answer) {
+    func respond(_ question: Question, with answer: Answer) -> Question? {
         responses.append(AnswerAttempt(question: question, answer: answer, isCorrect: question.correctAnswer == answer))
+
+        if questions.isEmpty {
+            return nil
+        }
+
+        return questions.removeFirst()
     }
 }
 
@@ -99,13 +105,27 @@ class ExaminerTests: XCTestCase {
         spy.completeLoadWithQuestions([question])
 
         let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
-        sut.respond(receivedQuestion, with: wrongAnswer)
-        sut.respond(receivedQuestion, with: correctAnswer)
+        _ = sut.respond(receivedQuestion, with: wrongAnswer)
+        _ = sut.respond(receivedQuestion, with: correctAnswer)
 
         XCTAssertEqual(sut.responses, [
             AnswerAttempt(question: question, answer: wrongAnswer, isCorrect: false),
             AnswerAttempt(question: question, answer: correctAnswer, isCorrect: true),
         ])
+    }
+
+    func test_respond_presentsNextQuestion() throws {
+        let (question1, answers1) = makeTrivia()
+        let (question2, _) = makeTrivia()
+
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithQuestions([question1, question2])
+
+        let firstQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
+        XCTAssertEqual(firstQuestion, question1)
+
+        let lastQuestion = sut.respond(question1, with: answers1[0])
+        XCTAssertEqual(lastQuestion, question2)
     }
 
     private func makeTrivia() -> (Question, [Answer]) {
