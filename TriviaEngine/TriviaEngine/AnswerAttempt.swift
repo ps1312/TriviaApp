@@ -1,7 +1,7 @@
 public struct AnswerAttempt: Equatable {
-    let question: Question
-    let answer: Answer
-    let isCorrect: Bool
+    public let question: Question
+    public let answer: Answer
+    public let isCorrect: Bool
 
     public init(question: Question, answer: Answer, isCorrect: Bool) {
         self.question = question
