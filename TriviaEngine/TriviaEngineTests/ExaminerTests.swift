@@ -20,19 +20,24 @@ class Examiner {
 
 class ExaminerTests: XCTestCase {
     func test_init_startsWithNoQuestions() {
-        let spy = QuestionsLoaderSpy()
-        let sut = Examiner(questionsLoader: spy)
+        let (sut, _) = makeSUT()
 
         XCTAssertTrue(sut.questions.isEmpty)
     }
 
     func test_prepare_messagesQuestionsLoader() {
-        let spy = QuestionsLoaderSpy()
-        let sut = Examiner(questionsLoader: spy)
+        let (sut, spy) = makeSUT()
 
         sut.prepare()
 
         XCTAssertEqual(spy.loadCallCount, 1)
+    }
+
+    private func makeSUT() -> (Examiner, QuestionsLoaderSpy) {
+        let spy = QuestionsLoaderSpy()
+        let sut = Examiner(questionsLoader: spy)
+
+        return (sut, spy)
     }
 
     private class QuestionsLoaderSpy: QuestionsLoader {
