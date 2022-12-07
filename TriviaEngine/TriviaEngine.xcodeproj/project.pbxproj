@@ -66,6 +66,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A0DD0232941181E0092F887 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				3A0DD0122941054C0092F887 /* Examiner.swift */,
+				3A0DD016294105FE0092F887 /* QuestionsLoader.swift */,
+				3A0DD01E29410C610092F887 /* InMemoryQuestionsLoader.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		3A0DD024294118400092F887 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				3A3BCBC12940C8F90000B211 /* Answer.swift */,
+				3A0DD0102940F92F0092F887 /* Question.swift */,
+				3A0DD014294105CC0092F887 /* AnswerAttempt.swift */,
+				3A0DD01A294106BF0092F887 /* Score.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
 		3AFC38ED2940C37B000B9FCA = {
 			isa = PBXGroup;
 			children = (
@@ -87,13 +108,8 @@
 		3AFC38F92940C37B000B9FCA /* TriviaEngine */ = {
 			isa = PBXGroup;
 			children = (
-				3A3BCBC12940C8F90000B211 /* Answer.swift */,
-				3A0DD0102940F92F0092F887 /* Question.swift */,
-				3A0DD0122941054C0092F887 /* Examiner.swift */,
-				3A0DD014294105CC0092F887 /* AnswerAttempt.swift */,
-				3A0DD016294105FE0092F887 /* QuestionsLoader.swift */,
-				3A0DD01A294106BF0092F887 /* Score.swift */,
-				3A0DD01E29410C610092F887 /* InMemoryQuestionsLoader.swift */,
+				3A0DD024294118400092F887 /* Domain */,
+				3A0DD0232941181E0092F887 /* API */,
 			);
 			path = TriviaEngine;
 			sourceTree = "<group>";
