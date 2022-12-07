@@ -70,7 +70,7 @@ class ExaminerTests: XCTestCase {
         XCTAssertNil(nextQuestion)
     }
 
-    func test_evaluate_deliversFinalScore() throws {
+    func test_evaluate_deliversFinalScoreWhenUserRespondsWithCorrectAnswer() throws {
         let (question, answers) = makeQuestionWithCorrectFirstAnswer()
         let correctAnswer = answers[0]
         let expectedScore = Score(points: 1, responses: [AnswerAttempt(question: question, answer: correctAnswer, isCorrect: true)])
@@ -80,6 +80,21 @@ class ExaminerTests: XCTestCase {
 
         let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
         _ = sut.respond(receivedQuestion, with: correctAnswer)
+
+        let score = sut.evaluate()
+        XCTAssertEqual(score, expectedScore)
+    }
+
+    func test_evaluate_deliversFinalScoreWhenUserRespondsWithWrongAnswer() throws {
+        let (question, answers) = makeQuestionWithCorrectFirstAnswer()
+        let wrongAnswer = answers[1]
+        let expectedScore = Score(points: 0, responses: [AnswerAttempt(question: question, answer: wrongAnswer, isCorrect: false)])
+
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithQuestions([question])
+
+        let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
+        _ = sut.respond(receivedQuestion, with: wrongAnswer)
 
         let score = sut.evaluate()
         XCTAssertEqual(score, expectedScore)
