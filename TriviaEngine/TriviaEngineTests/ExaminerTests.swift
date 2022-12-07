@@ -1,78 +1,6 @@
 import XCTest
 import TriviaEngine
 
-protocol QuestionsLoader {
-    func load() throws -> [Question]
-}
-
-struct AnswerAttempt: Equatable {
-    let question: Question
-    let answer: Answer
-    let isCorrect: Bool
-}
-
-struct Score: Equatable {
-    var points: Int
-    var responses: [AnswerAttempt]
-}
-
-class Examiner {
-    private let questionsLoader: QuestionsLoader
-    private var questions = [Question]()
-    private var score = Score(points: 0, responses: [])
-
-    var responses = [AnswerAttempt]()
-
-    var hasQuestions: Bool {
-        !questions.isEmpty
-    }
-
-    enum Error: Swift.Error {
-        case loadingQuestions
-        case noQuestionsAvailable
-    }
-
-    init(questionsLoader: QuestionsLoader) {
-        self.questionsLoader = questionsLoader
-    }
-
-    func start() throws -> Question {
-        do {
-            questions = try questionsLoader.load()
-        } catch {
-            throw Error.loadingQuestions
-        }
-
-        if questions.isEmpty {
-            throw Error.noQuestionsAvailable
-        }
-
-        return questions.removeFirst()
-    }
-
-    func respond(_ question: Question, with answer: Answer) -> Question? {
-        let isCorrect = question.correctAnswer == answer
-        let attempt = AnswerAttempt(question: question, answer: answer, isCorrect: isCorrect)
-
-        responses.append(attempt)
-        score.responses = responses
-
-        if isCorrect {
-            score.points += 1
-        }
-
-        if questions.isEmpty {
-            return nil
-        }
-
-        return questions.removeFirst()
-    }
-
-    func evaluate() -> Score {
-        score
-    }
-}
-
 class ExaminerTests: XCTestCase {
     func test_init_startsWithNoQuestions() {
         let (sut, _) = makeSUT()
@@ -97,7 +25,7 @@ class ExaminerTests: XCTestCase {
     }
 
     func test_start_presentsFirstQuestion() {
-        let (question, _) = makeTrivia()
+        let (question, _) = makeQuestionWithCorrectFirstAnswer()
 
         let (sut, spy) = makeSUT()
         spy.completeLoadWithQuestions([question])
@@ -116,7 +44,7 @@ class ExaminerTests: XCTestCase {
     }
 
     func test_respond_registersAnswerToAQuestion() throws {
-        let (question, answers) = makeTrivia()
+        let (question, answers) = makeQuestionWithCorrectFirstAnswer()
         let wrongAnswer = answers[1]
 
         let (sut, spy) = makeSUT()
@@ -131,8 +59,8 @@ class ExaminerTests: XCTestCase {
     }
 
     func test_respond_presentsNextQuestion() throws {
-        let (question1, answers1) = makeTrivia()
-        let (question2, _) = makeTrivia()
+        let (question1, answers1) = makeQuestionWithCorrectFirstAnswer()
+        let (question2, _) = makeQuestionWithCorrectFirstAnswer()
 
         let (sut, spy) = makeSUT()
         spy.completeLoadWithQuestions([question1, question2])
@@ -145,7 +73,7 @@ class ExaminerTests: XCTestCase {
     }
 
     func test_respond_deliversNilOnNoMoreQuestionsAvailable() throws {
-        let (question, answers) = makeTrivia()
+        let (question, answers) = makeQuestionWithCorrectFirstAnswer()
         let wrongAnswer = answers[1]
 
         let (sut, spy) = makeSUT()
@@ -158,7 +86,7 @@ class ExaminerTests: XCTestCase {
     }
 
     func test_evaluate_deliversFinalScore() throws {
-        let (question, answers) = makeTrivia()
+        let (question, answers) = makeQuestionWithCorrectFirstAnswer()
         let correctAnswer = answers[0]
         let expectedScore = Score(points: 1, responses: [AnswerAttempt(question: question, answer: correctAnswer, isCorrect: true)])
 
@@ -172,7 +100,14 @@ class ExaminerTests: XCTestCase {
         XCTAssertEqual(score, expectedScore)
     }
 
-    private func makeTrivia() -> (Question, [Answer]) {
+    private func makeSUT() -> (Examiner, QuestionsLoaderSpy) {
+        let spy = QuestionsLoaderSpy()
+        let sut = Examiner(questionsLoader: spy)
+
+        return (sut, spy)
+    }
+
+    private func makeQuestionWithCorrectFirstAnswer() -> (Question, [Answer]) {
         let correctAnswer = Answer(id: UUID(), text: "Correct answer")
         let wrongAnswer = Answer(id: UUID(), text: "Wrong answer")
         let question = Question(id: UUID(), title: "Is this correct?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
@@ -187,36 +122,6 @@ class ExaminerTests: XCTestCase {
             _ = try sut.start()
         } catch {
             XCTAssertEqual(error as NSError, expectedError as NSError)
-        }
-    }
-
-    private func makeSUT() -> (Examiner, QuestionsLoaderSpy) {
-        let spy = QuestionsLoaderSpy()
-        let sut = Examiner(questionsLoader: spy)
-
-        return (sut, spy)
-    }
-
-    private class QuestionsLoaderSpy: QuestionsLoader {
-        var loadCallCount = 0
-        var loadResult: [Question]?
-
-        func load() throws -> [Question] {
-            loadCallCount += 1
-
-            if let loadResult = loadResult {
-                return loadResult
-            }
-
-            throw NSError(domain: "Test made error", code: 9999)
-        }
-
-        func completeLoadWithError() {
-            loadResult = nil
-        }
-
-        func completeLoadWithQuestions(_ questions: [Question]) {
-            loadResult = questions
         }
     }
 }
