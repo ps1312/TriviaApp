@@ -98,7 +98,6 @@ class ExaminerTests: XCTestCase {
 
     func test_respond_registersAnswerToAQuestion() throws {
         let (question, answers) = makeTrivia()
-        let correctAnswer = answers[0]
         let wrongAnswer = answers[1]
 
         let (sut, spy) = makeSUT()
@@ -106,11 +105,9 @@ class ExaminerTests: XCTestCase {
 
         let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
         _ = sut.respond(receivedQuestion, with: wrongAnswer)
-        _ = sut.respond(receivedQuestion, with: correctAnswer)
 
         XCTAssertEqual(sut.responses, [
             AnswerAttempt(question: question, answer: wrongAnswer, isCorrect: false),
-            AnswerAttempt(question: question, answer: correctAnswer, isCorrect: true),
         ])
     }
 
@@ -126,6 +123,19 @@ class ExaminerTests: XCTestCase {
 
         let lastQuestion = sut.respond(question1, with: answers1[0])
         XCTAssertEqual(lastQuestion, question2)
+    }
+
+    func test_respond_deliversNilOnNoMoreQuestionsAvailable() throws {
+        let (question, answers) = makeTrivia()
+        let wrongAnswer = answers[1]
+
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithQuestions([question])
+
+        let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
+        let nextQuestion = sut.respond(receivedQuestion, with: wrongAnswer)
+
+        XCTAssertNil(nextQuestion)
     }
 
     private func makeTrivia() -> (Question, [Answer]) {
