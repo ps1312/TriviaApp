@@ -87,6 +87,32 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		3A0DD0252941188F0092F887 /* Unit */ = {
+			isa = PBXGroup;
+			children = (
+				3A0DD026294118970092F887 /* Helpers */,
+				3A3BCBC32940CA030000B211 /* ExaminerTests.swift */,
+				3A0DD01C294109640092F887 /* InMemoryQuestionsLoaderTests.swift */,
+			);
+			path = Unit;
+			sourceTree = "<group>";
+		};
+		3A0DD026294118970092F887 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3A0DD018294106260092F887 /* QuestionsLoaderSpy.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		3A0DD027294118AA0092F887 /* Integration */ = {
+			isa = PBXGroup;
+			children = (
+				3A0DD020294114B80092F887 /* ExaminerWithInMemoryQuestionsLoaderTests.swift */,
+			);
+			path = Integration;
+			sourceTree = "<group>";
+		};
 		3AFC38ED2940C37B000B9FCA = {
 			isa = PBXGroup;
 			children = (
@@ -117,10 +143,8 @@
 		3AFC39032940C37B000B9FCA /* TriviaEngineTests */ = {
 			isa = PBXGroup;
 			children = (
-				3A3BCBC32940CA030000B211 /* ExaminerTests.swift */,
-				3A0DD01C294109640092F887 /* InMemoryQuestionsLoaderTests.swift */,
-				3A0DD018294106260092F887 /* QuestionsLoaderSpy.swift */,
-				3A0DD020294114B80092F887 /* ExaminerWithInMemoryQuestionsLoaderTests.swift */,
+				3A0DD0252941188F0092F887 /* Unit */,
+				3A0DD027294118AA0092F887 /* Integration */,
 			);
 			path = TriviaEngineTests;
 			sourceTree = "<group>";
