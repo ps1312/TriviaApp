@@ -7,14 +7,19 @@ protocol QuestionsLoader {
 
 class Examiner {
     private let questionsLoader: QuestionsLoader
-    let questions = [Question]()
+    var questions = [Question]()
 
     init(questionsLoader: QuestionsLoader) {
         self.questionsLoader = questionsLoader
     }
 
     func prepare() throws {
-        _ = try questionsLoader.load()
+        questions = try questionsLoader.load()
+    }
+
+    func start() -> Question {
+        try? prepare()
+        return questions.removeFirst()
     }
 }
 
@@ -40,6 +45,19 @@ class ExaminerTests: XCTestCase {
         XCTAssertThrowsError(try sut.prepare())
     }
 
+    func test_start_presentsFirstQuestion() {
+        let correctAnswer = Answer(id: UUID(), text: "First answer")
+        let wrongAnswer = Answer(id: UUID(), text: "Second answer")
+        let question = Question(title: "First question?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
+
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithQuestions([question])
+
+        let receivedQuestion = sut.start()
+
+        XCTAssertEqual(receivedQuestion, question)
+    }
+
     private func makeSUT() -> (Examiner, QuestionsLoaderSpy) {
         let spy = QuestionsLoaderSpy()
         let sut = Examiner(questionsLoader: spy)
@@ -49,20 +67,24 @@ class ExaminerTests: XCTestCase {
 
     private class QuestionsLoaderSpy: QuestionsLoader {
         var loadCallCount = 0
-        var result: [Question]?
+        var loadResult: [Question]?
 
         func load() throws -> [Question] {
             loadCallCount += 1
 
-            if result == nil {
-                throw NSError(domain: "any", code: 0)
+            if let loadResult = loadResult {
+                return loadResult
             }
 
-            return []
+            throw NSError(domain: "any", code: 0)
         }
 
         func completeLoadWithError() {
-            result = nil
+            loadResult = nil
+        }
+
+        func completeLoadWithQuestions(_ questions: [Question]) {
+            loadResult = questions
         }
     }
 }
