@@ -8,6 +8,7 @@ protocol QuestionsLoader {
 struct AnswerAttempt: Equatable {
     let question: Question
     let answer: Answer
+    let isCorrect: Bool
 }
 
 class Examiner {
@@ -43,7 +44,7 @@ class Examiner {
     }
 
     func respond(_ question: Question, with answer: Answer) {
-        responses.append(AnswerAttempt(question: question, answer: answer))
+        responses.append(AnswerAttempt(question: question, answer: answer, isCorrect: question.correctAnswer == answer))
     }
 }
 
@@ -91,15 +92,19 @@ class ExaminerTests: XCTestCase {
 
     func test_respond_registersAnswerToAQuestion() throws {
         let (question, answers) = makeTrivia()
-        let selectedAnswer = answers[0]
+        let correctAnswer = answers[0]
+        let wrongAnswer = answers[1]
+
         let (sut, spy) = makeSUT()
         spy.completeLoadWithQuestions([question])
 
         let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
-        sut.respond(receivedQuestion, with: selectedAnswer)
+        sut.respond(receivedQuestion, with: wrongAnswer)
+        sut.respond(receivedQuestion, with: correctAnswer)
 
         XCTAssertEqual(sut.responses, [
-            AnswerAttempt(question: question, answer: selectedAnswer)
+            AnswerAttempt(question: question, answer: wrongAnswer, isCorrect: false),
+            AnswerAttempt(question: question, answer: correctAnswer, isCorrect: true),
         ])
     }
 
