@@ -11,9 +11,16 @@ struct AnswerAttempt: Equatable {
     let isCorrect: Bool
 }
 
+struct Score: Equatable {
+    var points: Int
+    var responses: [AnswerAttempt]
+}
+
 class Examiner {
     private let questionsLoader: QuestionsLoader
     private var questions = [Question]()
+    private var score = Score(points: 0, responses: [])
+
     var responses = [AnswerAttempt]()
 
     var hasQuestions: Bool {
@@ -44,13 +51,25 @@ class Examiner {
     }
 
     func respond(_ question: Question, with answer: Answer) -> Question? {
-        responses.append(AnswerAttempt(question: question, answer: answer, isCorrect: question.correctAnswer == answer))
+        let isCorrect = question.correctAnswer == answer
+        let attempt = AnswerAttempt(question: question, answer: answer, isCorrect: isCorrect)
+
+        responses.append(attempt)
+        score.responses = responses
+
+        if isCorrect {
+            score.points += 1
+        }
 
         if questions.isEmpty {
             return nil
         }
 
         return questions.removeFirst()
+    }
+
+    func evaluate() -> Score {
+        score
     }
 }
 
@@ -136,6 +155,21 @@ class ExaminerTests: XCTestCase {
         let nextQuestion = sut.respond(receivedQuestion, with: wrongAnswer)
 
         XCTAssertNil(nextQuestion)
+    }
+
+    func test_evaluate_deliversFinalScore() throws {
+        let (question, answers) = makeTrivia()
+        let correctAnswer = answers[0]
+        let expectedScore = Score(points: 1, responses: [AnswerAttempt(question: question, answer: correctAnswer, isCorrect: true)])
+
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithQuestions([question])
+
+        let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
+        _ = sut.respond(receivedQuestion, with: correctAnswer)
+
+        let score = sut.evaluate()
+        XCTAssertEqual(score, expectedScore)
     }
 
     private func makeTrivia() -> (Question, [Answer]) {
