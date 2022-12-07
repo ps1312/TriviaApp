@@ -13,17 +13,24 @@ class Examiner {
         !questions.isEmpty
     }
 
-    struct NoQuestionsAvailable: Error {}
+    enum Error: Swift.Error {
+        case loadingQuestions
+        case noQuestionsAvailable
+    }
 
     init(questionsLoader: QuestionsLoader) {
         self.questionsLoader = questionsLoader
     }
 
     func start() throws -> Question {
-        questions = try questionsLoader.load()
+        do {
+            questions = try questionsLoader.load()
+        } catch {
+            throw Error.loadingQuestions
+        }
 
         if questions.isEmpty {
-            throw NoQuestionsAvailable()
+            throw Error.noQuestionsAvailable
         }
 
         return questions.removeFirst()
@@ -45,11 +52,12 @@ class ExaminerTests: XCTestCase {
         XCTAssertEqual(spy.loadCallCount, 1)
     }
 
-    func test_start_throwsErrorWhenLoadingQuestionsFails() {
+    func test_start_throwsLoadingErrorWhenLoadingQuestionsFails() {
         let (sut, spy) = makeSUT()
-        spy.completeLoadWithError()
 
-        XCTAssertThrowsError(try sut.start())
+        expect(sut, toThrow: .loadingQuestions, when: {
+            spy.completeLoadWithError()
+        })
     }
 
     func test_start_presentsFirstQuestion() {
@@ -67,9 +75,20 @@ class ExaminerTests: XCTestCase {
 
     func test_start_throwsErrorWhenQuestionsIsEmpty() {
         let (sut, spy) = makeSUT()
-        spy.completeLoadWithQuestions([])
 
-        XCTAssertThrowsError(try sut.start())
+        expect(sut, toThrow: .noQuestionsAvailable, when: {
+            spy.completeLoadWithQuestions([])
+        })
+    }
+
+    private func expect(_ sut: Examiner, toThrow expectedError: Examiner.Error, when action: () -> Void) {
+        action()
+
+        do {
+            _ = try sut.start()
+        } catch {
+            XCTAssertEqual(error as NSError, expectedError as NSError)
+        }
     }
 
     private func makeSUT() -> (Examiner, QuestionsLoaderSpy) {
@@ -90,7 +109,7 @@ class ExaminerTests: XCTestCase {
                 return loadResult
             }
 
-            throw NSError(domain: "any", code: 0)
+            throw NSError(domain: "Test made error", code: 9999)
         }
 
         func completeLoadWithError() {
