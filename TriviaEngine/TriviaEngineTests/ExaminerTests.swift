@@ -7,7 +7,11 @@ protocol QuestionsLoader {
 
 class Examiner {
     private let questionsLoader: QuestionsLoader
-    var questions = [Question]()
+    private var questions = [Question]()
+
+    var hasQuestions: Bool {
+        !questions.isEmpty
+    }
 
     init(questionsLoader: QuestionsLoader) {
         self.questionsLoader = questionsLoader
@@ -27,7 +31,7 @@ class ExaminerTests: XCTestCase {
     func test_init_startsWithNoQuestions() {
         let (sut, _) = makeSUT()
 
-        XCTAssertTrue(sut.questions.isEmpty)
+        XCTAssertFalse(sut.hasQuestions)
     }
 
     func test_prepare_messagesQuestionsLoader() {
