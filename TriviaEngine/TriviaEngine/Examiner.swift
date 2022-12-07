@@ -2,8 +2,7 @@ public class Examiner {
     private let questionsLoader: QuestionsLoader
     private var questions = [Question]()
     private var score = Score(points: 0, responses: [])
-
-    public var responses = [AnswerAttempt]()
+    private var responses = [AnswerAttempt]()
 
     public var hasQuestions: Bool {
         !questions.isEmpty

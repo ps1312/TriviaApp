@@ -43,21 +43,6 @@ class ExaminerTests: XCTestCase {
         })
     }
 
-    func test_respond_registersAnswerToAQuestion() throws {
-        let (question, answers) = makeQuestionWithCorrectFirstAnswer()
-        let wrongAnswer = answers[1]
-
-        let (sut, spy) = makeSUT()
-        spy.completeLoadWithQuestions([question])
-
-        let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
-        _ = sut.respond(receivedQuestion, with: wrongAnswer)
-
-        XCTAssertEqual(sut.responses, [
-            AnswerAttempt(question: question, answer: wrongAnswer, isCorrect: false),
-        ])
-    }
-
     func test_respond_presentsNextQuestion() throws {
         let (question1, answers1) = makeQuestionWithCorrectFirstAnswer()
         let (question2, _) = makeQuestionWithCorrectFirstAnswer()
