@@ -5,9 +5,15 @@ protocol QuestionsLoader {
     func load() throws -> [Question]
 }
 
+struct AnswerAttempt: Equatable {
+    let question: Question
+    let answer: Answer
+}
+
 class Examiner {
     private let questionsLoader: QuestionsLoader
     private var questions = [Question]()
+    var responses = [AnswerAttempt]()
 
     var hasQuestions: Bool {
         !questions.isEmpty
@@ -34,6 +40,10 @@ class Examiner {
         }
 
         return questions.removeFirst()
+    }
+
+    func respond(_ question: Question, with answer: Answer) {
+        responses.append(AnswerAttempt(question: question, answer: answer))
     }
 }
 
@@ -79,6 +89,22 @@ class ExaminerTests: XCTestCase {
         expect(sut, toThrow: .noQuestionsAvailable, when: {
             spy.completeLoadWithQuestions([])
         })
+    }
+
+    func test_respond_registersAnswerToAQuestion() throws {
+        let correctAnswer = Answer(id: UUID(), text: "First answer")
+        let wrongAnswer = Answer(id: UUID(), text: "Second answer")
+        let question = Question(title: "First question?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
+
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithQuestions([question])
+
+        let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
+        sut.respond(receivedQuestion, with: correctAnswer)
+
+        XCTAssertEqual(sut.responses, [
+            AnswerAttempt(question: question, answer: correctAnswer)
+        ])
     }
 
     private func expect(_ sut: Examiner, toThrow expectedError: Examiner.Error, when action: () -> Void) {
