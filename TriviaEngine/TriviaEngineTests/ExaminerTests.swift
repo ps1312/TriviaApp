@@ -71,9 +71,7 @@ class ExaminerTests: XCTestCase {
     }
 
     func test_start_presentsFirstQuestion() {
-        let correctAnswer = Answer(id: UUID(), text: "First answer")
-        let wrongAnswer = Answer(id: UUID(), text: "Second answer")
-        let question = Question(id: UUID(), title: "First question?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
+        let (question, _) = makeTrivia()
 
         let (sut, spy) = makeSUT()
         spy.completeLoadWithQuestions([question])
@@ -92,19 +90,25 @@ class ExaminerTests: XCTestCase {
     }
 
     func test_respond_registersAnswerToAQuestion() throws {
-        let correctAnswer = Answer(id: UUID(), text: "First answer")
-        let wrongAnswer = Answer(id: UUID(), text: "Second answer")
-        let question = Question(id: UUID(), title: "First question?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
-
+        let (question, answers) = makeTrivia()
+        let selectedAnswer = answers[0]
         let (sut, spy) = makeSUT()
         spy.completeLoadWithQuestions([question])
 
         let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
-        sut.respond(receivedQuestion, with: correctAnswer)
+        sut.respond(receivedQuestion, with: selectedAnswer)
 
         XCTAssertEqual(sut.responses, [
-            AnswerAttempt(question: question, answer: correctAnswer)
+            AnswerAttempt(question: question, answer: selectedAnswer)
         ])
+    }
+
+    private func makeTrivia() -> (Question, [Answer]) {
+        let correctAnswer = Answer(id: UUID(), text: "Correct answer")
+        let wrongAnswer = Answer(id: UUID(), text: "Wrong answer")
+        let question = Question(id: UUID(), title: "Is this correct?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
+
+        return (question, [correctAnswer, wrongAnswer])
     }
 
     private func expect(_ sut: Examiner, toThrow expectedError: Examiner.Error, when action: () -> Void) {
