@@ -13,6 +13,8 @@ class Examiner {
         !questions.isEmpty
     }
 
+    struct NoQuestionsAvailable: Error {}
+
     init(questionsLoader: QuestionsLoader) {
         self.questionsLoader = questionsLoader
     }
@@ -21,8 +23,13 @@ class Examiner {
         questions = try questionsLoader.load()
     }
 
-    func start() -> Question {
-        try? prepare()
+    func start() throws -> Question {
+        try prepare()
+
+        if questions.isEmpty {
+            throw NoQuestionsAvailable()
+        }
+
         return questions.removeFirst()
     }
 }
@@ -57,9 +64,16 @@ class ExaminerTests: XCTestCase {
         let (sut, spy) = makeSUT()
         spy.completeLoadWithQuestions([question])
 
-        let receivedQuestion = sut.start()
+        let receivedQuestion = try? sut.start()
 
         XCTAssertEqual(receivedQuestion, question)
+    }
+
+    func test_start_throwsErrorWhenQuestionsIsEmpty() {
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithQuestions([])
+
+        XCTAssertThrowsError(try sut.start())
     }
 
     private func makeSUT() -> (Examiner, QuestionsLoaderSpy) {
