@@ -73,7 +73,7 @@ class ExaminerTests: XCTestCase {
     func test_start_presentsFirstQuestion() {
         let correctAnswer = Answer(id: UUID(), text: "First answer")
         let wrongAnswer = Answer(id: UUID(), text: "Second answer")
-        let question = Question(title: "First question?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
+        let question = Question(id: UUID(), title: "First question?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
 
         let (sut, spy) = makeSUT()
         spy.completeLoadWithQuestions([question])
@@ -94,7 +94,7 @@ class ExaminerTests: XCTestCase {
     func test_respond_registersAnswerToAQuestion() throws {
         let correctAnswer = Answer(id: UUID(), text: "First answer")
         let wrongAnswer = Answer(id: UUID(), text: "Second answer")
-        let question = Question(title: "First question?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
+        let question = Question(id: UUID(), title: "First question?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
 
         let (sut, spy) = makeSUT()
         spy.completeLoadWithQuestions([question])
