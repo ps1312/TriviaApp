@@ -13,6 +13,8 @@
 		3A0DD017294105FE0092F887 /* QuestionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0DD016294105FE0092F887 /* QuestionsLoader.swift */; };
 		3A0DD019294106260092F887 /* QuestionsLoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0DD018294106260092F887 /* QuestionsLoaderSpy.swift */; };
 		3A0DD01B294106BF0092F887 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0DD01A294106BF0092F887 /* Score.swift */; };
+		3A0DD01D294109640092F887 /* InMemoryQuestionsLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0DD01C294109640092F887 /* InMemoryQuestionsLoaderTests.swift */; };
+		3A0DD01F29410C610092F887 /* InMemoryQuestionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0DD01E29410C610092F887 /* InMemoryQuestionsLoader.swift */; };
 		3A3BCBC22940C8F90000B211 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BCBC12940C8F90000B211 /* Answer.swift */; };
 		3A3BCBC42940CA030000B211 /* ExaminerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BCBC32940CA030000B211 /* ExaminerTests.swift */; };
 		3AFC39002940C37B000B9FCA /* TriviaEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AFC38F72940C37B000B9FCA /* TriviaEngine.framework */; };
@@ -35,6 +37,8 @@
 		3A0DD016294105FE0092F887 /* QuestionsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsLoader.swift; sourceTree = "<group>"; };
 		3A0DD018294106260092F887 /* QuestionsLoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsLoaderSpy.swift; sourceTree = "<group>"; };
 		3A0DD01A294106BF0092F887 /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
+		3A0DD01C294109640092F887 /* InMemoryQuestionsLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryQuestionsLoaderTests.swift; sourceTree = "<group>"; };
+		3A0DD01E29410C610092F887 /* InMemoryQuestionsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryQuestionsLoader.swift; sourceTree = "<group>"; };
 		3A3BCBC12940C8F90000B211 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		3A3BCBC32940CA030000B211 /* ExaminerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExaminerTests.swift; sourceTree = "<group>"; };
 		3AFC38F72940C37B000B9FCA /* TriviaEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TriviaEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +91,7 @@
 				3A0DD014294105CC0092F887 /* AnswerAttempt.swift */,
 				3A0DD016294105FE0092F887 /* QuestionsLoader.swift */,
 				3A0DD01A294106BF0092F887 /* Score.swift */,
+				3A0DD01E29410C610092F887 /* InMemoryQuestionsLoader.swift */,
 			);
 			path = TriviaEngine;
 			sourceTree = "<group>";
@@ -95,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				3A3BCBC32940CA030000B211 /* ExaminerTests.swift */,
+				3A0DD01C294109640092F887 /* InMemoryQuestionsLoaderTests.swift */,
 				3A0DD018294106260092F887 /* QuestionsLoaderSpy.swift */,
 			);
 			path = TriviaEngineTests;
@@ -214,6 +220,7 @@
 				3A0DD015294105CC0092F887 /* AnswerAttempt.swift in Sources */,
 				3A0DD017294105FE0092F887 /* QuestionsLoader.swift in Sources */,
 				3A3BCBC22940C8F90000B211 /* Answer.swift in Sources */,
+				3A0DD01F29410C610092F887 /* InMemoryQuestionsLoader.swift in Sources */,
 				3A0DD01B294106BF0092F887 /* Score.swift in Sources */,
 				3A0DD0112940F92F0092F887 /* Question.swift in Sources */,
 			);
@@ -225,6 +232,7 @@
 			files = (
 				3A3BCBC42940CA030000B211 /* ExaminerTests.swift in Sources */,
 				3A0DD019294106260092F887 /* QuestionsLoaderSpy.swift in Sources */,
+				3A0DD01D294109640092F887 /* InMemoryQuestionsLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
