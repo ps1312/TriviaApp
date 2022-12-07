@@ -1,12 +1,12 @@
 import Foundation
 
-struct Answer {
-    let id: UUID
-    let text: String
+public struct Answer {
+    public let id: UUID
+    public let text: String
 }
 
-struct Question {
-    let title: String
-    let answers: [Answer]
-    let correctAnswer: Answer
+public struct Question {
+    public let title: String
+    public let answers: [Answer]
+    public let correctAnswer: Answer
 }
