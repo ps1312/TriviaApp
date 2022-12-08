@@ -13,7 +13,15 @@ public final class QuizViewController: UITableViewController {
     }
 
     public override func viewDidLoad() {
-        _ = try? examiner?.start()
+        do {
+            _ = try examiner?.start()
+        } catch {
+            setToolbarItems([
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+                UIBarButtonItem(title: "Retry", style: .plain, target: self, action: nil),
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+            ], animated: false)
+        }
     }
 
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
