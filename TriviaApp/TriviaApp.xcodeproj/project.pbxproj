@@ -10,6 +10,8 @@
 		3AC6AF8A2942006600007F73 /* QuizUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC6AF892942006600007F73 /* QuizUIIntegrationTests.swift */; };
 		3AC6AF8D2942078600007F73 /* TriviaEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AC6AF8C2942078600007F73 /* TriviaEngine.framework */; };
 		3AC6AF8E2942078600007F73 /* TriviaEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3AC6AF8C2942078600007F73 /* TriviaEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3AC6AF91294223EA00007F73 /* ExaminerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC6AF90294223EA00007F73 /* ExaminerSpy.swift */; };
+		3AC6AF932942240F00007F73 /* QuizViewController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC6AF922942240F00007F73 /* QuizViewController+TestHelpers.swift */; };
 		3AF6F43A29411D9F009526E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6F43929411D9F009526E9 /* AppDelegate.swift */; };
 		3AF6F43C29411D9F009526E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6F43B29411D9F009526E9 /* SceneDelegate.swift */; };
 		3AF6F43E29411D9F009526E9 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6F43D29411D9F009526E9 /* QuizViewController.swift */; };
@@ -45,6 +47,8 @@
 /* Begin PBXFileReference section */
 		3AC6AF892942006600007F73 /* QuizUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizUIIntegrationTests.swift; sourceTree = "<group>"; };
 		3AC6AF8C2942078600007F73 /* TriviaEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TriviaEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AC6AF90294223EA00007F73 /* ExaminerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExaminerSpy.swift; sourceTree = "<group>"; };
+		3AC6AF922942240F00007F73 /* QuizViewController+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuizViewController+TestHelpers.swift"; sourceTree = "<group>"; };
 		3AF6F43629411D9F009526E9 /* TriviaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TriviaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AF6F43929411D9F009526E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3AF6F43B29411D9F009526E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				3AC6AF892942006600007F73 /* QuizUIIntegrationTests.swift */,
+				3AC6AF90294223EA00007F73 /* ExaminerSpy.swift */,
+				3AC6AF922942240F00007F73 /* QuizViewController+TestHelpers.swift */,
 			);
 			path = TriviaAppTests;
 			sourceTree = "<group>";
@@ -238,6 +244,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AC6AF8A2942006600007F73 /* QuizUIIntegrationTests.swift in Sources */,
+				3AC6AF932942240F00007F73 /* QuizViewController+TestHelpers.swift in Sources */,
+				3AC6AF91294223EA00007F73 /* ExaminerSpy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
