@@ -2,6 +2,9 @@ import UIKit
 import TriviaEngine
 
 public final class QuizViewController: UITableViewController {
+    @IBOutlet private(set) public var questionTitleLabel: UILabel!
+
+    private var options = [Answer]()
     public var examiner: ExaminerDelegate?
 
     public override func viewDidLoad() {
@@ -10,7 +13,11 @@ public final class QuizViewController: UITableViewController {
 
     @objc func startGame() {
         do {
-            _ = try examiner?.start()
+            guard let question = try examiner?.start() else { return }
+
+            questionTitleLabel.text = question.title
+            options = question.answers
+
             setToolbarItems([
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
                 UIBarButtonItem(title: "Submit", style: .plain, target: self, action: nil),
@@ -26,17 +33,18 @@ public final class QuizViewController: UITableViewController {
     }
 
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        options.count
     }
 
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let option = options[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "OptionCell", for: indexPath)
 
         var config = cell.defaultContentConfiguration()
-        config.text = indexPath.row == 0 ? "True" : "False"
+        config.text = option.text
 
         cell.contentConfiguration = config
-        cell.accessoryType = indexPath.row == 0 ? .checkmark : .none
+        cell.accessoryType = .none
 
         return cell
     }

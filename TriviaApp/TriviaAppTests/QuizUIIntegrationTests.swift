@@ -23,6 +23,28 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertFalse(sut.isShowingStartRetry, "Expected no retry button after questions loading succeeds")
     }
 
+    func test_viewDidLoad_displaysFirstQuestionAndAnswers() {
+        let firstAnswer = Answer(id: UUID(), text: "correct answer")
+        let lastAnswer = Answer(id: UUID(), text: "wrong answer")
+
+        let question = makeQuestion(title: "another title", answers: [firstAnswer, lastAnswer])
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithSuccess(question: question)
+        sut.loadViewIfNeeded()
+
+        XCTAssertEqual(sut.questionTitle, question.title)
+
+        let firstOption = sut.simulateOptionIsVisible(at: 0)
+        let firstContentConfig = firstOption?.contentConfiguration as? UIListContentConfiguration
+        XCTAssertEqual(firstContentConfig?.text, firstAnswer.text)
+        XCTAssertEqual(firstOption?.accessoryType, UITableViewCell.AccessoryType.none)
+
+        let lastOption = sut.simulateOptionIsVisible(at: 1)
+        let lastContentConfig = lastOption?.contentConfiguration as? UIListContentConfiguration
+        XCTAssertEqual(lastContentConfig?.text, lastAnswer.text)
+        XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.none)
+    }
+
     private func makeSUT() -> (QuizViewController, ExaminerSpy) {
         let bundle = Bundle(for: QuizViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
@@ -34,8 +56,8 @@ class QuizUIIntegrationTests: XCTestCase {
         return (sut, spy)
     }
 
-    private func makeQuestion() -> Question {
-        Question(id: UUID(), title: "", answers: [], correctAnswer: Answer(id: UUID(), text: ""))
+    private func makeQuestion(title: String = "", answers: [Answer] = []) -> Question {
+        Question(id: UUID(), title: title, answers: answers, correctAnswer: Answer(id: UUID(), text: ""))
     }
 
     private class ExaminerSpy: ExaminerDelegate {
@@ -45,11 +67,11 @@ class QuizUIIntegrationTests: XCTestCase {
         func start() throws -> Question {
             startCallCount += 1
 
-            if startResult == nil {
+            guard let startResult = startResult else {
                 throw NSError(domain: "test error", code: 999)
             }
 
-            return Question(id: UUID(), title: "", answers: [], correctAnswer: Answer(id: UUID(), text: ""))
+            return startResult
         }
 
         func respond(_ question: Question, with answer: Answer) -> Question? {
@@ -76,8 +98,17 @@ extension QuizViewController {
         return retryButton.title == "Retry"
     }
 
+    var questionTitle: String? {
+        questionTitleLabel.text
+    }
+
     func simulateTapOnRetry() {
         guard let retryButton = toolbarItems?[1] else { return }
         _ = retryButton.target?.perform(retryButton.action)
+    }
+
+    func simulateOptionIsVisible(at index: Int) -> UITableViewCell? {
+        let indexPath = IndexPath(row: index, section: 0)
+        return tableView.dataSource?.tableView(tableView, cellForRowAt: indexPath)
     }
 }
