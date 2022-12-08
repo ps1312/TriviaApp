@@ -4,30 +4,30 @@ import TriviaEngine
 
 class QuizUIIntegrationTests: XCTestCase {
     func test_viewDidLoad_requestsExaminerForStart() {
-        let bundle = Bundle(for: QuizViewController.self)
-        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        let navController = storyboard.instantiateInitialViewController() as! UINavigationController
-        let viewController = navController.topViewController as! QuizViewController
-        let spy = ExaminerSpy()
-        viewController.examiner = spy
-        viewController.loadViewIfNeeded()
+        let (sut, spy) = makeSUT()
+        sut.loadViewIfNeeded()
 
         XCTAssertEqual(spy.startCallCount, 1)
     }
 
     func test_startFailure_displaysRetryButton() {
+        let (sut, spy) = makeSUT()
+        sut.loadViewIfNeeded()
+
+        XCTAssertTrue(sut.isShowingStartRetry, "Expected retry button after questions loading has failed on start")
+        sut.simulateTapOnRetry()
+        XCTAssertEqual(spy.startCallCount, 2, "Expected another start after user requests retry")
+    }
+
+    private func makeSUT() -> (QuizViewController, ExaminerSpy) {
         let bundle = Bundle(for: QuizViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         let navController = storyboard.instantiateInitialViewController() as! UINavigationController
         let sut = navController.topViewController as! QuizViewController
         let spy = ExaminerSpy()
         sut.examiner = spy
-        sut.loadViewIfNeeded()
 
-        XCTAssertTrue(sut.isShowingStartRetry, "Expected retry button after questions loading has failed on start")
-
-        sut.simulateTapOnRetry()
-        XCTAssertEqual(spy.startCallCount, 2, "Expected another start after user requests retry")
+        return (sut, spy)
     }
 
     private class ExaminerSpy: ExaminerDelegate {
