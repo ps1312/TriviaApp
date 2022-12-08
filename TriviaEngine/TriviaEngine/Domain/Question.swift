@@ -6,10 +6,10 @@ public struct Question: Equatable {
     public let answers: [Answer]
     public let correctAnswer: Answer
 
-    public init(id: UUID, title: String, answers: [Answer], correctAnswer: Answer) {
+    public init(id: UUID, title: String, answers: [Answer], correctIndex: Int) {
         self.id = id
         self.title = title
         self.answers = answers
-        self.correctAnswer = correctAnswer
+        self.correctAnswer = answers[correctIndex]
     }
 }

@@ -83,7 +83,7 @@ class QuizUIIntegrationTests: XCTestCase {
     private func makeQuestion() -> (Question, [Answer]) {
         let correctAnswer = Answer(id: UUID(), text: "Correct answer")
         let wrongAnswer = Answer(id: UUID(), text: "Wrong answer")
-        let question = Question(id: UUID(), title: "Is this correct?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
+        let question = Question(id: UUID(), title: "Is this correct?", answers: [correctAnswer, wrongAnswer], correctIndex: 0)
 
         return (question, [correctAnswer, wrongAnswer])
     }

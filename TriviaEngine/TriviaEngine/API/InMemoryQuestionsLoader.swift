@@ -12,7 +12,7 @@ public class InMemoryQuestionsLoader: QuestionsLoader {
             id: UUID(),
             title: "What is the capital of Brazil?",
             answers: firstQuestionAnswers,
-            correctAnswer: firstQuestionAnswers[2]
+            correctIndex: 2
         )
     }
 
@@ -27,7 +27,7 @@ public class InMemoryQuestionsLoader: QuestionsLoader {
             id: UUID(),
             title: "In what year Apollo 11 landed on the moon?",
             answers: secondQuestionAnswers,
-            correctAnswer: secondQuestionAnswers[2]
+            correctIndex: 2
         )
     }
 
