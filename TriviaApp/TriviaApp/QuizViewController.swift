@@ -1,7 +1,10 @@
 import UIKit
+import TriviaEngine
 
-class ViewController: UITableViewController {
-    override func viewWillAppear(_ animated: Bool) {
+public final class QuizViewController: UITableViewController {
+    public var examiner: ExaminerDelegate?
+
+    public override func viewWillAppear(_ animated: Bool) {
         setToolbarItems([
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
             UIBarButtonItem(title: "Submit", style: .plain, target: self, action: nil),
@@ -9,15 +12,15 @@ class ViewController: UITableViewController {
         ], animated: animated)
     }
 
-    override func viewDidLoad() {
-        title = "1 of 5"
+    public override func viewDidLoad() {
+        _ = try? examiner?.start()
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         5
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OptionCell", for: indexPath)
 
         var config = cell.defaultContentConfiguration()
