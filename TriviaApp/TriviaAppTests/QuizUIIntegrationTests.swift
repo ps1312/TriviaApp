@@ -69,6 +69,33 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertEqual(spy.respondCallCount, 1)
     }
 
+    func test_option_displaysSelectionIndicatorWhileChosen() {
+        let (question, _) = makeQuestion()
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithSuccess(question: question)
+        sut.loadViewIfNeeded()
+
+        var firstOption = sut.simulateOptionIsVisible(at: 0)
+        var lastOption = sut.simulateOptionIsVisible(at: 1)
+        
+        XCTAssertEqual(firstOption?.accessoryType, UITableViewCell.AccessoryType.none)
+        XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.none)
+
+        sut.simulateOptionIsSelected(at: 0)
+
+        firstOption = sut.simulateOptionIsVisible(at: 0)
+        lastOption = sut.simulateOptionIsVisible(at: 1)
+        XCTAssertEqual(firstOption?.accessoryType, UITableViewCell.AccessoryType.checkmark)
+        XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.none)
+
+        sut.simulateOptionIsSelected(at: 1)
+
+        firstOption = sut.simulateOptionIsVisible(at: 0)
+        lastOption = sut.simulateOptionIsVisible(at: 1)
+        XCTAssertEqual(firstOption?.accessoryType, UITableViewCell.AccessoryType.none)
+        XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.checkmark)
+    }
+
     private func makeSUT() -> (QuizViewController, ExaminerSpy) {
         let bundle = Bundle(for: QuizViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)

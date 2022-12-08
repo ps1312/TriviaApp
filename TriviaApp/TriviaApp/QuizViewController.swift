@@ -6,11 +6,14 @@ public final class QuizViewController: UITableViewController {
 
     private var question: Question?
     private var answer: Answer?
-
     private var options = [Answer]()
+
+    private var cells = [IndexPath: UITableViewCell]()
+
     public var examiner: ExaminerDelegate?
 
     public override func viewDidLoad() {
+        super.viewDidLoad()
         startGame()
     }
 
@@ -30,6 +33,7 @@ public final class QuizViewController: UITableViewController {
     public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         answer = question?.answers[indexPath.row]
         updateToolbar(title: "Submit", action: #selector(submit))
+        tableView.reloadData()
     }
 
     @objc func submit() {
@@ -48,8 +52,8 @@ public final class QuizViewController: UITableViewController {
         config.text = option.text
 
         cell.contentConfiguration = config
-        cell.accessoryType = .none
-
+        cell.accessoryType = answer?.id == option.id ? .checkmark : .none
+        
         return cell
     }
 

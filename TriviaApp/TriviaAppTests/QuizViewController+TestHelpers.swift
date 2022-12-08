@@ -29,6 +29,7 @@ extension QuizViewController {
     func simulateOptionIsSelected(at index: Int) {
         let indexPath = IndexPath(row: index, section: 0)
         tableView.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
+        tableView.layoutIfNeeded()
     }
 
     func simulateTapOnSubmit() {
