@@ -11,23 +11,23 @@ class QuizUIIntegrationTests: XCTestCase {
     }
 
     func test_retryButton_isDisplayedOnFailure() {
+        let (question, _) = makeQuestion()
         let (sut, spy) = makeSUT()
         
         spy.completeLoadWithError()
         sut.loadViewIfNeeded()
         XCTAssertTrue(sut.isShowingStartRetry, "Expected retry button after questions loading has failed on start")
 
-        spy.completeLoadWithSuccess(question: makeQuestion())
+        spy.completeLoadWithSuccess(question: question)
         sut.simulateTapOnRetry()
         XCTAssertEqual(spy.startCallCount, 2, "Expected another start after user requests retry")
         XCTAssertFalse(sut.isShowingStartRetry, "Expected no retry button after questions loading succeeds")
     }
 
     func test_viewDidLoad_displaysFirstQuestionAndAnswers() {
-        let firstAnswer = Answer(id: UUID(), text: "correct answer")
-        let lastAnswer = Answer(id: UUID(), text: "wrong answer")
-
-        let question = makeQuestion(title: "another title", answers: [firstAnswer, lastAnswer])
+        let (question, answers) = makeQuestion()
+        let firstAnswer = answers[0]
+        let lastAnswer = answers[1]
         let (sut, spy) = makeSUT()
         spy.completeLoadWithSuccess(question: question)
         sut.loadViewIfNeeded()
@@ -46,11 +46,9 @@ class QuizUIIntegrationTests: XCTestCase {
     }
 
     func test_submitButton_isDisabledUntilOptionIsSelected() {
-        let firstAnswer = Answer(id: UUID(), text: "correct answer")
-        let lastAnswer = Answer(id: UUID(), text: "wrong answer")
-
+        let (question, _) = makeQuestion()
         let (sut, spy) = makeSUT()
-        spy.completeLoadWithSuccess(question: makeQuestion(answers: [firstAnswer, lastAnswer]))
+        spy.completeLoadWithSuccess(question: question)
         sut.loadViewIfNeeded()
 
         XCTAssertFalse(sut.canSubmit, "Expected submit to be disabled until an option is selected")
@@ -61,11 +59,9 @@ class QuizUIIntegrationTests: XCTestCase {
     }
 
     func test_submitButton_messagedExaminerWithSelectedOption() {
-        let firstAnswer = Answer(id: UUID(), text: "correct answer")
-        let lastAnswer = Answer(id: UUID(), text: "wrong answer")
-
+        let (question, _) = makeQuestion()
         let (sut, spy) = makeSUT()
-        spy.completeLoadWithSuccess(question: makeQuestion(answers: [firstAnswer, lastAnswer]))
+        spy.completeLoadWithSuccess(question: question)
         sut.loadViewIfNeeded()
 
         sut.simulateOptionIsSelected(at: 0)
@@ -84,7 +80,11 @@ class QuizUIIntegrationTests: XCTestCase {
         return (sut, spy)
     }
 
-    private func makeQuestion(title: String = "", answers: [Answer] = []) -> Question {
-        Question(id: UUID(), title: title, answers: answers, correctAnswer: Answer(id: UUID(), text: ""))
+    private func makeQuestion() -> (Question, [Answer]) {
+        let correctAnswer = Answer(id: UUID(), text: "Correct answer")
+        let wrongAnswer = Answer(id: UUID(), text: "Wrong answer")
+        let question = Question(id: UUID(), title: "Is this correct?", answers: [correctAnswer, wrongAnswer], correctAnswer: correctAnswer)
+
+        return (question, [correctAnswer, wrongAnswer])
     }
 }
