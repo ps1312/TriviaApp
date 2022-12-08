@@ -1,3 +1,9 @@
+public protocol ExaminerDelegate {
+    func start() throws -> Question
+    func respond(_ question: Question, with answer: Answer) -> Question?
+    func evaluate() -> Score
+}
+
 public class Examiner {
     private let questionsLoader: QuestionsLoader
     private var questions = [Question]()
