@@ -10,15 +10,17 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertEqual(spy.startCallCount, 1)
     }
 
-    func test_startFailure_displaysRetryButton() {
+    func test_retryButton_isDisplayedOnFailure() {
         let (sut, spy) = makeSUT()
+        
         spy.completeLoadWithError()
-
         sut.loadViewIfNeeded()
         XCTAssertTrue(sut.isShowingStartRetry, "Expected retry button after questions loading has failed on start")
 
+        spy.completeLoadWithSuccess(question: makeQuestion())
         sut.simulateTapOnRetry()
         XCTAssertEqual(spy.startCallCount, 2, "Expected another start after user requests retry")
+        XCTAssertFalse(sut.isShowingStartRetry, "Expected no retry button after questions loading succeeds")
     }
 
     private func makeSUT() -> (QuizViewController, ExaminerSpy) {
@@ -30,6 +32,10 @@ class QuizUIIntegrationTests: XCTestCase {
         sut.examiner = spy
 
         return (sut, spy)
+    }
+
+    private func makeQuestion() -> Question {
+        Question(id: UUID(), title: "", answers: [], correctAnswer: Answer(id: UUID(), text: ""))
     }
 
     private class ExaminerSpy: ExaminerDelegate {
@@ -56,6 +62,10 @@ class QuizUIIntegrationTests: XCTestCase {
 
         func completeLoadWithError() {
             startResult = nil
+        }
+
+        func completeLoadWithSuccess(question: Question) {
+            startResult = question
         }
     }
 }

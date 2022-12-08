@@ -4,28 +4,25 @@ import TriviaEngine
 public final class QuizViewController: UITableViewController {
     public var examiner: ExaminerDelegate?
 
-    public override func viewWillAppear(_ animated: Bool) {
-        setToolbarItems([
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-            UIBarButtonItem(title: "Submit", style: .plain, target: self, action: nil),
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        ], animated: animated)
+    public override func viewDidLoad() {
+        startGame()
     }
 
-    public override func viewDidLoad() {
+    @objc func startGame() {
         do {
             _ = try examiner?.start()
+            setToolbarItems([
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+                UIBarButtonItem(title: "Submit", style: .plain, target: self, action: nil),
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+            ], animated: false)
         } catch {
             setToolbarItems([
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-                UIBarButtonItem(title: "Retry", style: .plain, target: self, action: #selector(retry)),
+                UIBarButtonItem(title: "Retry", style: .plain, target: self, action: #selector(startGame)),
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
             ], animated: false)
         }
-    }
-
-    @objc func retry() {
-        _ = try? examiner?.start()
     }
 
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
