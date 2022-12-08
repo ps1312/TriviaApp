@@ -18,9 +18,12 @@ public final class QuizViewController: UITableViewController {
             questionTitleLabel.text = question.title
             options = question.answers
 
+            let submitButtom = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: nil)
+            submitButtom.isEnabled = false
+
             setToolbarItems([
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-                UIBarButtonItem(title: "Submit", style: .plain, target: self, action: nil),
+                submitButtom,
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
             ], animated: false)
         } catch {

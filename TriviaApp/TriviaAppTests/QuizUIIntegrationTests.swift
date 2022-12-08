@@ -45,6 +45,14 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.none)
     }
 
+    func test_submitButton_isDisabledOnStart() {
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithSuccess(question: makeQuestion())
+        sut.loadViewIfNeeded()
+
+        XCTAssertFalse(sut.canSubmit, "Expected submit to be disabled until an option is selected")
+    }
+
     private func makeSUT() -> (QuizViewController, ExaminerSpy) {
         let bundle = Bundle(for: QuizViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
@@ -100,6 +108,11 @@ extension QuizViewController {
 
     var questionTitle: String? {
         questionTitleLabel.text
+    }
+
+    var canSubmit: Bool {
+        guard let submitButton = toolbarItems?[1] else { return false }
+        return submitButton.isEnabled
     }
 
     func simulateTapOnRetry() {
