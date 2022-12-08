@@ -96,6 +96,17 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.checkmark)
     }
 
+    func test_submitButton_isDisabledAfterQuestionSubmit() {
+        let (question, _) = makeQuestion()
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithSuccess(question: question)
+        sut.loadViewIfNeeded()
+        sut.simulateOptionIsSelected(at: 0)
+        sut.simulateTapOnSubmit()
+
+        XCTAssertFalse(sut.canSubmit)
+    }
+
     private func makeSUT() -> (QuizViewController, ExaminerSpy) {
         let bundle = Bundle(for: QuizViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
