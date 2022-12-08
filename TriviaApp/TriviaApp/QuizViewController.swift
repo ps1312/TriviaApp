@@ -14,35 +14,17 @@ public final class QuizViewController: UITableViewController {
     @objc func startGame() {
         do {
             guard let question = try examiner?.start() else { return }
-
             questionTitleLabel.text = question.title
             options = question.answers
 
-            let submitButton = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: nil)
-            submitButton.isEnabled = false
-
-            setToolbarItems([
-                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-                submitButton,
-                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-            ], animated: false)
+            updateToolbar(title: "Submit", isEnabled: false)
         } catch {
-            setToolbarItems([
-                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-                UIBarButtonItem(title: "Retry", style: .plain, target: self, action: #selector(startGame)),
-                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-            ], animated: false)
+            updateToolbar(title: "Retry", action: #selector(startGame))
         }
     }
 
     public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let submitButton = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: nil)
-
-        setToolbarItems([
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-            submitButton,
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        ], animated: false)
+        updateToolbar(title: "Submit")
     }
 
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -60,6 +42,17 @@ public final class QuizViewController: UITableViewController {
         cell.accessoryType = .none
 
         return cell
+    }
+
+    private func updateToolbar(title: String, action: Selector? = nil, isEnabled: Bool = true) {
+        let actionButton = UIBarButtonItem(title: title, style: .plain, target: self, action: action)
+        actionButton.isEnabled = isEnabled
+
+        setToolbarItems([
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+            actionButton,
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        ], animated: true)
     }
 }
 
