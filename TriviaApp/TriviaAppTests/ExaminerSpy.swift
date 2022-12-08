@@ -5,6 +5,7 @@ class ExaminerSpy: ExaminerDelegate {
     var startCallCount = 0
     var respondCallCount = 0
     var startResult: Question?
+    var respondResult: Question?
 
     func start() throws -> Question {
         startCallCount += 1
@@ -18,7 +19,11 @@ class ExaminerSpy: ExaminerDelegate {
 
     func respond(_ question: Question, with answer: Answer) -> Question? {
         respondCallCount += 1
-        return nil
+        return respondResult
+    }
+
+    func completeRespondWith(question: Question?) {
+        respondResult = question
     }
 
     func evaluate() -> Score {

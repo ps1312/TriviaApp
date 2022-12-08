@@ -37,8 +37,13 @@ public final class QuizViewController: UITableViewController {
     }
 
     @objc func submit() {
-        _ = examiner?.respond(question!, with: answer!)
+        question = examiner?.respond(question!, with: answer!)
         updateToolbar(title: "Submit", isEnabled: false)
+        guard let question = question else { return }
+
+        options = question.answers
+        questionTitleLabel.text = question.title
+        answer = nil
     }
 
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

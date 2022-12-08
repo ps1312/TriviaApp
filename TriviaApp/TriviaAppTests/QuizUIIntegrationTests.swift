@@ -107,6 +107,31 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertFalse(sut.canSubmit)
     }
 
+    func test_submitButton_displaysNextQuestionAfterTapAndUnselectPreviousOption() {
+        let answer1 = Answer(id: UUID(), text: "answer 1")
+        let answer2 = Answer(id: UUID(), text: "answer 2")
+        let (question1, _) = makeQuestion(title: "first title")
+        let (question2, _) = makeQuestion(title: "second title", answers: [answer1, answer2])
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithSuccess(question: question1)
+        sut.loadViewIfNeeded()
+        sut.simulateOptionIsSelected(at: 0)
+
+        spy.completeRespondWith(question: question2)
+        sut.simulateTapOnSubmit()
+
+        XCTAssertEqual(sut.questionTitle, question2.title)
+        let firstOption = sut.simulateOptionIsVisible(at: 0)
+        let firstContentConfig = firstOption?.contentConfiguration as? UIListContentConfiguration
+        XCTAssertEqual(firstContentConfig?.text, answer1.text)
+        XCTAssertEqual(firstOption?.accessoryType, UITableViewCell.AccessoryType.none)
+
+        let lastOption = sut.simulateOptionIsVisible(at: 1)
+        let lastContentConfig = lastOption?.contentConfiguration as? UIListContentConfiguration
+        XCTAssertEqual(lastContentConfig?.text, answer2.text)
+        XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.none)
+    }
+
     private func makeSUT() -> (QuizViewController, ExaminerSpy) {
         let bundle = Bundle(for: QuizViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
@@ -118,10 +143,10 @@ class QuizUIIntegrationTests: XCTestCase {
         return (sut, spy)
     }
 
-    private func makeQuestion() -> (Question, [Answer]) {
+    private func makeQuestion(title: String = "any title", answers: [Answer]? = nil) -> (Question, [Answer]) {
         let correctAnswer = Answer(id: UUID(), text: "Correct answer")
         let wrongAnswer = Answer(id: UUID(), text: "Wrong answer")
-        let question = Question(id: UUID(), title: "Is this correct?", answers: [correctAnswer, wrongAnswer], correctIndex: 0)
+        let question = Question(id: UUID(), title: title, answers: answers ?? [correctAnswer, wrongAnswer], correctIndex: 0)
 
         return (question, [correctAnswer, wrongAnswer])
     }
