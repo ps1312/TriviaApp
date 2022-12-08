@@ -30,4 +30,9 @@ extension QuizViewController {
         let indexPath = IndexPath(row: index, section: 0)
         tableView.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
     }
+
+    func simulateTapOnSubmit() {
+        guard let submitButton = toolbarItems?[1] else { return }
+        _ = submitButton.target?.perform(submitButton.action)
+    }
 }

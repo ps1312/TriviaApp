@@ -46,8 +46,11 @@ class QuizUIIntegrationTests: XCTestCase {
     }
 
     func test_submitButton_isDisabledUntilOptionIsSelected() {
+        let firstAnswer = Answer(id: UUID(), text: "correct answer")
+        let lastAnswer = Answer(id: UUID(), text: "wrong answer")
+
         let (sut, spy) = makeSUT()
-        spy.completeLoadWithSuccess(question: makeQuestion())
+        spy.completeLoadWithSuccess(question: makeQuestion(answers: [firstAnswer, lastAnswer]))
         sut.loadViewIfNeeded()
 
         XCTAssertFalse(sut.canSubmit, "Expected submit to be disabled until an option is selected")
@@ -55,6 +58,19 @@ class QuizUIIntegrationTests: XCTestCase {
         sut.simulateOptionIsSelected(at: 0)
 
         XCTAssertTrue(sut.canSubmit, "Expect submit to be enabled after an option is selected")
+    }
+
+    func test_submitButton_messagedExaminerWithSelectedOption() {
+        let firstAnswer = Answer(id: UUID(), text: "correct answer")
+        let lastAnswer = Answer(id: UUID(), text: "wrong answer")
+
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithSuccess(question: makeQuestion(answers: [firstAnswer, lastAnswer]))
+        sut.loadViewIfNeeded()
+
+        sut.simulateOptionIsSelected(at: 0)
+        sut.simulateTapOnSubmit()
+        XCTAssertEqual(spy.respondCallCount, 1)
     }
 
     private func makeSUT() -> (QuizViewController, ExaminerSpy) {

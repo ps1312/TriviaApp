@@ -4,6 +4,9 @@ import TriviaEngine
 public final class QuizViewController: UITableViewController {
     @IBOutlet private(set) public var questionTitleLabel: UILabel!
 
+    private var question: Question?
+    private var answer: Answer?
+
     private var options = [Answer]()
     public var examiner: ExaminerDelegate?
 
@@ -14,6 +17,7 @@ public final class QuizViewController: UITableViewController {
     @objc func startGame() {
         do {
             guard let question = try examiner?.start() else { return }
+            self.question = question
             questionTitleLabel.text = question.title
             options = question.answers
 
@@ -24,7 +28,12 @@ public final class QuizViewController: UITableViewController {
     }
 
     public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        updateToolbar(title: "Submit")
+        answer = question?.answers[indexPath.row]
+        updateToolbar(title: "Submit", action: #selector(submit))
+    }
+
+    @objc func submit() {
+        _ = examiner?.respond(question!, with: answer!)
     }
 
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
