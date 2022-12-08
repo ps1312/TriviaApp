@@ -18,12 +18,12 @@ public final class QuizViewController: UITableViewController {
             questionTitleLabel.text = question.title
             options = question.answers
 
-            let submitButtom = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: nil)
-            submitButtom.isEnabled = false
+            let submitButton = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: nil)
+            submitButton.isEnabled = false
 
             setToolbarItems([
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-                submitButtom,
+                submitButton,
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
             ], animated: false)
         } catch {
@@ -33,6 +33,16 @@ public final class QuizViewController: UITableViewController {
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
             ], animated: false)
         }
+    }
+
+    public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let submitButton = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: nil)
+
+        setToolbarItems([
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+            submitButton,
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        ], animated: false)
     }
 
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

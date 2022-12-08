@@ -45,12 +45,16 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.none)
     }
 
-    func test_submitButton_isDisabledOnStart() {
+    func test_submitButton_isDisabledUntilOptionIsSelected() {
         let (sut, spy) = makeSUT()
         spy.completeLoadWithSuccess(question: makeQuestion())
         sut.loadViewIfNeeded()
 
         XCTAssertFalse(sut.canSubmit, "Expected submit to be disabled until an option is selected")
+
+        sut.simulateOptionIsSelected(at: 0)
+
+        XCTAssertTrue(sut.canSubmit, "Expect submit to be enabled after an option is selected")
     }
 
     private func makeSUT() -> (QuizViewController, ExaminerSpy) {
