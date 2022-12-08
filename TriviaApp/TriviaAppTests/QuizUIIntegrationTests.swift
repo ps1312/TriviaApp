@@ -25,6 +25,9 @@ class QuizUIIntegrationTests: XCTestCase {
         sut.loadViewIfNeeded()
 
         XCTAssertTrue(sut.isShowingStartRetry, "Expected retry button after questions loading has failed on start")
+
+        sut.simulateTapOnRetry()
+        XCTAssertEqual(spy.startCallCount, 2, "Expected another start after user requests retry")
     }
 
     private class ExaminerSpy: ExaminerDelegate {
@@ -49,5 +52,10 @@ extension QuizViewController {
     var isShowingStartRetry: Bool {
         guard let retryButton = toolbarItems?[1] else { return false }
         return retryButton.title == "Retry"
+    }
+
+    func simulateTapOnRetry() {
+        guard let retryButton = toolbarItems?[1] else { return }
+        _ = retryButton.target?.perform(retryButton.action)
     }
 }

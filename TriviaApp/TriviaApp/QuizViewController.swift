@@ -18,10 +18,14 @@ public final class QuizViewController: UITableViewController {
         } catch {
             setToolbarItems([
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-                UIBarButtonItem(title: "Retry", style: .plain, target: self, action: nil),
+                UIBarButtonItem(title: "Retry", style: .plain, target: self, action: #selector(retry)),
                 UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
             ], animated: false)
         }
+    }
+
+    @objc func retry() {
+        _ = try? examiner?.start()
     }
 
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
