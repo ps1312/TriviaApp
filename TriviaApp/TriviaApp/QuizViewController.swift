@@ -7,7 +7,9 @@ public final class QuizViewController: UITableViewController {
     private var question: Question?
     private var answer: Answer?
     private var options = [Answer]()
+
     public var examiner: ExaminerDelegate?
+    public var onFinish: (() -> Void)?
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +40,7 @@ public final class QuizViewController: UITableViewController {
         updateToolbar(title: "Submit", isEnabled: false)
         
         guard let question = question else {
-            _ = examiner?.evaluate()
+            onFinish?()
             return
         }
 

@@ -111,24 +111,29 @@ class QuizUIIntegrationTests: XCTestCase {
         expect(sut.simulateOptionIsVisible(at: 1), toHaveTitle: answers[1].text, isSelected: false)
     }
 
-    func test_submitButton_messagesExaminerForEvaluationAfterLastQuestion() {
+    func test_submitButton_notifiesHandler() {
         let (question1, _) = makeQuestion(title: "first title")
-        let (sut, spy) = makeSUT()
+        var handlerCallCount = 0
+        let (sut, spy) = makeSUT(onFinish: {
+            handlerCallCount += 1
+        })
+
         spy.completeLoadWithSuccess(question: question1)
         sut.loadViewIfNeeded()
         sut.simulateOptionIsSelected(at: 0)
         sut.simulateTapOnSubmit()
 
-        XCTAssertEqual(spy.evaluateCallCount, 1)
+        XCTAssertEqual(handlerCallCount, 1)
     }
 
-    private func makeSUT() -> (QuizViewController, ExaminerSpy) {
+    private func makeSUT(onFinish: @escaping () -> Void = {}) -> (QuizViewController, ExaminerSpy) {
         let bundle = Bundle(for: QuizViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         let navController = storyboard.instantiateInitialViewController() as! UINavigationController
         let sut = navController.topViewController as! QuizViewController
         let spy = ExaminerSpy()
         sut.examiner = spy
+        sut.onFinish = onFinish
 
         return (sut, spy)
     }

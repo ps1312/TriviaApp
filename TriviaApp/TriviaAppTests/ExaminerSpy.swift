@@ -11,8 +11,6 @@ class ExaminerSpy: ExaminerDelegate {
     }
     var respondResult: Question?
 
-    var evaluateCallCount = 0
-
     func start() throws -> Question {
         startCallCount += 1
 
@@ -33,7 +31,6 @@ class ExaminerSpy: ExaminerDelegate {
     }
 
     func evaluate() -> Score {
-        evaluateCallCount += 1
         return Score(points: 0, responses: [])
     }
 
