@@ -79,6 +79,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3ABEEFDF2947A20B001703D9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3AC6AF90294223EA00007F73 /* ExaminerSpy.swift */,
+				3AC6AF922942240F00007F73 /* QuizViewController+TestHelpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		3AC6AF8B2942078600007F73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,9 +132,8 @@
 		3AF6F45229411E96009526E9 /* TriviaAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				3ABEEFDF2947A20B001703D9 /* Helpers */,
 				3AC6AF892942006600007F73 /* QuizUIIntegrationTests.swift */,
-				3AC6AF90294223EA00007F73 /* ExaminerSpy.swift */,
-				3AC6AF922942240F00007F73 /* QuizViewController+TestHelpers.swift */,
 			);
 			path = TriviaAppTests;
 			sourceTree = "<group>";
