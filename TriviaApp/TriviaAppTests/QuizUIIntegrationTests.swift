@@ -53,6 +53,10 @@ class QuizUIIntegrationTests: XCTestCase {
         sut.simulateOptionIsSelected(at: 0)
 
         XCTAssertTrue(sut.canSubmit, "Expect submit to be enabled after an option is selected")
+
+        sut.simulateTapOnSubmit()
+
+        XCTAssertFalse(sut.canSubmit, "Expect submit to be disabled after entering second question")
     }
 
     func test_submitButton_messagedExaminerWithSelectedOption() {
@@ -84,17 +88,6 @@ class QuizUIIntegrationTests: XCTestCase {
 
         expect(sut.simulateOptionIsVisible(at: 0), isSelected: false)
         expect(sut.simulateOptionIsVisible(at: 1), isSelected: true)
-    }
-
-    func test_submitButton_isDisabledAfterQuestionSubmit() {
-        let (question, _) = makeQuestion()
-        let (sut, spy) = makeSUT()
-        spy.completeLoadWithSuccess(question: question)
-        sut.loadViewIfNeeded()
-        sut.simulateOptionIsSelected(at: 0)
-        sut.simulateTapOnSubmit()
-
-        XCTAssertFalse(sut.canSubmit)
     }
 
     func test_submitButton_displaysNextQuestionAfterTapAndUnselectPreviousOption() {
