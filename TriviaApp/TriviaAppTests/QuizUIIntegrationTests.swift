@@ -128,7 +128,7 @@ class QuizUIIntegrationTests: XCTestCase {
 
     private func makeSUT(onFinish: @escaping () -> Void = {}) -> (QuizViewController, ExaminerSpy) {
         let bundle = Bundle(for: QuizViewController.self)
-        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+        let storyboard = UIStoryboard(name: "Quiz", bundle: bundle)
         let navController = storyboard.instantiateInitialViewController() as! UINavigationController
         let sut = navController.topViewController as! QuizViewController
         let spy = ExaminerSpy()
