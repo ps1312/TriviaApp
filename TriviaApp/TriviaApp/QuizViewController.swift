@@ -38,7 +38,7 @@ public final class QuizViewController: UITableViewController {
     @objc func submit() {
         question = examiner?.respond(question!, with: answer!)
         updateToolbar(title: "Submit", isEnabled: false)
-        
+
         guard let question = question else {
             onFinish?()
             return
@@ -47,6 +47,7 @@ public final class QuizViewController: UITableViewController {
         options = question.answers
         questionTitleLabel.text = question.title
         answer = nil
+        tableView.reloadData()
     }
 
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
