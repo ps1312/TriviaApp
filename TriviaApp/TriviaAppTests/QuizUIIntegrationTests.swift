@@ -36,14 +36,10 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertEqual(sut.questionTitle, question.title, "Expected to display question title text")
 
         let firstOption = sut.simulateOptionIsVisible(at: 0)
-        let firstContentConfig = firstOption?.contentConfiguration as? UIListContentConfiguration
-        XCTAssertEqual(firstContentConfig?.text, firstAnswer.text)
-        XCTAssertEqual(firstOption?.accessoryType, UITableViewCell.AccessoryType.none)
+        expect(firstOption, toHaveTitle: firstAnswer.text, isSelected: false)
 
         let lastOption = sut.simulateOptionIsVisible(at: 1)
-        let lastContentConfig = lastOption?.contentConfiguration as? UIListContentConfiguration
-        XCTAssertEqual(lastContentConfig?.text, lastAnswer.text)
-        XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.none)
+        expect(lastOption, toHaveTitle: lastAnswer.text, isSelected: false)
     }
 
     func test_submitButton_isDisabledUntilOptionIsSelected() {
@@ -76,25 +72,18 @@ class QuizUIIntegrationTests: XCTestCase {
         spy.completeLoadWithSuccess(question: question)
         sut.loadViewIfNeeded()
 
-        var firstOption = sut.simulateOptionIsVisible(at: 0)
-        var lastOption = sut.simulateOptionIsVisible(at: 1)
-        
-        XCTAssertEqual(firstOption?.accessoryType, UITableViewCell.AccessoryType.none)
-        XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.none)
+        expect(sut.simulateOptionIsVisible(at: 0), isSelected: false)
+        expect(sut.simulateOptionIsVisible(at: 1), isSelected: false)
 
         sut.simulateOptionIsSelected(at: 0)
 
-        firstOption = sut.simulateOptionIsVisible(at: 0)
-        lastOption = sut.simulateOptionIsVisible(at: 1)
-        XCTAssertEqual(firstOption?.accessoryType, UITableViewCell.AccessoryType.checkmark)
-        XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.none)
+        expect(sut.simulateOptionIsVisible(at: 0), isSelected: true)
+        expect(sut.simulateOptionIsVisible(at: 1), isSelected: false)
 
         sut.simulateOptionIsSelected(at: 1)
 
-        firstOption = sut.simulateOptionIsVisible(at: 0)
-        lastOption = sut.simulateOptionIsVisible(at: 1)
-        XCTAssertEqual(firstOption?.accessoryType, UITableViewCell.AccessoryType.none)
-        XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.checkmark)
+        expect(sut.simulateOptionIsVisible(at: 0), isSelected: false)
+        expect(sut.simulateOptionIsVisible(at: 1), isSelected: true)
     }
 
     func test_submitButton_isDisabledAfterQuestionSubmit() {
@@ -109,10 +98,12 @@ class QuizUIIntegrationTests: XCTestCase {
     }
 
     func test_submitButton_displaysNextQuestionAfterTapAndUnselectPreviousOption() {
-        let answer1 = Answer(id: UUID(), text: "answer 1")
-        let answer2 = Answer(id: UUID(), text: "answer 2")
         let (question1, _) = makeQuestion(title: "first title")
-        let (question2, _) = makeQuestion(title: "second title", answers: [answer1, answer2])
+        let (question2, answers) = makeQuestion(title: "second title", answers: [
+            Answer(id: UUID(), text: "answer 1"),
+            Answer(id: UUID(), text: "answer 2")
+        ])
+
         let (sut, spy) = makeSUT()
         spy.completeLoadWithSuccess(question: question1)
         sut.loadViewIfNeeded()
@@ -122,15 +113,8 @@ class QuizUIIntegrationTests: XCTestCase {
         sut.simulateTapOnSubmit()
 
         XCTAssertEqual(sut.questionTitle, question2.title)
-        let firstOption = sut.simulateOptionIsVisible(at: 0)
-        let firstContentConfig = firstOption?.contentConfiguration as? UIListContentConfiguration
-        XCTAssertEqual(firstContentConfig?.text, answer1.text)
-        XCTAssertEqual(firstOption?.accessoryType, UITableViewCell.AccessoryType.none)
-
-        let lastOption = sut.simulateOptionIsVisible(at: 1)
-        let lastContentConfig = lastOption?.contentConfiguration as? UIListContentConfiguration
-        XCTAssertEqual(lastContentConfig?.text, answer2.text)
-        XCTAssertEqual(lastOption?.accessoryType, UITableViewCell.AccessoryType.none)
+        expect(sut.simulateOptionIsVisible(at: 0), toHaveTitle: answers[0].text, isSelected: false)
+        expect(sut.simulateOptionIsVisible(at: 1), toHaveTitle: answers[1].text, isSelected: false)
     }
 
     private func makeSUT() -> (QuizViewController, ExaminerSpy) {
@@ -144,11 +128,19 @@ class QuizUIIntegrationTests: XCTestCase {
         return (sut, spy)
     }
 
+    private func expect(_ cell: UITableViewCell?, toHaveTitle title: String? = nil, isSelected: Bool) {
+        let config = cell?.contentConfiguration as? UIListContentConfiguration
+        if title != nil {
+            XCTAssertEqual(config?.text, title, "Expect cell to have title")
+        }
+        XCTAssertEqual(cell?.accessoryType, isSelected ? UITableViewCell.AccessoryType.checkmark : UITableViewCell.AccessoryType.none)
+    }
+
     private func makeQuestion(title: String = "any title", answers: [Answer]? = nil) -> (Question, [Answer]) {
         let correctAnswer = Answer(id: UUID(), text: "Correct answer")
         let wrongAnswer = Answer(id: UUID(), text: "Wrong answer")
         let question = Question(id: UUID(), title: title, answers: answers ?? [correctAnswer, wrongAnswer], correctIndex: 0)
 
-        return (question, [correctAnswer, wrongAnswer])
+        return (question, answers ?? [correctAnswer, wrongAnswer])
     }
 }
