@@ -99,6 +99,15 @@
 			path = "Results UI";
 			sourceTree = "<group>";
 		};
+		3A198A942947BD3700EA895E /* Quiz UI */ = {
+			isa = PBXGroup;
+			children = (
+				3AF6F43D29411D9F009526E9 /* QuizViewController.swift */,
+				3AF6F43F29411D9F009526E9 /* Quiz.storyboard */,
+			);
+			path = "Quiz UI";
+			sourceTree = "<group>";
+		};
 		3ABEEFDF2947A20B001703D9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,11 +147,10 @@
 		3AF6F43829411D9F009526E9 /* TriviaApp */ = {
 			isa = PBXGroup;
 			children = (
+				3A198A942947BD3700EA895E /* Quiz UI */,
+				3A198A932947BC5D00EA895E /* Results UI */,
 				3AF6F43929411D9F009526E9 /* AppDelegate.swift */,
 				3AF6F43B29411D9F009526E9 /* SceneDelegate.swift */,
-				3AF6F43D29411D9F009526E9 /* QuizViewController.swift */,
-				3AF6F43F29411D9F009526E9 /* Quiz.storyboard */,
-				3A198A932947BC5D00EA895E /* Results UI */,
 				3AF6F44229411DA0009526E9 /* Assets.xcassets */,
 				3AF6F44429411DA0009526E9 /* LaunchScreen.storyboard */,
 				3AF6F44729411DA0009526E9 /* Info.plist */,
