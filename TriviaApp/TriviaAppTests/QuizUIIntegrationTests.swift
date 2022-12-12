@@ -91,7 +91,7 @@ class QuizUIIntegrationTests: XCTestCase {
         expect(sut.simulateOptionIsVisible(at: 1), isSelected: true)
     }
 
-    func test_submitButton_displaysNextQuestionAfterTapAndUnselectPreviousOption() {
+    func test_submitButton_displaysNextQuestionAfterTapAndClearsSelectedAnswers() {
         let (question1, _) = makeQuestion(title: "first title")
         let (question2, answers) = makeQuestion(title: "second title", answers: [
             Answer(id: UUID(), text: "answer 1"),
