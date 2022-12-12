@@ -4,7 +4,7 @@ public protocol ExaminerDelegate {
     func evaluate() -> Score
 }
 
-public class Examiner {
+public class Examiner: ExaminerDelegate {
     private let questionsLoader: QuestionsLoader
     private var questions = [Question]()
     private var score = Score(points: 0, responses: [])
