@@ -59,8 +59,8 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertFalse(sut.canSubmit, "Expect submit to be disabled after entering second question")
     }
 
-    func test_submitButton_messagedExaminerWithSelectedOption() {
-        let (question, _) = makeQuestion()
+    func test_submitButton_messagesExaminerWithSelectedAnswer() {
+        let (question, answers) = makeQuestion()
         let (sut, spy) = makeSUT()
         spy.completeLoadWithSuccess(question: question)
         sut.loadViewIfNeeded()
@@ -68,6 +68,7 @@ class QuizUIIntegrationTests: XCTestCase {
         sut.simulateOptionIsSelected(at: 0)
         sut.simulateTapOnSubmit()
         XCTAssertEqual(spy.respondCallCount, 1)
+        XCTAssertEqual(spy.answers, [answers[0]])
     }
 
     func test_option_displaysSelectionIndicatorWhileChosen() {
