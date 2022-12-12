@@ -7,9 +7,6 @@ public final class QuizViewController: UITableViewController {
     private var question: Question?
     private var answer: Answer?
     private var options = [Answer]()
-
-    private var cells = [IndexPath: UITableViewCell]()
-
     public var examiner: ExaminerDelegate?
 
     public override func viewDidLoad() {
@@ -39,7 +36,11 @@ public final class QuizViewController: UITableViewController {
     @objc func submit() {
         question = examiner?.respond(question!, with: answer!)
         updateToolbar(title: "Submit", isEnabled: false)
-        guard let question = question else { return }
+        
+        guard let question = question else {
+            _ = examiner?.evaluate()
+            return
+        }
 
         options = question.answers
         questionTitleLabel.text = question.title

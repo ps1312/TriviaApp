@@ -4,6 +4,7 @@ import TriviaEngine
 class ExaminerSpy: ExaminerDelegate {
     var startCallCount = 0
     var respondCallCount = 0
+    var evaluateCallCount = 0
     var startResult: Question?
     var respondResult: Question?
 
@@ -27,7 +28,8 @@ class ExaminerSpy: ExaminerDelegate {
     }
 
     func evaluate() -> Score {
-        Score(points: 0, responses: [])
+        evaluateCallCount += 1
+        return Score(points: 0, responses: [])
     }
 
     func completeLoadWithError() {
