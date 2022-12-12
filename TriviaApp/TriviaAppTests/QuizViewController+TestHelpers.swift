@@ -7,6 +7,11 @@ extension QuizViewController {
         return retryButton.title == "Retry"
     }
 
+    var isShowingSubmit: Bool {
+        guard let submitButton = toolbarItems?[1] else { return false }
+        return submitButton.title == "Submit"
+    }
+
     var questionTitle: String? {
         questionTitleLabel.text
     }

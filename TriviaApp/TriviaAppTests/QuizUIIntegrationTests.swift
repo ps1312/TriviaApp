@@ -22,6 +22,7 @@ class QuizUIIntegrationTests: XCTestCase {
         sut.simulateTapOnRetry()
         XCTAssertEqual(spy.startCallCount, 2, "Expected another start after user requests retry")
         XCTAssertFalse(sut.isShowingStartRetry, "Expected no retry button after questions loading succeeds")
+        XCTAssertTrue(sut.isShowingSubmit, "Expected to show submit after user retries with success")
     }
 
     func test_viewDidLoad_displaysFirstQuestionAndAnswers() {
