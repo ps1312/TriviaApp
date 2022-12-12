@@ -25,3 +25,10 @@ Given the player finishes a game
 When the player taps on "play again"
 Then the app should start another round of trivia questions
 ```
+
+### Question Screen:
+
+<p float="left" align="middle">
+  <img src="TRIVIA_QUESTION_dark.png" width="300" />
+  <img src="TRIVIA_QUESTION_light.png" width="300" />
+</p>
