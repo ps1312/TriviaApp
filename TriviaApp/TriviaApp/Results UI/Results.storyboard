@@ -32,6 +32,24 @@
                                 <constraint firstItem="W6L-dh-SZW" firstAttribute="centerY" secondItem="YnC-0N-Hip" secondAttribute="centerY" id="hnB-Wg-bqr"/>
                             </constraints>
                         </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="D1I-Rl-vUH">
+                            <rect key="frame" x="0.0" y="245" width="393" height="66"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pGd-jb-Bhn">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="66"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="Play Again"/>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="pGd-jb-Bhn" secondAttribute="trailing" id="XBV-5R-pCa"/>
+                                <constraint firstAttribute="bottom" secondItem="pGd-jb-Bhn" secondAttribute="bottom" id="Yd1-d2-tmZ"/>
+                                <constraint firstItem="pGd-jb-Bhn" firstAttribute="top" secondItem="D1I-Rl-vUH" secondAttribute="top" id="ZFe-WO-v5z"/>
+                                <constraint firstItem="pGd-jb-Bhn" firstAttribute="leading" secondItem="D1I-Rl-vUH" secondAttribute="leading" id="vp0-e4-zya"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResultAnswerCell" rowHeight="87" id="He0-Te-MsQ" customClass="ResultAnswerCell" customModule="TriviaApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="130" width="393" height="87"/>
