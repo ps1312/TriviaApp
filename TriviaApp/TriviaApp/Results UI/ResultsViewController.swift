@@ -1,6 +1,13 @@
 import UIKit
 
 final class ResultsViewController: UITableViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        title = "Results"
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         5
     }
