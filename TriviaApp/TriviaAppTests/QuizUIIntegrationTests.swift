@@ -32,7 +32,7 @@ class QuizUIIntegrationTests: XCTestCase {
         spy.completeLoadWithSuccess(question: question)
         sut.loadViewIfNeeded()
 
-        XCTAssertEqual(sut.questionTitle, question.title)
+        XCTAssertEqual(sut.questionTitle, question.title, "Expected to display question title text")
 
         let firstOption = sut.simulateOptionIsVisible(at: 0)
         let firstContentConfig = firstOption?.contentConfiguration as? UIListContentConfiguration
