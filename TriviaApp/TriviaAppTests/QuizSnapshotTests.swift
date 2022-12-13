@@ -6,8 +6,8 @@ class QuizSnapshotTests: XCTestCase {
         let	(sut, spy) = makeSUT()
         spy.completeLoadWithError()
 
-        let snapshot = SnapshotWindow(configuration: .iPhone13(style: .light), root: sut).snapshot()
-        record(snapshot: snapshot, named: "QUESTIONS_LOAD_ERROR_light")
+        assert(snapshot: sut.snapshot(.iPhone13(style: .light)), named: "QUESTIONS_LOAD_ERROR_light")
+        assert(snapshot: sut.snapshot(.iPhone13(style: .dark)), named: "QUESTIONS_LOAD_ERROR_dark")
     }
 
     private func makeSUT(onFinish: @escaping () -> Void = {}) -> (UINavigationController, ExaminerSpy) {
@@ -24,3 +24,8 @@ class QuizSnapshotTests: XCTestCase {
     }
 }
 
+extension UINavigationController {
+    func snapshot(_ configuration: SnapshotConfiguration) -> UIImage {
+        SnapshotWindow(configuration: configuration, root: self).snapshot()
+    }
+}
