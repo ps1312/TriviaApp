@@ -13,6 +13,19 @@ When the player answers all questions
 Then the app should display the score summary
 ```
 
+### Scenario: Player wants to see the score
+```
+- Story:
+As a player
+I want to see my final score
+So I can see my overall performance in the quiz
+
+- Acceptance criteria:
+Given the player is in the last question
+When the player submits the last answer
+Then the app should display the final score
+```
+
 ### Scenario: Player wants to play again
 ```
 - Story:
