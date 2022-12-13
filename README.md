@@ -41,14 +41,15 @@ Then the app should start another round of trivia questions
 
 ### Question Screen:
 
-<p float="left" align="middle">
-  <img src="TRIVIA_QUESTION_dark.png" width="300" />
-  <img src="TRIVIA_QUESTION_light.png" width="300" />
+<p>
+  <img src="./TriviaApp/TriviaAppSnapshotTests/snapshots/ANSWER_SELECTED_light.png" width="300" />
+  <img src="./TriviaApp/TriviaAppSnapshotTests/snapshots/ANSWER_SELECTED_dark.png" width="300" />
 </p>
 
 ### Results Screen:
 
-<p float="left" align="middle">
-  <img src="TRIVIA_RESULTS_dark.png" width="300" />
-  <img src="TRIVIA_RESULTS_light.png" width="300" />
+<p>
+  <img src="./TriviaApp/TriviaAppSnapshotTests/snapshots/RESULTS_light.png" width="300" />
+  -
+  <img src="./TriviaApp/TriviaAppSnapshotTests/snapshots/RESULTS_dark.png" width="300" />
 </p>
