@@ -16,12 +16,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="YnC-0N-Hip">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="80"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You got 1 of 6" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6L-dh-SZW" userLabel="Final Score Label">
-                                    <rect key="frame" x="97.333333333333329" y="19.666666666666668" width="198.33333333333337" height="40.666666666666657"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                    <rect key="frame" x="114.33333333333333" y="13.333333333333332" width="164.33333333333337" height="33.666666666666671"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -33,7 +33,7 @@
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="D1I-Rl-vUH">
-                            <rect key="frame" x="0.0" y="245" width="393" height="66"/>
+                            <rect key="frame" x="0.0" y="225" width="393" height="66"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pGd-jb-Bhn">
@@ -52,23 +52,23 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResultAnswerCell" rowHeight="87" id="He0-Te-MsQ" customClass="ResultAnswerCell" customModule="TriviaApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="130" width="393" height="87"/>
+                                <rect key="frame" x="0.0" y="110" width="393" height="87"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="He0-Te-MsQ" id="Hld-Qz-XRl">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="87"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="BID-FT-OpJ">
-                                            <rect key="frame" x="20" y="11" width="353" height="65"/>
+                                            <rect key="frame" x="25" y="16" width="343" height="55"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Incorrect answer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPW-8k-Kd4" userLabel="Wrong Answer Label">
-                                                    <rect key="frame" x="0.0" y="0.0" width="353" height="28.666666666666668"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="23.666666666666668"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" systemColor="systemRedColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Correct answer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiG-Sp-hfy" userLabel="Correct Answer Label">
-                                                    <rect key="frame" x="0.0" y="36.666666666666664" width="353" height="28.333333333333336"/>
+                                                    <rect key="frame" x="0.0" y="31.666666666666664" width="343" height="23.333333333333336"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" systemColor="systemGreenColor"/>
                                                     <nil key="highlightedColor"/>
@@ -77,10 +77,10 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="BID-FT-OpJ" firstAttribute="leading" secondItem="Hld-Qz-XRl" secondAttribute="leadingMargin" id="4gC-eW-sbB"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="BID-FT-OpJ" secondAttribute="trailing" id="DzK-xf-9VI"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="BID-FT-OpJ" secondAttribute="bottom" id="GHQ-z3-0qs"/>
-                                        <constraint firstItem="BID-FT-OpJ" firstAttribute="top" secondItem="Hld-Qz-XRl" secondAttribute="topMargin" id="z7d-TJ-jKV"/>
+                                        <constraint firstItem="BID-FT-OpJ" firstAttribute="leading" secondItem="Hld-Qz-XRl" secondAttribute="leadingMargin" constant="5" id="4gC-eW-sbB"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="BID-FT-OpJ" secondAttribute="trailing" constant="5" id="DzK-xf-9VI"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="BID-FT-OpJ" secondAttribute="bottom" constant="5" id="GHQ-z3-0qs"/>
+                                        <constraint firstItem="BID-FT-OpJ" firstAttribute="top" secondItem="Hld-Qz-XRl" secondAttribute="topMargin" constant="5" id="z7d-TJ-jKV"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
