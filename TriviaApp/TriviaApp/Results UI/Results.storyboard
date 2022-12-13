@@ -16,11 +16,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="YnC-0N-Hip">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="120"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your score: 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6L-dh-SZW" userLabel="Final Score Label">
-                                    <rect key="frame" x="120.66666666666669" y="13.333333333333332" width="152" height="33.666666666666671"/>
+                                    <rect key="frame" x="120.66666666666669" y="43.333333333333343" width="152" height="33.666666666666657"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -33,7 +33,7 @@
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="D1I-Rl-vUH">
-                            <rect key="frame" x="0.0" y="225" width="393" height="66"/>
+                            <rect key="frame" x="0.0" y="285" width="393" height="66"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pGd-jb-Bhn">
@@ -52,7 +52,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResultAnswerCell" rowHeight="87" id="He0-Te-MsQ" customClass="ResultAnswerCell" customModule="TriviaApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="110" width="393" height="87"/>
+                                <rect key="frame" x="0.0" y="170" width="393" height="87"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="He0-Te-MsQ" id="Hld-Qz-XRl">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="87"/>
