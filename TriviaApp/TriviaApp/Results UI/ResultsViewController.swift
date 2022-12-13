@@ -21,8 +21,8 @@ final class ResultsViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ResultAnswerCell") as! ResultAnswerCell
         let attempt = score?.responses[indexPath.row]
 
-        cell.correctAnswerLabel.text = attempt?.answer.text
-        cell.wrongAnswerLabel.text = attempt?.answer.text
+        cell.correctAnswerLabel.text = attempt!.isCorrect ? attempt?.answer.text : attempt!.question.correctAnswer.text
+        cell.wrongAnswerLabel.text = attempt!.answer.text
 
         cell.wrongAnswerLabel.isHidden = attempt?.isCorrect ?? true
         

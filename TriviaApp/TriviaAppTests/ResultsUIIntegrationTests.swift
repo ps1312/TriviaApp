@@ -32,6 +32,7 @@ class ResultsUIIntegrationTests: XCTestCase {
 
     func test_answerAttempts_displaysWrongAnswerWithCorrectAnswerOnBottom() {
         let (question, answers) = makeQuestion()
+        let correctAnswer = answers[0]
         let wrongAnswer = answers[1]
         let attempt = AnswerAttempt(question: question, answer: wrongAnswer, isCorrect: false)
         let score = Score(points: 1, responses: [attempt])
@@ -42,6 +43,8 @@ class ResultsUIIntegrationTests: XCTestCase {
         XCTAssertEqual(cell0?.isDisplayingWrongAnswer, true, "Expected wrong answer in cell when attempt is wrong")
         XCTAssertEqual(cell0?.wrongAnswerText, wrongAnswer.text, "Expected wrong answer text in cell")
         XCTAssertEqual(cell0?.wrongAnswerColor, UIColor.systemRed, "Expected wrong answer color to be .systemRed")
+
+        XCTAssertEqual(cell0?.correctAnswerText, correctAnswer.text, "Expected correct answer text in cell")
     }
 
     private func makeSUT(score: Score = Score(points: 0, responses: [])) -> ResultsViewController {
