@@ -20,8 +20,12 @@ final class ResultsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ResultAnswerCell") as! ResultAnswerCell
         let attempt = score?.responses[indexPath.row]
+
         cell.correctAnswerLabel.text = attempt?.answer.text
-        cell.wrongAnswerLabel.isHidden = true
+        cell.wrongAnswerLabel.text = attempt?.answer.text
+
+        cell.wrongAnswerLabel.isHidden = attempt?.isCorrect ?? true
+        
         return cell
     }
 }

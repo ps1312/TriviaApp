@@ -30,6 +30,20 @@ class ResultsUIIntegrationTests: XCTestCase {
         XCTAssertEqual(cell0?.correctAnswerColor, UIColor.systemGreen, "Expected correct answer color to be .systemGreen")
     }
 
+    func test_answerAttempts_displaysWrongAnswerWithCorrectAnswerOnBottom() {
+        let (question, answers) = makeQuestion()
+        let wrongAnswer = answers[1]
+        let attempt = AnswerAttempt(question: question, answer: wrongAnswer, isCorrect: false)
+        let score = Score(points: 1, responses: [attempt])
+        let sut = makeSUT(score: score)
+
+        let cell0 = sut.simulateAttemptIsVisible(at: 0) as? ResultAnswerCell
+
+        XCTAssertEqual(cell0?.isDisplayingWrongAnswer, true, "Expected wrong answer in cell when attempt is wrong")
+        XCTAssertEqual(cell0?.wrongAnswerText, wrongAnswer.text, "Expected wrong answer text in cell")
+        XCTAssertEqual(cell0?.wrongAnswerColor, UIColor.systemRed, "Expected wrong answer color to be .systemRed")
+    }
+
     private func makeSUT(score: Score = Score(points: 0, responses: [])) -> ResultsViewController {
         let bundle = Bundle(for: ResultsViewController.self)
         let storyboard = UIStoryboard(name: "Results", bundle: bundle)
@@ -72,5 +86,13 @@ extension ResultAnswerCell {
 
     var correctAnswerColor: UIColor {
         correctAnswerLabel.textColor
+    }
+
+    var wrongAnswerText: String? {
+        wrongAnswerLabel.text
+    }
+
+    var wrongAnswerColor: UIColor {
+        wrongAnswerLabel.textColor
     }
 }
