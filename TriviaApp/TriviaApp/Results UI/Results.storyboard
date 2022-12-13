@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="a2W-rD-CDs">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Results-->
+        <scene sceneID="vrO-bx-K1K">
+            <objects>
+                <tableViewController id="mg9-dL-hLT" customClass="ResultsViewController" customModule="TriviaApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="yWD-A7-Mdt">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="YnC-0N-Hip">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your score: 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6L-dh-SZW" userLabel="Final Score Label">
+                                    <rect key="frame" x="120.66666666666669" y="13.333333333333332" width="152" height="33.666666666666671"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="W6L-dh-SZW" firstAttribute="centerX" secondItem="YnC-0N-Hip" secondAttribute="centerX" id="RHh-2y-akT"/>
+                                <constraint firstItem="W6L-dh-SZW" firstAttribute="centerY" secondItem="YnC-0N-Hip" secondAttribute="centerY" id="hnB-Wg-bqr"/>
+                            </constraints>
+                        </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="D1I-Rl-vUH">
+                            <rect key="frame" x="0.0" y="225" width="393" height="66"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pGd-jb-Bhn">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="66"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="Play Again"/>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="pGd-jb-Bhn" secondAttribute="trailing" id="XBV-5R-pCa"/>
+                                <constraint firstAttribute="bottom" secondItem="pGd-jb-Bhn" secondAttribute="bottom" id="Yd1-d2-tmZ"/>
+                                <constraint firstItem="pGd-jb-Bhn" firstAttribute="top" secondItem="D1I-Rl-vUH" secondAttribute="top" id="ZFe-WO-v5z"/>
+                                <constraint firstItem="pGd-jb-Bhn" firstAttribute="leading" secondItem="D1I-Rl-vUH" secondAttribute="leading" id="vp0-e4-zya"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResultAnswerCell" rowHeight="87" id="He0-Te-MsQ" customClass="ResultAnswerCell" customModule="TriviaApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="110" width="393" height="87"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="He0-Te-MsQ" id="Hld-Qz-XRl">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="87"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="BID-FT-OpJ">
+                                            <rect key="frame" x="25" y="16" width="343" height="55"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Incorrect answer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPW-8k-Kd4" userLabel="Wrong Answer Label">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="23.666666666666668"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" systemColor="systemRedColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Correct answer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CiG-Sp-hfy" userLabel="Correct Answer Label">
+                                                    <rect key="frame" x="0.0" y="31.666666666666664" width="343" height="23.333333333333336"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" systemColor="systemGreenColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="BID-FT-OpJ" firstAttribute="leading" secondItem="Hld-Qz-XRl" secondAttribute="leadingMargin" constant="5" id="4gC-eW-sbB"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="BID-FT-OpJ" secondAttribute="trailing" constant="5" id="DzK-xf-9VI"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="BID-FT-OpJ" secondAttribute="bottom" constant="5" id="GHQ-z3-0qs"/>
+                                        <constraint firstItem="BID-FT-OpJ" firstAttribute="top" secondItem="Hld-Qz-XRl" secondAttribute="topMargin" constant="5" id="z7d-TJ-jKV"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="correctAnswerLabel" destination="CiG-Sp-hfy" id="KER-AQ-ZOd"/>
+                                    <outlet property="wrongAnswerLabel" destination="OPW-8k-Kd4" id="Ddb-0N-hOm"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="mg9-dL-hLT" id="b3d-Do-DaH"/>
+                            <outlet property="delegate" destination="mg9-dL-hLT" id="dwi-5q-HiL"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Results" id="1FJ-4d-AH9"/>
+                    <connections>
+                        <outlet property="playAgainButton" destination="pGd-jb-Bhn" id="VKe-o4-N4t"/>
+                        <outlet property="totalScoreLabel" destination="W6L-dh-SZW" id="MQf-oy-5qG"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="INP-aM-fph" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="614.50381679389307" y="-48.591549295774648"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="akP-5j-zcO">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="a2W-rD-CDs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="dPu-MJ-E0R">
+                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="mg9-dL-hLT" kind="relationship" relationship="rootViewController" id="cjF-kk-x7h"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cCO-LJ-DdJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-312.21374045801525" y="-48.591549295774648"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
