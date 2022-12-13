@@ -84,8 +84,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="correctAnswerLabel" destination="OPW-8k-Kd4" id="ZWw-5o-JJN"/>
-                                    <outlet property="wrongAnswerLabel" destination="CiG-Sp-hfy" id="M24-yq-0j5"/>
+                                    <outlet property="correctAnswerLabel" destination="CiG-Sp-hfy" id="KER-AQ-ZOd"/>
+                                    <outlet property="wrongAnswerLabel" destination="OPW-8k-Kd4" id="Ddb-0N-hOm"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

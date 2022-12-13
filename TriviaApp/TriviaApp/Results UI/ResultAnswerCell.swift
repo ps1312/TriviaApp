@@ -1,6 +1,6 @@
 import UIKit
 
 final class ResultAnswerCell: UITableViewCell {
-    @IBOutlet private(set) var wrongAnswerLabel: UILabel!
-    @IBOutlet private(set) var correctAnswerLabel: UILabel!
+    @IBOutlet private(set) public var wrongAnswerLabel: UILabel!
+    @IBOutlet private(set) public var correctAnswerLabel: UILabel!
 }
