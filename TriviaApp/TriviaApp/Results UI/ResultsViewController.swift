@@ -3,14 +3,21 @@ import TriviaEngine
 
 final class ResultsViewController: UITableViewController {
     var score: Score?
+    var onRestart: (() -> Void)?
 
     @IBOutlet private(set) public var totalScoreLabel: UILabel!
+    @IBOutlet private(set) public var playAgainButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = "Results"
         totalScoreLabel.text = "Your score: \(score?.points ?? 0)"
+        playAgainButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+    }
+
+    @objc func tap() {
+        onRestart?()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

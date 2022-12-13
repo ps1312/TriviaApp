@@ -96,6 +96,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Results" id="1FJ-4d-AH9"/>
                     <connections>
+                        <outlet property="playAgainButton" destination="pGd-jb-Bhn" id="VKe-o4-N4t"/>
                         <outlet property="totalScoreLabel" destination="W6L-dh-SZW" id="MQf-oy-5qG"/>
                     </connections>
                 </tableViewController>

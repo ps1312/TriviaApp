@@ -47,12 +47,24 @@ class ResultsUIIntegrationTests: XCTestCase {
         XCTAssertEqual(cell0?.correctAnswerText, correctAnswer.text, "Expected correct answer text in cell")
     }
 
-    private func makeSUT(score: Score = Score(points: 0, responses: [])) -> ResultsViewController {
+    func test_playAgain_notifiesHandler() {
+        var callCount = 0
+        let sut = makeSUT(onRestart: {
+            callCount += 1
+        })
+
+        sut.simulateTapOnPlayAgain()
+
+        XCTAssertEqual(callCount, 1)
+    }
+
+    private func makeSUT(score: Score = Score(points: 0, responses: []), onRestart: @escaping () -> Void = {}) -> ResultsViewController {
         let bundle = Bundle(for: ResultsViewController.self)
         let storyboard = UIStoryboard(name: "Results", bundle: bundle)
         let navController = storyboard.instantiateInitialViewController() as! UINavigationController
         let sut = navController.topViewController as! ResultsViewController
         sut.score = score
+        sut.onRestart = onRestart
         sut.loadViewIfNeeded()
 
         return sut
@@ -75,6 +87,14 @@ extension ResultsViewController {
     func simulateAttemptIsVisible(at row: Int) -> UITableViewCell? {
         let indexPath = IndexPath(row: row, section: 0)
         return tableView.dataSource?.tableView(tableView, cellForRowAt: indexPath)
+    }
+
+    func simulateTapOnPlayAgain() {
+        playAgainButton.allTargets.forEach { target in
+            playAgainButton.actions(forTarget: target, forControlEvent: .touchUpInside)?.forEach {
+                (target as NSObject).perform(Selector($0))
+            }
+        }
     }
 }
 
