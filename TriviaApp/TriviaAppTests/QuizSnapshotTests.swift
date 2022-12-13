@@ -10,6 +10,15 @@ class QuizSnapshotTests: XCTestCase {
         assert(snapshot: sut.snapshot(.iPhone13(style: .dark)), named: "QUESTIONS_LOAD_ERROR_dark")
     }
 
+    func test_loadQuestionSuccess() {
+        let (question, _) = makeQuestion(title: "Any\nmultiline\nquestion")
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithSuccess(question: question)
+
+        assert(snapshot: sut.snapshot(.iPhone13(style: .light)), named: "QUESTIONS_LOAD_SUCCESS_dark")
+        assert(snapshot: sut.snapshot(.iPhone13(style: .dark)), named: "QUESTIONS_LOAD_SUCCESS_light")
+    }
+
     private func makeSUT(onFinish: @escaping () -> Void = {}) -> (UINavigationController, ExaminerSpy) {
         let bundle = Bundle(for: QuizViewController.self)
         let storyboard = UIStoryboard(name: "Quiz", bundle: bundle)
@@ -18,7 +27,7 @@ class QuizSnapshotTests: XCTestCase {
         let spy = ExaminerSpy()
         viewController.examiner = spy
         viewController.onFinish = onFinish
-        viewController.loadViewIfNeeded()
+        sut.loadViewIfNeeded()
 
         return (sut, spy)
     }

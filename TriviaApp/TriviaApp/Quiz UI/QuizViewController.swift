@@ -14,6 +14,7 @@ public final class QuizViewController: UITableViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         startGame()
+        sizeTableHeaderToFit()
     }
 
     @objc func startGame() {
@@ -25,6 +26,7 @@ public final class QuizViewController: UITableViewController {
 
             updateToolbar(title: "Submit", isEnabled: false)
         } catch {
+            print(error)
             questionTitleLabel.text = "Something went wrong loading the questions, please try again."
             updateToolbar(title: "Retry", action: #selector(startGame))
         }
