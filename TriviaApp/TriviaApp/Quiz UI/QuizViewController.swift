@@ -25,6 +25,7 @@ public final class QuizViewController: UITableViewController {
 
             updateToolbar(title: "Submit", isEnabled: false)
         } catch {
+            questionTitleLabel.text = "Something went wrong loading the questions, please try again."
             updateToolbar(title: "Retry", action: #selector(startGame))
         }
     }
