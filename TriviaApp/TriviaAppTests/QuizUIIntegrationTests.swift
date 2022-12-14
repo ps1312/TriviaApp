@@ -1,6 +1,6 @@
 import XCTest
-import TriviaApp
 import TriviaEngine
+@testable import TriviaApp
 
 class QuizUIIntegrationTests: XCTestCase {
     func test_viewDidLoad_requestsExaminerForStart() {
