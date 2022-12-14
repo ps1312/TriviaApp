@@ -15,8 +15,8 @@ class QuizSnapshotTests: XCTestCase {
         let (navController, _, spy) = makeSUT()
         spy.completeLoadWithSuccess(question: question)
 
-        assert(snapshot: navController.snapshot(.iPhone13(style: .light)), named: "QUESTIONS_LOAD_SUCCESS_dark")
-        assert(snapshot: navController.snapshot(.iPhone13(style: .dark)), named: "QUESTIONS_LOAD_SUCCESS_light")
+        assert(snapshot: navController.snapshot(.iPhone13(style: .light)), named: "QUESTIONS_LOAD_SUCCESS_light")
+        assert(snapshot: navController.snapshot(.iPhone13(style: .dark)), named: "QUESTIONS_LOAD_SUCCESS_dark")
     }
 
     func test_answerSelected() {
@@ -25,8 +25,8 @@ class QuizSnapshotTests: XCTestCase {
         spy.completeLoadWithSuccess(question: question)
         viewController.simulateOptionIsSelected(at: 0)
 
-        assert(snapshot: navController.snapshot(.iPhone13(style: .light)), named: "ANSWER_SELECTED_dark")
-        assert(snapshot: navController.snapshot(.iPhone13(style: .dark)), named: "ANSWER_SELECTED_light")
+        assert(snapshot: navController.snapshot(.iPhone13(style: .light)), named: "ANSWER_SELECTED_light")
+        assert(snapshot: navController.snapshot(.iPhone13(style: .dark)), named: "ANSWER_SELECTED_dark")
     }
 
     private func makeSUT(onFinish: @escaping () -> Void = {}) -> (UINavigationController, QuizViewController, ExaminerSpy) {
