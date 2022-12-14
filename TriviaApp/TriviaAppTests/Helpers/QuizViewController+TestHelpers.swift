@@ -12,8 +12,16 @@ extension QuizViewController {
         return submitButton.title == "Submit"
     }
 
+    var isDisplayingQuestionsNumber: Bool {
+        !questionNumberLabel.isHidden
+    }
+
     var questionTitle: String? {
         questionTitleLabel.text
+    }
+
+    var questionNumberText: String? {
+        questionNumberLabel.text
     }
 
     var canSubmit: Bool {

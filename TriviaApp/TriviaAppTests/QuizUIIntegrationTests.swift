@@ -10,19 +10,54 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertEqual(spy.startCallCount, 1)
     }
 
-    func test_retryButton_isDisplayedOnFailure() {
+    func test_loadingError_displaysRetryButtonAndMessage() {
         let (question, _) = makeQuestion()
         let (sut, spy) = makeSUT()
         
         spy.completeLoadWithError()
         sut.loadViewIfNeeded()
         XCTAssertTrue(sut.isShowingStartRetry, "Expected retry button after questions loading has failed on start")
+        XCTAssertEqual(sut.questionTitle, "Something went wrong loading the questions, please try again.")
 
         spy.completeLoadWithSuccess(question: question)
         sut.simulateTapOnRetry()
         XCTAssertEqual(spy.startCallCount, 2, "Expected another start after user requests retry")
         XCTAssertFalse(sut.isShowingStartRetry, "Expected no retry button after questions loading succeeds")
         XCTAssertTrue(sut.isShowingSubmit, "Expected to show submit after user retries with success")
+        XCTAssertEqual(sut.questionTitle, question.title)
+    }
+
+    func test_questionNumber_isDisplayedOnceQuestionsLoad() {
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithError()
+        sut.loadViewIfNeeded()
+
+        XCTAssertFalse(sut.isDisplayingQuestionsNumber, "Expect no question number label when questions loading fails")
+
+        let (question1, _) = makeQuestion()
+        spy.completeLoadWithSuccess(question: question1)
+        sut.simulateTapOnRetry()
+
+        XCTAssertTrue(sut.isDisplayingQuestionsNumber)
+        XCTAssertEqual(sut.questionNumberText, "Question 1")
+
+        let (question2, _) = makeQuestion()
+        spy.completeRespondWith(question: question2)
+        _ = sut.simulateOptionIsVisible(at: 0)
+        sut.simulateOptionIsSelected(at: 0)
+        sut.simulateTapOnSubmit()
+
+        XCTAssertTrue(sut.isDisplayingQuestionsNumber)
+        XCTAssertEqual(sut.questionNumberText, "Question 2")
+
+        let (question3, _) = makeQuestion()
+        spy.completeRespondWith(question: question3)
+        _ = sut.simulateOptionIsVisible(at: 1)
+        sut.simulateOptionIsSelected(at: 1)
+        sut.simulateTapOnSubmit()
+
+        XCTAssertTrue(sut.isDisplayingQuestionsNumber)
+        XCTAssertEqual(sut.questionNumberText, "Question 3")
     }
 
     func test_viewDidLoad_displaysFirstQuestionAndAnswers() {

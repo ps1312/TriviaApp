@@ -50,6 +50,17 @@
                ReferencedContainer = "container:TriviaEngine/TriviaEngine.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3A2D57922948FAEE00151E67"
+               BuildableName = "TriviaAppSnapshotTests.xctest"
+               BlueprintName = "TriviaAppSnapshotTests"
+               ReferencedContainer = "container:TriviaApp/TriviaApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
