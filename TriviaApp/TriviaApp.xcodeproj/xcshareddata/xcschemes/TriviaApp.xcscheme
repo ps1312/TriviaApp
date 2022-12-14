@@ -39,17 +39,6 @@
                ReferencedContainer = "container:TriviaApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3A2D57922948FAEE00151E67"
-               BuildableName = "TriviaAppSnapshotTests.xctest"
-               BlueprintName = "TriviaAppSnapshotTests"
-               ReferencedContainer = "container:TriviaApp.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

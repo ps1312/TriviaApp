@@ -27,6 +27,39 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertEqual(sut.questionTitle, question.title)
     }
 
+    func test_questionNumber_isDisplayedOnceQuestionsLoad() {
+        let (sut, spy) = makeSUT()
+        spy.completeLoadWithError()
+        sut.loadViewIfNeeded()
+
+        XCTAssertFalse(sut.isDisplayingQuestionsNumber, "Expect no question number label when questions loading fails")
+
+        let (question1, _) = makeQuestion()
+        spy.completeLoadWithSuccess(question: question1)
+        sut.simulateTapOnRetry()
+
+        XCTAssertTrue(sut.isDisplayingQuestionsNumber)
+        XCTAssertEqual(sut.questionNumberText, "Question 1")
+
+        let (question2, _) = makeQuestion()
+        spy.completeRespondWith(question: question2)
+        _ = sut.simulateOptionIsVisible(at: 0)
+        sut.simulateOptionIsSelected(at: 0)
+        sut.simulateTapOnSubmit()
+
+        XCTAssertTrue(sut.isDisplayingQuestionsNumber)
+        XCTAssertEqual(sut.questionNumberText, "Question 2")
+
+        let (question3, _) = makeQuestion()
+        spy.completeRespondWith(question: question3)
+        _ = sut.simulateOptionIsVisible(at: 1)
+        sut.simulateOptionIsSelected(at: 1)
+        sut.simulateTapOnSubmit()
+
+        XCTAssertTrue(sut.isDisplayingQuestionsNumber)
+        XCTAssertEqual(sut.questionNumberText, "Question 3")
+    }
+
     func test_viewDidLoad_displaysFirstQuestionAndAnswers() {
         let (question, answers) = makeQuestion()
         let firstAnswer = answers[0]

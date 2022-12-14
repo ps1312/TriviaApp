@@ -3,6 +3,7 @@ import TriviaEngine
 
 public final class QuizViewController: UITableViewController {
     @IBOutlet private(set) public var questionTitleLabel: UILabel!
+    @IBOutlet private(set) public var questionNumberLabel: UILabel!
 
     private var question: Question?
     private var answer: Answer?
@@ -11,9 +12,12 @@ public final class QuizViewController: UITableViewController {
     public var examiner: ExaminerDelegate?
     public var onFinish: (() -> Void)?
 
+    var questionNumber = 1
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         startGame()
+        questionNumberLabel.isHidden = true
     }
 
     @objc func startGame() {
@@ -25,6 +29,8 @@ public final class QuizViewController: UITableViewController {
 
             updateToolbar(title: "Submit", isEnabled: false)
             sizeTableHeaderToFit()
+            questionNumberLabel.isHidden = false
+            questionNumberLabel.text = "Question \(questionNumber)"
         } catch {
             questionTitleLabel.text = "Something went wrong loading the questions, please try again."
             updateToolbar(title: "Retry", action: #selector(startGame))
@@ -49,6 +55,8 @@ public final class QuizViewController: UITableViewController {
         options = question.answers
         questionTitleLabel.text = question.title
         answer = nil
+        questionNumber += 1
+        questionNumberLabel.text = "Question \(questionNumber)"
         tableView.reloadData()
     }
 

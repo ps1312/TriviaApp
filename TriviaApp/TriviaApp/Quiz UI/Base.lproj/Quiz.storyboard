@@ -19,19 +19,30 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is true in two lines two lines two lines two lines two lines?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZ2-ky-7l4">
-                                    <rect key="frame" x="18" y="0.0" width="357" height="62"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="CGN-7t-87F">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question 1 of X" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRv-8V-RzA" userLabel="Question Number Label">
+                                            <rect key="frame" x="144.33333333333334" y="0.0" width="104.33333333333334" height="22"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is true in two lines two lines two lines two lines two lines?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZ2-ky-7l4">
+                                            <rect key="frame" x="17.333333333333343" y="31" width="358.33333333333326" height="69"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="SZ2-ky-7l4" secondAttribute="bottom" constant="38" id="7mH-28-Ywh"/>
-                                <constraint firstAttribute="trailing" secondItem="SZ2-ky-7l4" secondAttribute="trailing" constant="18" id="Mil-iC-wZy"/>
-                                <constraint firstItem="SZ2-ky-7l4" firstAttribute="top" secondItem="MRX-lV-fsE" secondAttribute="top" id="fV3-MY-uIp"/>
-                                <constraint firstItem="SZ2-ky-7l4" firstAttribute="leading" secondItem="MRX-lV-fsE" secondAttribute="leading" constant="18" id="o0Q-Uc-Kcz"/>
+                                <constraint firstAttribute="bottom" secondItem="CGN-7t-87F" secondAttribute="bottom" id="TiH-HV-fZB"/>
+                                <constraint firstAttribute="trailing" secondItem="CGN-7t-87F" secondAttribute="trailing" id="Z8p-oG-QOs"/>
+                                <constraint firstItem="CGN-7t-87F" firstAttribute="top" secondItem="MRX-lV-fsE" secondAttribute="top" id="oUD-Ve-2Sk"/>
+                                <constraint firstItem="CGN-7t-87F" firstAttribute="leading" secondItem="MRX-lV-fsE" secondAttribute="leading" id="veC-m0-2Qp"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -61,6 +72,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="mmO-96-D2f"/>
                     <connections>
+                        <outlet property="questionNumberLabel" destination="DRv-8V-RzA" id="Mja-nk-x2O"/>
                         <outlet property="questionTitleLabel" destination="SZ2-ky-7l4" id="GCt-gq-ZFb"/>
                     </connections>
                 </tableViewController>
