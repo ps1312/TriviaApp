@@ -1,4 +1,5 @@
 import Foundation
+import XCTest
 import TriviaEngine
 
 func makeQuestion(title: String = "any title", answers: [Answer]? = nil) -> (Question, [Answer]) {
@@ -7,4 +8,12 @@ func makeQuestion(title: String = "any title", answers: [Answer]? = nil) -> (Que
     let question = Question(id: UUID(), title: title, answers: answers ?? [correctAnswer, wrongAnswer], correctIndex: 0)
 
     return (question, answers ?? [correctAnswer, wrongAnswer])
+}
+
+extension XCTestCase {
+    func testMemoryLeak(_ instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Expected instance to be nil after SUT has been deallocated", file: file, line: line)
+        }
+    }
 }

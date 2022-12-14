@@ -58,7 +58,7 @@ class ResultsUIIntegrationTests: XCTestCase {
         XCTAssertEqual(callCount, 1)
     }
 
-    private func makeSUT(score: Score = Score(points: 0, responses: []), onRestart: @escaping () -> Void = {}) -> ResultsViewController {
+    private func makeSUT(score: Score = Score(points: 0, responses: []), onRestart: @escaping () -> Void = {}, file: StaticString = #filePath, line: UInt = #line) -> ResultsViewController {
         let bundle = Bundle(for: ResultsViewController.self)
         let storyboard = UIStoryboard(name: "Results", bundle: bundle)
         let navController = storyboard.instantiateInitialViewController() as! UINavigationController
@@ -66,6 +66,8 @@ class ResultsUIIntegrationTests: XCTestCase {
         sut.score = score
         sut.onRestart = onRestart
         sut.loadViewIfNeeded()
+
+        testMemoryLeak(sut, file: file, line: line)
 
         return sut
     }
