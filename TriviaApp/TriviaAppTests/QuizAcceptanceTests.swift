@@ -22,6 +22,19 @@ class QuizAcceptanceTests: XCTestCase {
         expect(lastOption, toHaveTitle: "São Paulo", isSelected: false)
     }
 
+    func test_quiz_displaysResultsAfterLastQuestionWithAllCorrectAnswers() {
+        let sut = makeSUT()
+        sut.loadViewIfNeeded()
+
+        selectAnswer(in: sut, at: 2)
+        selectAnswer(in: sut, at: 2)
+
+        let results = try? XCTUnwrap(sut.navigationController?.topViewController as? ResultsViewController)
+        results?.loadViewIfNeeded()
+        XCTAssertEqual(results?.totalScore, "Your score: 2", "Expected full score after finishing with all correct answers")
+        XCTAssertEqual(results?.numberOfAttempts, 2)
+    }
+
     private func makeSUT() -> QuizViewController {
         let sceneDelegate = SceneDelegate()
         sceneDelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
@@ -29,9 +42,15 @@ class QuizAcceptanceTests: XCTestCase {
 
         let navController = sceneDelegate.window?.rootViewController as! UINavigationController
         let sut = navController.topViewController as! QuizViewController
-        sut.examiner = Examiner(questionsLoader: InMemoryQuestionsLoader())
 
         return sut
+    }
+
+    private func selectAnswer(in sut: QuizViewController, at index: Int) {
+        _ = sut.simulateOptionIsVisible(at: index)
+        sut.simulateOptionIsSelected(at: index)
+        sut.simulateTapOnSubmit()
+        RunLoop.current.run(until: Date())
     }
 
     private func expect(_ cell: UITableViewCell?, toHaveTitle title: String? = nil, isSelected: Bool) {

@@ -6,6 +6,10 @@ extension ResultsViewController {
         return totalScoreLabel.text
     }
 
+    var numberOfAttempts: Int? {
+        tableView.dataSource?.tableView(tableView, numberOfRowsInSection: 0)
+    }
+
     func simulateAttemptIsVisible(at row: Int) -> UITableViewCell? {
         let indexPath = IndexPath(row: row, section: 0)
         return tableView.dataSource?.tableView(tableView, cellForRowAt: indexPath)

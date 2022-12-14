@@ -17,7 +17,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let storyboard = UIStoryboard(name: "Quiz", bundle: bundle)
         let navController = storyboard.instantiateInitialViewController() as! UINavigationController
         let quizViewController = navController.topViewController as! QuizViewController
-        quizViewController.examiner = Examiner(questionsLoader: InMemoryQuestionsLoader())
+        let examiner = Examiner(questionsLoader: InMemoryQuestionsLoader())
+        quizViewController.examiner = examiner
+        quizViewController.onFinish = {
+            let bundle2 = Bundle(for: ResultsViewController.self)
+            let storyboard2 = UIStoryboard(name: "Results", bundle: bundle2)
+            let navController2 = storyboard2.instantiateInitialViewController() as! UINavigationController
+            let resultsViewController = navController2.topViewController as! ResultsViewController
+            resultsViewController.score = examiner.evaluate()
+            navController.pushViewController(resultsViewController, animated: true)
+        }
 
         window?.rootViewController = navController
         window?.makeKeyAndVisible()
