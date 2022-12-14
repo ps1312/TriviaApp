@@ -11,7 +11,7 @@ class QuizSnapshotTests: XCTestCase {
     }
 
     func test_loadQuestionSuccess() {
-        let (question, _) = makeQuestion(title: "Any\nmultiline\nquestion")
+        let (question, _) = makeQuestion(title: "Any any any\nmultiline multiline multine\nquestion question question")
         let (navController, _, spy) = makeSUT()
         spy.completeLoadWithSuccess(question: question)
 
@@ -20,7 +20,7 @@ class QuizSnapshotTests: XCTestCase {
     }
 
     func test_answerSelected() {
-        let (question, _) = makeQuestion(title: "Any\nmultiline\nquestion")
+        let (question, _) = makeQuestion(title: "Any any any\nmultiline multiline multine\nquestion question question")
         let (navController, viewController, spy) = makeSUT()
         spy.completeLoadWithSuccess(question: question)
         viewController.simulateOptionIsSelected(at: 0)

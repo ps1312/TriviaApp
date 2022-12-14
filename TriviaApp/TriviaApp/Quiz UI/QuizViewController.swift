@@ -17,10 +17,16 @@ public final class QuizViewController: UITableViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         startGame()
-        questionNumberLabel.isHidden = true
+    }
+
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        sizeTableHeaderToFit()
     }
 
     @objc func startGame() {
+        questionNumberLabel.isHidden = true
+
         do {
             guard let question = try examiner?.start() else { return }
             self.question = question
@@ -28,7 +34,6 @@ public final class QuizViewController: UITableViewController {
             options = question.answers
 
             updateToolbar(title: "Submit", isEnabled: false)
-            sizeTableHeaderToFit()
             questionNumberLabel.isHidden = false
             questionNumberLabel.text = "Question \(questionNumber)"
         } catch {

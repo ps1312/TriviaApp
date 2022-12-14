@@ -11,35 +11,38 @@
         <scene sceneID="l7Q-ZO-bOt">
             <objects>
                 <tableViewController id="Ybx-i0-aJ8" customClass="QuizViewController" customModule="TriviaApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Swt-bi-p7R">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="60" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Swt-bi-p7R">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="MRX-lV-fsE">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="CGN-7t-87F">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="CGN-7t-87F">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="110"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question 1 of X" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRv-8V-RzA" userLabel="Question Number Label">
-                                            <rect key="frame" x="144.33333333333334" y="0.0" width="104.33333333333334" height="22"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question X" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRv-8V-RzA" userLabel="Question Number Label">
+                                            <rect key="frame" x="152.66666666666666" y="0.0" width="87.666666666666657" height="20.333333333333332"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is true in two lines two lines two lines two lines two lines?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZ2-ky-7l4">
-                                            <rect key="frame" x="17.333333333333343" y="31" width="358.33333333333326" height="69"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="What is true in two lines two lines two lines two lines two lines?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZ2-ky-7l4">
+                                            <rect key="frame" x="17.333333333333343" y="25.333333333333336" width="358.33333333333326" height="84.666666666666657"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="SZ2-ky-7l4" firstAttribute="centerX" secondItem="CGN-7t-87F" secondAttribute="centerX" id="C0u-cd-88X"/>
+                                    </constraints>
                                 </stackView>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="CGN-7t-87F" secondAttribute="bottom" id="TiH-HV-fZB"/>
+                                <constraint firstAttribute="bottom" secondItem="CGN-7t-87F" secondAttribute="bottom" constant="40" id="TiH-HV-fZB"/>
                                 <constraint firstAttribute="trailing" secondItem="CGN-7t-87F" secondAttribute="trailing" id="Z8p-oG-QOs"/>
                                 <constraint firstItem="CGN-7t-87F" firstAttribute="top" secondItem="MRX-lV-fsE" secondAttribute="top" id="oUD-Ve-2Sk"/>
                                 <constraint firstItem="CGN-7t-87F" firstAttribute="leading" secondItem="MRX-lV-fsE" secondAttribute="leading" id="veC-m0-2Qp"/>
@@ -47,7 +50,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OptionCell" textLabel="f2H-dF-NcO" rowHeight="75" style="IBUITableViewCellStyleDefault" id="Mbo-ML-gMr">
-                                <rect key="frame" x="0.0" y="150" width="393" height="75"/>
+                                <rect key="frame" x="0.0" y="200" width="393" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Mbo-ML-gMr" id="1Fe-p3-gUm">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="75"/>
