@@ -5,6 +5,8 @@ class InMemoryQuestionsLoaderTests: XCTestCase {
     func test_load_deliversDefaultTriviaQuestions() {
         let sut = InMemoryQuestionsLoader()
 
+        testMemoryLeak(sut)
+
         let questions = try! sut.load()
         XCTAssertEqual(questions.count, 2)
         XCTAssertEqual(questions[0].title, "What is the capital of Brazil?")
