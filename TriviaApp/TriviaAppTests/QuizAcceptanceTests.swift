@@ -4,28 +4,34 @@ import TriviaEngine
 
 class QuizAcceptanceTests: XCTestCase {
     func test_quiz_displaysFirstQuestionAndAnswers() {
+        let sut = makeSUT()
+        sut.loadViewIfNeeded()
+
+        XCTAssertEqual(sut.questionTitleLabel.text, "What is the capital of Brazil?")
+
+        let firstOption = sut.simulateOptionIsVisible(at: 0)
+        expect(firstOption, toHaveTitle: "Pernambuco", isSelected: false)
+
+        let secondOption = sut.simulateOptionIsVisible(at: 1)
+        expect(secondOption, toHaveTitle: "Rio de Janeiro", isSelected: false)
+
+        let thirdOption = sut.simulateOptionIsVisible(at: 2)
+        expect(thirdOption, toHaveTitle: "Brasília", isSelected: false)
+
+        let lastOption = sut.simulateOptionIsVisible(at: 3)
+        expect(lastOption, toHaveTitle: "São Paulo", isSelected: false)
+    }
+
+    private func makeSUT() -> QuizViewController {
         let sceneDelegate = SceneDelegate()
         sceneDelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         sceneDelegate.configureView()
 
-        let navController = sceneDelegate.window?.rootViewController as? UINavigationController
-        let sut = navController?.topViewController as? QuizViewController
-        sut?.examiner = Examiner(questionsLoader: InMemoryQuestionsLoader())
-        sut?.loadViewIfNeeded()
+        let navController = sceneDelegate.window?.rootViewController as! UINavigationController
+        let sut = navController.topViewController as! QuizViewController
+        sut.examiner = Examiner(questionsLoader: InMemoryQuestionsLoader())
 
-        XCTAssertEqual(sut?.questionTitleLabel.text, "What is the capital of Brazil?")
-
-        let firstOption = sut?.simulateOptionIsVisible(at: 0)
-        expect(firstOption, toHaveTitle: "Pernambuco", isSelected: false)
-
-        let secondOption = sut?.simulateOptionIsVisible(at: 1)
-        expect(secondOption, toHaveTitle: "Rio de Janeiro", isSelected: false)
-
-        let thirdOption = sut?.simulateOptionIsVisible(at: 2)
-        expect(thirdOption, toHaveTitle: "Brasília", isSelected: false)
-
-        let lastOption = sut?.simulateOptionIsVisible(at: 3)
-        expect(lastOption, toHaveTitle: "São Paulo", isSelected: false)
+        return sut
     }
 
     private func expect(_ cell: UITableViewCell?, toHaveTitle title: String? = nil, isSelected: Bool) {
