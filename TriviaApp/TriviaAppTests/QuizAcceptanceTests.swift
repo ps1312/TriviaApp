@@ -37,6 +37,30 @@ class QuizAcceptanceTests: XCTestCase {
         XCTAssertEqual(results?.numberOfAttempts, 2)
     }
 
+    func test_playAgain_restartsGame() {
+        let sceneDelegate = SceneDelegate()
+        sceneDelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        sceneDelegate.configureView()
+
+        var nav = sceneDelegate.window?.rootViewController as! UINavigationController
+        let sut = nav.topViewController as! QuizViewController
+        sut.loadViewIfNeeded()
+
+        selectAnswer(in: sut, at: 2)
+        selectAnswer(in: sut, at: 2)
+
+        let results = try? XCTUnwrap(nav.topViewController as? ResultsViewController)
+        results?.loadViewIfNeeded()
+
+        results?.simulateTapOnPlayAgain()
+
+        nav = sceneDelegate.window?.rootViewController as! UINavigationController
+        let currentView = try? XCTUnwrap(nav.topViewController as? QuizViewController)
+        currentView?.loadViewIfNeeded()
+
+        XCTAssertEqual(currentView?.questionTitleLabel.text, "What is the capital of Brazil?")
+    }
+
     private func makeSUT() -> UINavigationController {
         let sceneDelegate = SceneDelegate()
         sceneDelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
