@@ -4,7 +4,8 @@ import TriviaEngine
 
 class QuizAcceptanceTests: XCTestCase {
     func test_quiz_displaysFirstQuestionAndAnswers() {
-        let sut = makeSUT()
+        let nav = makeSUT()
+        let sut = nav.topViewController as! QuizViewController
         sut.loadViewIfNeeded()
 
         XCTAssertEqual(sut.questionTitleLabel.text, "What is the capital of Brazil?")
@@ -23,27 +24,27 @@ class QuizAcceptanceTests: XCTestCase {
     }
 
     func test_quiz_displaysResultsAfterLastQuestionWithAllCorrectAnswers() {
-        let sut = makeSUT()
+        let nav = makeSUT()
+        let sut = nav.topViewController as! QuizViewController
         sut.loadViewIfNeeded()
 
         selectAnswer(in: sut, at: 2)
         selectAnswer(in: sut, at: 2)
 
-        let results = try? XCTUnwrap(sut.navigationController?.topViewController as? ResultsViewController)
+        let results = try? XCTUnwrap(nav.topViewController as? ResultsViewController)
         results?.loadViewIfNeeded()
         XCTAssertEqual(results?.totalScore, "Your score: 2", "Expected full score after finishing with all correct answers")
         XCTAssertEqual(results?.numberOfAttempts, 2)
     }
 
-    private func makeSUT() -> QuizViewController {
+    private func makeSUT() -> UINavigationController {
         let sceneDelegate = SceneDelegate()
         sceneDelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         sceneDelegate.configureView()
 
-        let navController = sceneDelegate.window?.rootViewController as! UINavigationController
-        let sut = navController.topViewController as! QuizViewController
+        let nav = sceneDelegate.window?.rootViewController as! UINavigationController
 
-        return sut
+        return nav
     }
 
     private func selectAnswer(in sut: QuizViewController, at index: Int) {

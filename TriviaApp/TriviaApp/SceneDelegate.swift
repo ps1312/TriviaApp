@@ -25,7 +25,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let navController2 = storyboard2.instantiateInitialViewController() as! UINavigationController
             let resultsViewController = navController2.topViewController as! ResultsViewController
             resultsViewController.score = examiner.evaluate()
-            navController.pushViewController(resultsViewController, animated: true)
+
+            navController.viewControllers = [resultsViewController]
         }
 
         window?.rootViewController = navController
