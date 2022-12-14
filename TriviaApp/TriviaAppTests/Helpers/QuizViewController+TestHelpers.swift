@@ -1,5 +1,5 @@
 import UIKit
-import TriviaApp
+@testable import TriviaApp
 
 extension QuizViewController {
     var isShowingStartRetry: Bool {

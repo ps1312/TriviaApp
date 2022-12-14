@@ -100,9 +100,12 @@ class ExaminerTests: XCTestCase {
         XCTAssertEqual(score, expectedScore)
     }
 
-    private func makeSUT() -> (Examiner, QuestionsLoaderSpy) {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (Examiner, QuestionsLoaderSpy) {
         let spy = QuestionsLoaderSpy()
         let sut = Examiner(questionsLoader: spy)
+
+        testMemoryLeak(spy, file: file, line: line)
+        testMemoryLeak(sut, file: file, line: line)
 
         return (sut, spy)
     }

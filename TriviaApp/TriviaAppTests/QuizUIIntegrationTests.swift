@@ -1,6 +1,6 @@
 import XCTest
-import TriviaApp
 import TriviaEngine
+@testable import TriviaApp
 
 class QuizUIIntegrationTests: XCTestCase {
     func test_viewDidLoad_requestsExaminerForStart() {
@@ -161,7 +161,7 @@ class QuizUIIntegrationTests: XCTestCase {
         XCTAssertEqual(handlerCallCount, 1)
     }
 
-    private func makeSUT(onFinish: @escaping () -> Void = {}) -> (QuizViewController, ExaminerSpy) {
+    private func makeSUT(onFinish: @escaping () -> Void = {}, file: StaticString = #filePath, line: UInt = #line) -> (QuizViewController, ExaminerSpy) {
         let bundle = Bundle(for: QuizViewController.self)
         let storyboard = UIStoryboard(name: "Quiz", bundle: bundle)
         let navController = storyboard.instantiateInitialViewController() as! UINavigationController
@@ -169,6 +169,9 @@ class QuizUIIntegrationTests: XCTestCase {
         let spy = ExaminerSpy()
         sut.examiner = spy
         sut.onFinish = onFinish
+
+        testMemoryLeak(sut, file: file, line: line)
+        testMemoryLeak(spy, file: file, line: line)
 
         return (sut, spy)
     }

@@ -3,8 +3,7 @@ import TriviaEngine
 
 class ExaminerWithInMemoryQuestionsLoaderTests: XCTestCase {
     func test_examinerWithInMemoryQuestionsLoader_deliversZeroScoreWhenRespondingWithWrongAnswers() throws {
-        let inMemoryQuestionsLoader = InMemoryQuestionsLoader()
-        let examiner = Examiner(questionsLoader: inMemoryQuestionsLoader)
+        let examiner = makeSUT()
 
         let firstQuestion = try examiner.start()
         let secondQuestion = examiner.respond(firstQuestion, with: firstQuestion.answers[0])!
@@ -18,8 +17,7 @@ class ExaminerWithInMemoryQuestionsLoaderTests: XCTestCase {
     }
 
     func test_examinerWithInMemoryQuestionsLoader_deliversFinalScoreScoreWhenRespondingWithOneRightAnswer() throws {
-        let inMemoryQuestionsLoader = InMemoryQuestionsLoader()
-        let examiner = Examiner(questionsLoader: inMemoryQuestionsLoader)
+        let examiner = makeSUT()
 
         let firstQuestion = try examiner.start()
         let secondQuestion = examiner.respond(firstQuestion, with: firstQuestion.answers[0])!
@@ -33,8 +31,7 @@ class ExaminerWithInMemoryQuestionsLoaderTests: XCTestCase {
     }
 
     func test_examinerWithInMemoryQuestionsLoader_deliversFullScoreWhenRespondingWithCorrectAnswers() throws {
-        let inMemoryQuestionsLoader = InMemoryQuestionsLoader()
-        let examiner = Examiner(questionsLoader: inMemoryQuestionsLoader)
+        let examiner = makeSUT()
 
         let firstQuestion = try examiner.start()
         let secondQuestion = examiner.respond(firstQuestion, with: firstQuestion.answers[2])!
@@ -45,5 +42,15 @@ class ExaminerWithInMemoryQuestionsLoaderTests: XCTestCase {
         XCTAssertEqual(score.points, 2)
         XCTAssertEqual(score.responses.first?.isCorrect, true)
         XCTAssertEqual(score.responses.last?.isCorrect, true)
+    }
+
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> Examiner {
+        let inMemoryQuestionsLoader = InMemoryQuestionsLoader()
+        let examiner = Examiner(questionsLoader: inMemoryQuestionsLoader)
+
+        testMemoryLeak(inMemoryQuestionsLoader, file: file, line: line)
+        testMemoryLeak(examiner, file: file, line: line)
+
+        return examiner
     }
 }

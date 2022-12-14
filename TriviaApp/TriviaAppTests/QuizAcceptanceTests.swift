@@ -4,28 +4,78 @@ import TriviaEngine
 
 class QuizAcceptanceTests: XCTestCase {
     func test_quiz_displaysFirstQuestionAndAnswers() {
+        let nav = makeSUT()
+        let sut = nav.topViewController as! QuizViewController
+        sut.loadViewIfNeeded()
+
+        XCTAssertEqual(sut.questionTitleLabel.text, "What is the capital of Brazil?")
+
+        let firstOption = sut.simulateOptionIsVisible(at: 0)
+        expect(firstOption, toHaveTitle: "Pernambuco", isSelected: false)
+
+        let secondOption = sut.simulateOptionIsVisible(at: 1)
+        expect(secondOption, toHaveTitle: "Rio de Janeiro", isSelected: false)
+
+        let thirdOption = sut.simulateOptionIsVisible(at: 2)
+        expect(thirdOption, toHaveTitle: "Brasília", isSelected: false)
+
+        let lastOption = sut.simulateOptionIsVisible(at: 3)
+        expect(lastOption, toHaveTitle: "São Paulo", isSelected: false)
+    }
+
+    func test_quiz_displaysResultsAfterLastQuestionWithAllCorrectAnswers() {
+        let nav = makeSUT()
+        let sut = nav.topViewController as! QuizViewController
+        sut.loadViewIfNeeded()
+
+        selectAnswer(in: sut, at: 2)
+        selectAnswer(in: sut, at: 2)
+
+        let results = try? XCTUnwrap(nav.topViewController as? ResultsViewController)
+        results?.loadViewIfNeeded()
+        XCTAssertEqual(results?.totalScore, "Your score: 2", "Expected full score after finishing with all correct answers")
+        XCTAssertEqual(results?.numberOfAttempts, 2)
+    }
+
+    func test_playAgain_restartsGame() {
         let sceneDelegate = SceneDelegate()
         sceneDelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         sceneDelegate.configureView()
 
-        let navController = sceneDelegate.window?.rootViewController as? UINavigationController
-        let sut = navController?.topViewController as? QuizViewController
-        sut?.examiner = Examiner(questionsLoader: InMemoryQuestionsLoader())
-        sut?.loadViewIfNeeded()
+        var nav = sceneDelegate.window?.rootViewController as! UINavigationController
+        let sut = nav.topViewController as! QuizViewController
+        sut.loadViewIfNeeded()
 
-        XCTAssertEqual(sut?.questionTitleLabel.text, "What is the capital of Brazil?")
+        selectAnswer(in: sut, at: 2)
+        selectAnswer(in: sut, at: 2)
 
-        let firstOption = sut?.simulateOptionIsVisible(at: 0)
-        expect(firstOption, toHaveTitle: "Pernambuco", isSelected: false)
+        let results = try? XCTUnwrap(nav.topViewController as? ResultsViewController)
+        results?.loadViewIfNeeded()
 
-        let secondOption = sut?.simulateOptionIsVisible(at: 1)
-        expect(secondOption, toHaveTitle: "Rio de Janeiro", isSelected: false)
+        results?.simulateTapOnPlayAgain()
 
-        let thirdOption = sut?.simulateOptionIsVisible(at: 2)
-        expect(thirdOption, toHaveTitle: "Brasília", isSelected: false)
+        nav = sceneDelegate.window?.rootViewController as! UINavigationController
+        let currentView = try? XCTUnwrap(nav.topViewController as? QuizViewController)
+        currentView?.loadViewIfNeeded()
 
-        let lastOption = sut?.simulateOptionIsVisible(at: 3)
-        expect(lastOption, toHaveTitle: "São Paulo", isSelected: false)
+        XCTAssertEqual(currentView?.questionTitleLabel.text, "What is the capital of Brazil?")
+    }
+
+    private func makeSUT() -> UINavigationController {
+        let sceneDelegate = SceneDelegate()
+        sceneDelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        sceneDelegate.configureView()
+
+        let nav = sceneDelegate.window?.rootViewController as! UINavigationController
+
+        return nav
+    }
+
+    private func selectAnswer(in sut: QuizViewController, at index: Int) {
+        _ = sut.simulateOptionIsVisible(at: index)
+        sut.simulateOptionIsSelected(at: index)
+        sut.simulateTapOnSubmit()
+        RunLoop.current.run(until: Date())
     }
 
     private func expect(_ cell: UITableViewCell?, toHaveTitle title: String? = nil, isSelected: Bool) {

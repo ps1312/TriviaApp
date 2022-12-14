@@ -1,7 +1,7 @@
 import UIKit
 import TriviaEngine
 
-public final class QuizViewController: UITableViewController {
+final class QuizViewController: UITableViewController {
     @IBOutlet private(set) public var questionTitleLabel: UILabel!
     @IBOutlet private(set) public var questionNumberLabel: UILabel!
 
@@ -14,12 +14,12 @@ public final class QuizViewController: UITableViewController {
 
     var questionNumber = 1
 
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         startGame()
     }
 
-    public override func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         sizeTableHeaderToFit()
     }
@@ -42,7 +42,7 @@ public final class QuizViewController: UITableViewController {
         }
     }
 
-    public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         answer = question?.answers[indexPath.row]
         updateToolbar(title: "Submit", action: #selector(submit))
         tableView.reloadData()
@@ -65,11 +65,11 @@ public final class QuizViewController: UITableViewController {
         tableView.reloadData()
     }
 
-    public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         options.count
     }
 
-    public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let option = options[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "OptionCell", for: indexPath)
 
