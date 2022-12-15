@@ -5,7 +5,7 @@ public class InMemoryQuestionsLoader: QuestionsLoader {
         Answer(id: UUID(), text: "Pernambuco"),
         Answer(id: UUID(), text: "Rio de Janeiro"),
         Answer(id: UUID(), text: "Brasília"),
-        Answer(id: UUID(), text: "São Paulo")
+        Answer(id: UUID(), text: "São Paulo"),
     ]
     var firstQuestion: Question {
         Question(
@@ -20,7 +20,7 @@ public class InMemoryQuestionsLoader: QuestionsLoader {
         Answer(id: UUID(), text: "1962"),
         Answer(id: UUID(), text: "1653"),
         Answer(id: UUID(), text: "1969"),
-        Answer(id: UUID(), text: "1983")
+        Answer(id: UUID(), text: "1983"),
     ]
     var secondQuestion: Question {
         Question(

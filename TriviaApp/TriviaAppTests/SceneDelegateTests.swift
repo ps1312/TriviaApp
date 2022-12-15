@@ -1,5 +1,5 @@
-import XCTest
 @testable import TriviaApp
+import XCTest
 
 class SceneDelegateTests: XCTest {
     func test_sceneWillConnectToSession_configuresWindow() {

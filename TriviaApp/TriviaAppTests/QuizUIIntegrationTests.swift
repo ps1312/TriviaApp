@@ -1,6 +1,6 @@
-import XCTest
-import TriviaEngine
 @testable import TriviaApp
+import TriviaEngine
+import XCTest
 
 class QuizUIIntegrationTests: XCTestCase {
     func test_viewDidLoad_requestsExaminerForStart() {
@@ -13,7 +13,7 @@ class QuizUIIntegrationTests: XCTestCase {
     func test_loadingError_displaysRetryButtonAndMessage() {
         let (question, _) = makeQuestion()
         let (sut, spy) = makeSUT()
-        
+
         spy.completeLoadWithError()
         sut.loadViewIfNeeded()
         XCTAssertTrue(sut.isShowingStartRetry, "Expected retry button after questions loading has failed on start")
@@ -130,7 +130,7 @@ class QuizUIIntegrationTests: XCTestCase {
         let (question1, _) = makeQuestion(title: "first title")
         let (question2, answers) = makeQuestion(title: "second title", answers: [
             Answer(id: UUID(), text: "answer 1"),
-            Answer(id: UUID(), text: "answer 2")
+            Answer(id: UUID(), text: "answer 2"),
         ])
 
         let (sut, spy) = makeSUT()

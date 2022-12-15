@@ -187,6 +187,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3AFC390C2940C37B000B9FCA /* Build configuration list for PBXNativeTarget "TriviaEngineTests" */;
 			buildPhases = (
+				3AC46E5E294B5305001E7588 /* Swift Format */,
 				3AFC38FB2940C37B000B9FCA /* Sources */,
 				3AFC38FC2940C37B000B9FCA /* Frameworks */,
 				3AFC38FD2940C37B000B9FCA /* Resources */,
@@ -256,6 +257,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3AC46E5E294B5305001E7588 /* Swift Format */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Format";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "../BuildTools/swiftformat \"$SRCROOT\" --swiftversion 5\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3AFC38F32940C37B000B9FCA /* Sources */ = {

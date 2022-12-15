@@ -55,9 +55,9 @@ final class SnapshotWindow: UIWindow {
     convenience init(configuration: SnapshotConfiguration, root: UIViewController) {
         self.init(frame: CGRect(origin: .zero, size: configuration.size))
         self.configuration = configuration
-        self.layoutMargins = configuration.layoutMargins
-        self.rootViewController = root
-        self.isHidden = false
+        layoutMargins = configuration.layoutMargins
+        rootViewController = root
+        isHidden = false
         root.view.layoutMargins = configuration.layoutMargins
     }
 
@@ -98,7 +98,8 @@ struct SnapshotConfiguration {
                 .init(displayScale: 3),
                 .init(accessibilityContrast: .normal),
                 .init(displayGamut: .P3),
-                .init(userInterfaceStyle: style)
-            ]))
+                .init(userInterfaceStyle: style),
+            ])
+        )
     }
 }

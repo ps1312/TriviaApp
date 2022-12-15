@@ -9,6 +9,7 @@ class ExaminerSpy: ExaminerDelegate {
     var respondCallCount: Int {
         answers.count
     }
+
     var respondResult: Question?
 
     func start() throws -> Question {
@@ -21,7 +22,7 @@ class ExaminerSpy: ExaminerDelegate {
         return startResult
     }
 
-    func respond(_ question: Question, with answer: Answer) -> Question? {
+    func respond(_: Question, with answer: Answer) -> Question? {
         answers.append(answer)
         return respondResult
     }

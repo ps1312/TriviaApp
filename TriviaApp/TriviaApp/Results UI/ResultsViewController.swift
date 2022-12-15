@@ -1,12 +1,12 @@
-import UIKit
 import TriviaEngine
+import UIKit
 
 final class ResultsViewController: UITableViewController {
     var score: Score?
     var onRestart: (() -> Void)?
 
-    @IBOutlet private(set) public var totalScoreLabel: UILabel!
-    @IBOutlet private(set) public var playAgainButton: UIButton!
+    @IBOutlet public private(set) var totalScoreLabel: UILabel!
+    @IBOutlet public private(set) var playAgainButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,7 @@ final class ResultsViewController: UITableViewController {
         onRestart?()
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         score?.responses.count ?? 0
     }
 
@@ -32,7 +32,7 @@ final class ResultsViewController: UITableViewController {
         cell.wrongAnswerLabel.text = attempt!.answer.text
 
         cell.wrongAnswerLabel.isHidden = attempt?.isCorrect ?? true
-        
+
         return cell
     }
 }

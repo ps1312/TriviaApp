@@ -1,5 +1,5 @@
-import XCTest
 import TriviaEngine
+import XCTest
 
 class ExaminerTests: XCTestCase {
     func test_init_startsWithNoQuestions() {

@@ -1,6 +1,6 @@
 import Foundation
-import XCTest
 import TriviaEngine
+import XCTest
 
 func makeQuestion(title: String = "any title", answers: [Answer]? = nil) -> (Question, [Answer]) {
     let correctAnswer = Answer(id: UUID(), text: "Correct answer")
