@@ -1,9 +1,9 @@
-import UIKit
 import TriviaEngine
+import UIKit
 
 final class QuizViewController: UITableViewController {
-    @IBOutlet private(set) public var questionTitleLabel: UILabel!
-    @IBOutlet private(set) public var questionNumberLabel: UILabel!
+    @IBOutlet public private(set) var questionTitleLabel: UILabel!
+    @IBOutlet public private(set) var questionNumberLabel: UILabel!
 
     private var question: Question?
     private var answer: Answer?
@@ -65,7 +65,7 @@ final class QuizViewController: UITableViewController {
         tableView.reloadData()
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         options.count
     }
 
@@ -78,7 +78,7 @@ final class QuizViewController: UITableViewController {
 
         cell.contentConfiguration = config
         cell.accessoryType = answer?.id == option.id ? .checkmark : .none
-        
+
         return cell
     }
 
@@ -89,8 +89,7 @@ final class QuizViewController: UITableViewController {
         setToolbarItems([
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
             actionButton,
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
         ], animated: true)
     }
 }
-

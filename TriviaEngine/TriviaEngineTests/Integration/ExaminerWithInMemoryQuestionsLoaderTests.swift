@@ -1,5 +1,5 @@
-import XCTest
 import TriviaEngine
+import XCTest
 
 class ExaminerWithInMemoryQuestionsLoaderTests: XCTestCase {
     func test_examinerWithInMemoryQuestionsLoader_deliversZeroScoreWhenRespondingWithWrongAnswers() throws {

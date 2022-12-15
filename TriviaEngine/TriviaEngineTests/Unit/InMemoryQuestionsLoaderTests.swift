@@ -1,5 +1,5 @@
-import XCTest
 import TriviaEngine
+import XCTest
 
 class InMemoryQuestionsLoaderTests: XCTestCase {
     func test_load_deliversDefaultTriviaQuestions() {

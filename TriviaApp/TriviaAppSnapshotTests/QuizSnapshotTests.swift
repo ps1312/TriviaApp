@@ -1,9 +1,9 @@
-import XCTest
 @testable import TriviaApp
+import XCTest
 
 class QuizSnapshotTests: XCTestCase {
     func test_loadQuestionsError() {
-        let	(navController, _, spy) = makeSUT()
+        let (navController, _, spy) = makeSUT()
         spy.completeLoadWithError()
 
         assert(snapshot: navController.snapshot(.iPhone13(style: .light)), named: "QUESTIONS_LOAD_ERROR_light")

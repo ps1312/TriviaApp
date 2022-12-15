@@ -9,4 +9,3 @@ public struct Answer: Equatable {
         self.text = text
     }
 }
-

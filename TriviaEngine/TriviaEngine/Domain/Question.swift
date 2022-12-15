@@ -10,6 +10,6 @@ public struct Question: Equatable {
         self.id = id
         self.title = title
         self.answers = answers
-        self.correctAnswer = answers[correctIndex]
+        correctAnswer = answers[correctIndex]
     }
 }
