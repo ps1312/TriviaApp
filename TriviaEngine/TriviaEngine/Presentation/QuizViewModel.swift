@@ -1,20 +1,19 @@
 import Foundation
-import TriviaEngine
 
-final class QuizViewModel {
+public final class QuizViewModel {
     private let examiner: ExaminerDelegate
     private var currentQuestion: Question?
     private var questionNumber = 1
 
-    init(examiner: ExaminerDelegate) {
+    public init(examiner: ExaminerDelegate) {
         self.examiner = examiner
     }
 
-    var questionChanged: ((String, [String], Int) -> Void)?
-    var startFailed: (() -> Void)?
-    var finished: (() -> Void)?
+    public var questionChanged: ((String, [String], Int) -> Void)?
+    public var startFailed: (() -> Void)?
+    public var finished: (() -> Void)?
 
-    func load() {
+    public func load() {
         do {
             let question = try examiner.start()
             let answers = question.answers.map { $0.text }
@@ -26,7 +25,7 @@ final class QuizViewModel {
         }
     }
 
-    func respond(with index: Int) {
+    public func respond(with index: Int) {
         guard let question = currentQuestion else { return }
 
         if let nextQuestion = examiner.respond(question, with: index) {

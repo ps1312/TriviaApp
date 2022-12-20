@@ -1,4 +1,5 @@
 @testable import TriviaApp
+import TriviaEngine
 import XCTest
 
 class QuizSnapshotTests: XCTestCase {
