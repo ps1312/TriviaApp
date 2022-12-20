@@ -6,13 +6,15 @@ final class QuizViewController: UITableViewController {
     @IBOutlet public private(set) var questionNumberLabel: UILabel!
 
     private var question: Question?
-    private var answer: Answer?
-    private var options = [Answer]()
 
     public var examiner: ExaminerDelegate?
     public var onFinish: (() -> Void)?
 
+    var optionsControllers = [IndexPath: OptionCellViewController]()
+
     var questionNumber = 1
+
+    var selected: IndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +33,11 @@ final class QuizViewController: UITableViewController {
             guard let question = try examiner?.start() else { return }
             self.question = question
             questionTitleLabel.text = question.title
-            options = question.answers
+
+            question.answers.enumerated().forEach { index, option in
+                let indexPath = IndexPath(row: index, section: 0)
+                self.optionsControllers[indexPath] = OptionCellViewController(model: option)
+            }
 
             updateToolbar(title: "Submit", isEnabled: false)
             questionNumberLabel.isHidden = false
@@ -43,13 +49,15 @@ final class QuizViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        answer = question?.answers[indexPath.row]
+        selected = indexPath
         updateToolbar(title: "Submit", action: #selector(submit))
         tableView.reloadData()
     }
 
     @objc func submit() {
-        question = examiner?.respond(question!, with: answer!)
+        let selectedAnswer = question!.answers[selected!.row]
+        question = examiner?.respond(question!, with: selectedAnswer)
+
         updateToolbar(title: "Submit", isEnabled: false)
 
         guard let question = question else {
@@ -57,29 +65,25 @@ final class QuizViewController: UITableViewController {
             return
         }
 
-        options = question.answers
+        question.answers.enumerated().forEach { index, option in
+            let indexPath = IndexPath(row: index, section: 0)
+            self.optionsControllers[indexPath] = OptionCellViewController(model: option)
+        }
+
+        selected = nil
         questionTitleLabel.text = question.title
-        answer = nil
         questionNumber += 1
         questionNumberLabel.text = "Question \(questionNumber)"
         tableView.reloadData()
     }
 
     override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        options.count
+        optionsControllers.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let option = options[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "OptionCell", for: indexPath)
-
-        var config = cell.defaultContentConfiguration()
-        config.text = option.text
-
-        cell.contentConfiguration = config
-        cell.accessoryType = answer?.id == option.id ? .checkmark : .none
-
-        return cell
+        let view = optionsControllers[indexPath]
+        return view!.view(tableView, indexPath: indexPath, selected: selected == indexPath)
     }
 
     private func updateToolbar(title: String, action: Selector? = nil, isEnabled: Bool = true) {

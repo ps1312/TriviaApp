@@ -176,12 +176,12 @@ class QuizUIIntegrationTests: XCTestCase {
         return (sut, spy)
     }
 
-    private func expect(_ cell: UITableViewCell?, toHaveTitle title: String? = nil, isSelected: Bool) {
+    private func expect(_ cell: UITableViewCell?, toHaveTitle title: String? = nil, isSelected: Bool, file: StaticString = #filePath, line: UInt = #line) {
         let config = cell?.contentConfiguration as? UIListContentConfiguration
         if title != nil {
             XCTAssertEqual(config?.text, title, "Expect cell to have title")
         }
-        XCTAssertEqual(cell?.accessoryType, isSelected ? UITableViewCell.AccessoryType.checkmark : UITableViewCell.AccessoryType.none)
+        XCTAssertEqual(cell?.accessoryType, isSelected ? UITableViewCell.AccessoryType.checkmark : UITableViewCell.AccessoryType.none, file: file, line: line)
     }
 
     private func makeQuestion(title: String = "any title", answers: [Answer]? = nil) -> (Question, [Answer]) {
