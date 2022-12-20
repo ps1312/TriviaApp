@@ -35,6 +35,12 @@ class QuizAcceptanceTests: XCTestCase {
         results?.loadViewIfNeeded()
         XCTAssertEqual(results?.totalScore, "Your score: 2", "Expected full score after finishing with all correct answers")
         XCTAssertEqual(results?.numberOfAttempts, 2)
+
+        let view0 = results?.simulateAttemptIsVisible(at: 0) as? ResultAnswerCell
+        XCTAssertEqual(view0?.correctAnswerText, "Brasília")
+
+        let view1 = results?.simulateAttemptIsVisible(at: 1) as? ResultAnswerCell
+        XCTAssertEqual(view1?.correctAnswerText, "1969")
     }
 
     func test_playAgain_restartsGame() {

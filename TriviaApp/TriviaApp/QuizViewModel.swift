@@ -27,10 +27,11 @@ final class QuizViewModel {
     }
 
     func respond(with index: Int) {
-        guard let currentQuestion = currentQuestion else { return }
+        guard let question = currentQuestion else { return }
 
-        if let nextQuestion = examiner.respond(currentQuestion, with: index) {
+        if let nextQuestion = examiner.respond(question, with: index) {
             let answers = nextQuestion.answers.map { $0.text }
+            currentQuestion = nextQuestion
             questionNumber += 1
             questionChanged?(nextQuestion.title, answers, questionNumber)
         } else {
