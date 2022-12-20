@@ -29,7 +29,7 @@ final class QuizViewController: UITableViewController {
 
     override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         selected = indexPath
-        updateToolbar(title: "Submit", action: #selector(submit))
+        setupNextButton(title: "Submit", action: #selector(submit))
         tableView.reloadData()
     }
 
@@ -47,32 +47,47 @@ final class QuizViewController: UITableViewController {
     }
 
     private func setupBindings() {
-        viewModel?.questionChanged = { [weak self] title, options, questionNumber in
-            guard let self = self else { return }
-            self.questionTitleLabel.text = title
-            self.questionNumberLabel.isHidden = false
-            self.questionNumberLabel.text = "Question \(questionNumber)"
-            self.updateToolbar(title: "Submit", isEnabled: false)
-            self.selected = nil
-            options.enumerated().forEach { index, title in
-                let indexPath = IndexPath(row: index, section: 0)
-                self.optionsControllers[indexPath] = OptionCellViewController(title: title)
-            }
-            self.tableView.reloadData()
+        viewModel?.questionChanged = { [weak self] in
+            self?.setupNextQuestion(title: $0, newOptions: $1, questionNumber: $2)
         }
 
         viewModel?.startFailed = { [weak self] in
             self?.questionTitleLabel.text = "Something went wrong loading the questions, please try again."
-            self?.updateToolbar(title: "Retry", action: #selector(self?.startGame))
+            self?.setupNextButton(title: "Retry", action: #selector(self?.startGame))
         }
 
         viewModel?.finished = { [weak self] in
-            self?.updateToolbar(title: "Submit", isEnabled: false)
+            self?.setupNextButton(title: "Submit", isEnabled: false)
             self?.onFinish?()
         }
     }
 
-    private func updateToolbar(title: String, action: Selector? = nil, isEnabled: Bool = true) {
+    // MARK: - UI Helpers
+
+    private func setupNextQuestion(title: String, newOptions: [String], questionNumber: Int) {
+        questionTitleLabel.text = title
+        setupNextButton(title: "Submit", isEnabled: false)
+        selected = nil
+
+        updateQuestionNumber(newNumber: questionNumber)
+        refreshOptions(newOptions: newOptions)
+    }
+
+    private func updateQuestionNumber(newNumber: Int) {
+        questionNumberLabel.isHidden = false
+        questionNumberLabel.text = "Question \(newNumber)"
+    }
+
+    private func refreshOptions(newOptions: [String]) {
+        newOptions.enumerated().forEach { index, title in
+            let indexPath = IndexPath(row: index, section: 0)
+            self.optionsControllers[indexPath] = OptionCellViewController(title: title)
+        }
+
+        tableView.reloadData()
+    }
+
+    private func setupNextButton(title: String, action: Selector? = nil, isEnabled: Bool = true) {
         let actionButton = UIBarButtonItem(title: title, style: .plain, target: self, action: action)
         actionButton.isEnabled = isEnabled
 
