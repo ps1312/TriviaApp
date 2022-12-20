@@ -12,6 +12,8 @@
 		3A198A922947BB2700EA895E /* ResultAnswerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A198A912947BB2700EA895E /* ResultAnswerCell.swift */; };
 		3A198A962947BDFA00EA895E /* ResultsUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A198A952947BDFA00EA895E /* ResultsUIIntegrationTests.swift */; };
 		3A2D578A2948F75100151E67 /* UITableViewController+HeaderSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2D57892948F75100151E67 /* UITableViewController+HeaderSizing.swift */; };
+		3A31D629295234A600F58B87 /* QuizUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A31D628295234A600F58B87 /* QuizUIComposer.swift */; };
+		3A31D62B295234D400F58B87 /* ResultsUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A31D62A295234D400F58B87 /* ResultsUIComposer.swift */; };
 		3A3D78D1294900A1003E4FF2 /* QuizSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4D78062948C63200A7AF77 /* QuizSnapshotTests.swift */; };
 		3A3D78D2294900AB003E4FF2 /* QUESTIONS_LOAD_SUCCESS_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2D57862948F51A00151E67 /* QUESTIONS_LOAD_SUCCESS_dark.png */; };
 		3A3D78D3294900AB003E4FF2 /* QUESTIONS_LOAD_SUCCESS_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2D57852948F51A00151E67 /* QUESTIONS_LOAD_SUCCESS_light.png */; };
@@ -87,6 +89,8 @@
 		3A2D578B2948F9D300151E67 /* ANSWER_SELECTED_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ANSWER_SELECTED_dark.png; sourceTree = "<group>"; };
 		3A2D578C2948F9D300151E67 /* ANSWER_SELECTED_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ANSWER_SELECTED_light.png; sourceTree = "<group>"; };
 		3A2D57932948FAEE00151E67 /* TriviaAppSnapshotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TriviaAppSnapshotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A31D628295234A600F58B87 /* QuizUIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizUIComposer.swift; sourceTree = "<group>"; };
+		3A31D62A295234D400F58B87 /* ResultsUIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsUIComposer.swift; sourceTree = "<group>"; };
 		3A4D78042948BF3A00A7AF77 /* ResultsViewController+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultsViewController+TestHelpers.swift"; sourceTree = "<group>"; };
 		3A4D78062948C63200A7AF77 /* QuizSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSnapshotTests.swift; sourceTree = "<group>"; };
 		3A97E244294911D7006B2A09 /* ResultsSnapshotsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsSnapshotsTests.swift; sourceTree = "<group>"; };
@@ -142,9 +146,10 @@
 		3A198A932947BC5D00EA895E /* Results UI */ = {
 			isa = PBXGroup;
 			children = (
-				3A198A8D2947B12200EA895E /* Results.storyboard */,
 				3A198A8F2947B9B600EA895E /* ResultsViewController.swift */,
 				3A198A912947BB2700EA895E /* ResultAnswerCell.swift */,
+				3A31D62A295234D400F58B87 /* ResultsUIComposer.swift */,
+				3A198A8D2947B12200EA895E /* Results.storyboard */,
 			);
 			path = "Results UI";
 			sourceTree = "<group>";
@@ -154,6 +159,7 @@
 			children = (
 				3AF6F43D29411D9F009526E9 /* QuizViewController.swift */,
 				3AD719A82951F07A00A023E5 /* OptionCellViewController.swift */,
+				3A31D628295234A600F58B87 /* QuizUIComposer.swift */,
 				3AF6F43F29411D9F009526E9 /* Quiz.storyboard */,
 			);
 			path = "Quiz UI";
@@ -436,7 +442,9 @@
 				3AF6F43A29411D9F009526E9 /* AppDelegate.swift in Sources */,
 				3AF6F43C29411D9F009526E9 /* SceneDelegate.swift in Sources */,
 				3A198A922947BB2700EA895E /* ResultAnswerCell.swift in Sources */,
+				3A31D629295234A600F58B87 /* QuizUIComposer.swift in Sources */,
 				3A198A902947B9B600EA895E /* ResultsViewController.swift in Sources */,
+				3A31D62B295234D400F58B87 /* ResultsUIComposer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
