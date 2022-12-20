@@ -13,6 +13,39 @@ final class QuizViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupBindings()
+        startGame()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        sizeTableHeaderToFit()
+    }
+
+    @objc func startGame() {
+        viewModel?.load()
+    }
+
+    override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selected = indexPath
+        updateToolbar(title: "Submit", action: #selector(submit))
+        tableView.reloadData()
+    }
+
+    @objc func submit() {
+        viewModel?.respond(with: selected!.row)
+    }
+
+    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        optionsControllers.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let view = optionsControllers[indexPath]
+        return view!.view(tableView, indexPath: indexPath, selected: selected == indexPath)
+    }
+
+    private func setupBindings() {
         viewModel?.questionChanged = { [weak self] title, options, questionNumber in
             guard let self = self else { return }
             self.questionTitleLabel.text = title
@@ -36,36 +69,6 @@ final class QuizViewController: UITableViewController {
             self?.updateToolbar(title: "Submit", isEnabled: false)
             self?.onFinish?()
         }
-
-        startGame()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        sizeTableHeaderToFit()
-    }
-
-    @objc func startGame() {
-        viewModel?.load()
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selected = indexPath
-        updateToolbar(title: "Submit", action: #selector(submit))
-        tableView.reloadData()
-    }
-
-    @objc func submit() {
-        viewModel?.respond(with: selected!.row)
-    }
-
-    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        optionsControllers.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let view = optionsControllers[indexPath]
-        return view!.view(tableView, indexPath: indexPath, selected: selected == indexPath)
     }
 
     private func updateToolbar(title: String, action: Selector? = nil, isEnabled: Bool = true) {
