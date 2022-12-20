@@ -35,8 +35,8 @@ class QuizSnapshotTests: XCTestCase {
         let navController = storyboard.instantiateInitialViewController() as! UINavigationController
         let viewController = navController.topViewController as! QuizViewController
         let spy = ExaminerSpy()
-        viewController.examiner = spy
         viewController.onFinish = onFinish
+        viewController.viewModel = QuizViewModel(examiner: spy)
         navController.loadViewIfNeeded()
 
         return (navController, viewController, spy)

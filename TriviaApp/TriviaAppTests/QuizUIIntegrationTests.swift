@@ -167,8 +167,8 @@ class QuizUIIntegrationTests: XCTestCase {
         let navController = storyboard.instantiateInitialViewController() as! UINavigationController
         let sut = navController.topViewController as! QuizViewController
         let spy = ExaminerSpy()
-        sut.examiner = spy
         sut.onFinish = onFinish
+        sut.viewModel = QuizViewModel(examiner: spy)
 
         testMemoryLeak(sut, file: file, line: line)
         testMemoryLeak(spy, file: file, line: line)

@@ -1,23 +1,42 @@
-import TriviaEngine
 import UIKit
 
 final class QuizViewController: UITableViewController {
     @IBOutlet public private(set) var questionTitleLabel: UILabel!
     @IBOutlet public private(set) var questionNumberLabel: UILabel!
 
-    private var question: Question?
-
-    public var examiner: ExaminerDelegate?
     public var onFinish: (() -> Void)?
-
     var optionsControllers = [IndexPath: OptionCellViewController]()
 
-    var questionNumber = 1
-
     var selected: IndexPath?
+    var viewModel: QuizViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        viewModel?.questionChanged = { [weak self] title, options, questionNumber in
+            guard let self = self else { return }
+            self.questionTitleLabel.text = title
+            self.questionNumberLabel.isHidden = false
+            self.questionNumberLabel.text = "Question \(questionNumber)"
+            self.updateToolbar(title: "Submit", isEnabled: false)
+            self.selected = nil
+            options.enumerated().forEach { index, title in
+                let indexPath = IndexPath(row: index, section: 0)
+                self.optionsControllers[indexPath] = OptionCellViewController(title: title)
+            }
+            self.tableView.reloadData()
+        }
+
+        viewModel?.startFailed = { [weak self] in
+            self?.questionTitleLabel.text = "Something went wrong loading the questions, please try again."
+            self?.updateToolbar(title: "Retry", action: #selector(self?.startGame))
+        }
+
+        viewModel?.finished = { [weak self] in
+            self?.updateToolbar(title: "Submit", isEnabled: false)
+            self?.onFinish?()
+        }
+
         startGame()
     }
 
@@ -27,25 +46,7 @@ final class QuizViewController: UITableViewController {
     }
 
     @objc func startGame() {
-        questionNumberLabel.isHidden = true
-
-        do {
-            guard let question = try examiner?.start() else { return }
-            self.question = question
-            questionTitleLabel.text = question.title
-
-            question.answers.enumerated().forEach { index, option in
-                let indexPath = IndexPath(row: index, section: 0)
-                self.optionsControllers[indexPath] = OptionCellViewController(model: option)
-            }
-
-            updateToolbar(title: "Submit", isEnabled: false)
-            questionNumberLabel.isHidden = false
-            questionNumberLabel.text = "Question \(questionNumber)"
-        } catch {
-            questionTitleLabel.text = "Something went wrong loading the questions, please try again."
-            updateToolbar(title: "Retry", action: #selector(startGame))
-        }
+        viewModel?.load()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -55,25 +56,7 @@ final class QuizViewController: UITableViewController {
     }
 
     @objc func submit() {
-        question = examiner?.respond(question!, with: selected!.row)
-
-        updateToolbar(title: "Submit", isEnabled: false)
-
-        guard let question = question else {
-            onFinish?()
-            return
-        }
-
-        question.answers.enumerated().forEach { index, option in
-            let indexPath = IndexPath(row: index, section: 0)
-            self.optionsControllers[indexPath] = OptionCellViewController(model: option)
-        }
-
-        selected = nil
-        questionTitleLabel.text = question.title
-        questionNumber += 1
-        questionNumberLabel.text = "Question \(questionNumber)"
-        tableView.reloadData()
+        viewModel?.respond(with: selected!.row)
     }
 
     override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {

@@ -17,7 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navController = storyboard.instantiateInitialViewController() as! UINavigationController
         let quizViewController = navController.topViewController as! QuizViewController
         let examiner = Examiner(questionsLoader: InMemoryQuestionsLoader())
-        quizViewController.examiner = examiner
+
+        quizViewController.viewModel = QuizViewModel(examiner: examiner)
         quizViewController.onFinish = {
             let bundle2 = Bundle(for: ResultsViewController.self)
             let storyboard2 = UIStoryboard(name: "Results", bundle: bundle2)
