@@ -5,11 +5,13 @@ public struct Question: Equatable {
     public let title: String
     public let answers: [Answer]
     public let correctAnswer: Answer
+    public let correctIndex: Int
 
     public init(id: UUID, title: String, answers: [Answer], correctIndex: Int) {
         self.id = id
         self.title = title
         self.answers = answers
         correctAnswer = answers[correctIndex]
+        self.correctIndex = correctIndex
     }
 }

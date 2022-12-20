@@ -2,6 +2,9 @@ import TriviaEngine
 import XCTest
 
 class ExaminerTests: XCTestCase {
+    let correctIndex = 0
+    let wrongIndex = 1
+
     func test_init_startsWithNoQuestions() {
         let (sut, _) = makeSUT()
 
@@ -44,7 +47,7 @@ class ExaminerTests: XCTestCase {
     }
 
     func test_respond_presentsNextQuestion() throws {
-        let (question1, answers1) = makeQuestionWithCorrectFirstAnswer()
+        let (question1, _) = makeQuestionWithCorrectFirstAnswer()
         let (question2, _) = makeQuestionWithCorrectFirstAnswer()
 
         let (sut, spy) = makeSUT()
@@ -53,33 +56,32 @@ class ExaminerTests: XCTestCase {
         let firstQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
         XCTAssertEqual(firstQuestion, question1)
 
-        let lastQuestion = sut.respond(question1, with: answers1[0])
+        let lastQuestion = sut.respond(question1, with: wrongIndex)
         XCTAssertEqual(lastQuestion, question2)
     }
 
     func test_respond_deliversNilOnNoMoreQuestionsAvailable() throws {
-        let (question, answers) = makeQuestionWithCorrectFirstAnswer()
-        let wrongAnswer = answers[1]
+        let (question, _) = makeQuestionWithCorrectFirstAnswer()
 
         let (sut, spy) = makeSUT()
         spy.completeLoadWithQuestions([question])
 
         let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
-        let nextQuestion = sut.respond(receivedQuestion, with: wrongAnswer)
+        let nextQuestion = sut.respond(receivedQuestion, with: wrongIndex)
 
         XCTAssertNil(nextQuestion)
     }
 
     func test_evaluate_deliversFinalScoreWhenUserRespondsWithCorrectAnswer() throws {
         let (question, answers) = makeQuestionWithCorrectFirstAnswer()
-        let correctAnswer = answers[0]
+        let correctAnswer = answers[correctIndex]
         let expectedScore = Score(points: 1, responses: [AnswerAttempt(question: question, answer: correctAnswer, isCorrect: true)])
 
         let (sut, spy) = makeSUT()
         spy.completeLoadWithQuestions([question])
 
         let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
-        _ = sut.respond(receivedQuestion, with: correctAnswer)
+        _ = sut.respond(receivedQuestion, with: correctIndex)
 
         let score = sut.evaluate()
         XCTAssertEqual(score, expectedScore)
@@ -87,14 +89,14 @@ class ExaminerTests: XCTestCase {
 
     func test_evaluate_deliversFinalScoreWhenUserRespondsWithWrongAnswer() throws {
         let (question, answers) = makeQuestionWithCorrectFirstAnswer()
-        let wrongAnswer = answers[1]
+        let wrongAnswer = answers[wrongIndex]
         let expectedScore = Score(points: 0, responses: [AnswerAttempt(question: question, answer: wrongAnswer, isCorrect: false)])
 
         let (sut, spy) = makeSUT()
         spy.completeLoadWithQuestions([question])
 
         let receivedQuestion = try XCTUnwrap(try sut.start(), "Expected start() to deliver first question")
-        _ = sut.respond(receivedQuestion, with: wrongAnswer)
+        _ = sut.respond(receivedQuestion, with: wrongIndex)
 
         let score = sut.evaluate()
         XCTAssertEqual(score, expectedScore)
@@ -113,7 +115,7 @@ class ExaminerTests: XCTestCase {
     private func makeQuestionWithCorrectFirstAnswer() -> (Question, [Answer]) {
         let correctAnswer = Answer(id: UUID(), text: "Correct answer")
         let wrongAnswer = Answer(id: UUID(), text: "Wrong answer")
-        let question = Question(id: UUID(), title: "Is this correct?", answers: [correctAnswer, wrongAnswer], correctIndex: 0)
+        let question = Question(id: UUID(), title: "Is this correct?", answers: [correctAnswer, wrongAnswer], correctIndex: correctIndex)
 
         return (question, [correctAnswer, wrongAnswer])
     }

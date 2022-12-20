@@ -55,8 +55,7 @@ final class QuizViewController: UITableViewController {
     }
 
     @objc func submit() {
-        let selectedAnswer = question!.answers[selected!.row]
-        question = examiner?.respond(question!, with: selectedAnswer)
+        question = examiner?.respond(question!, with: selected!.row)
 
         updateToolbar(title: "Submit", isEnabled: false)
 

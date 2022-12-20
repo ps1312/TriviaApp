@@ -2,12 +2,15 @@ import TriviaEngine
 import XCTest
 
 class ExaminerWithInMemoryQuestionsLoaderTests: XCTestCase {
+    let correctIndex = 2
+    let wrongIndex = 1
+
     func test_examinerWithInMemoryQuestionsLoader_deliversZeroScoreWhenRespondingWithWrongAnswers() throws {
         let examiner = makeSUT()
 
         let firstQuestion = try examiner.start()
-        let secondQuestion = examiner.respond(firstQuestion, with: firstQuestion.answers[0])!
-        _ = examiner.respond(secondQuestion, with: secondQuestion.answers[0])
+        let secondQuestion = examiner.respond(firstQuestion, with: wrongIndex)!
+        _ = examiner.respond(secondQuestion, with: wrongIndex)
 
         let score = examiner.evaluate()
 
@@ -20,8 +23,8 @@ class ExaminerWithInMemoryQuestionsLoaderTests: XCTestCase {
         let examiner = makeSUT()
 
         let firstQuestion = try examiner.start()
-        let secondQuestion = examiner.respond(firstQuestion, with: firstQuestion.answers[0])!
-        _ = examiner.respond(secondQuestion, with: secondQuestion.answers[2])
+        let secondQuestion = examiner.respond(firstQuestion, with: wrongIndex)!
+        _ = examiner.respond(secondQuestion, with: correctIndex)
 
         let score = examiner.evaluate()
 
@@ -34,8 +37,8 @@ class ExaminerWithInMemoryQuestionsLoaderTests: XCTestCase {
         let examiner = makeSUT()
 
         let firstQuestion = try examiner.start()
-        let secondQuestion = examiner.respond(firstQuestion, with: firstQuestion.answers[2])!
-        _ = examiner.respond(secondQuestion, with: secondQuestion.answers[2])
+        let secondQuestion = examiner.respond(firstQuestion, with: correctIndex)!
+        _ = examiner.respond(secondQuestion, with: correctIndex)
 
         let score = examiner.evaluate()
 

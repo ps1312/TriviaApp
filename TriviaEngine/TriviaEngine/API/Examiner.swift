@@ -1,6 +1,6 @@
 public protocol ExaminerDelegate {
     func start() throws -> Question
-    func respond(_ question: Question, with answer: Answer) -> Question?
+    func respond(_ question: Question, with index: Int) -> Question?
     func evaluate() -> Score
 }
 
@@ -37,9 +37,10 @@ public class Examiner: ExaminerDelegate {
         return questions.removeFirst()
     }
 
-    public func respond(_ question: Question, with answer: Answer) -> Question? {
-        let isCorrect = question.correctAnswer == answer
-        let attempt = AnswerAttempt(question: question, answer: answer, isCorrect: isCorrect)
+    public func respond(_ question: Question, with index: Int) -> Question? {
+        let isCorrect = question.correctIndex == index
+        let selectedAnswer = question.answers[index]
+        let attempt = AnswerAttempt(question: question, answer: selectedAnswer, isCorrect: isCorrect)
 
         responses.append(attempt)
         score.responses = responses
