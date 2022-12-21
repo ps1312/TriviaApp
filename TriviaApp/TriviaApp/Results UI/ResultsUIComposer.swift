@@ -5,8 +5,7 @@ final class ResultsUIComposer {
     static func composeWith(examiner: ExaminerDelegate, onRestart: @escaping () -> Void) -> ResultsViewController {
         let bundle = Bundle(for: ResultsViewController.self)
         let storyboard = UIStoryboard(name: "Results", bundle: bundle)
-        let navController = storyboard.instantiateInitialViewController() as! UINavigationController
-        let viewController = navController.topViewController as! ResultsViewController
+        let viewController = storyboard.instantiateInitialViewController() as! ResultsViewController
         viewController.score = examiner.evaluate()
         viewController.onRestart = onRestart
 

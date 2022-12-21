@@ -16,12 +16,12 @@ class ResultsSnapshotsTests: XCTestCase {
     }
 
     private func makeSUT(score: Score) -> (UINavigationController, ResultsViewController, ExaminerSpy) {
-        let bundle = Bundle(for: ResultsViewController.self)
-        let storyboard = UIStoryboard(name: "Results", bundle: bundle)
-        let navController = storyboard.instantiateInitialViewController() as! UINavigationController
-        let viewController = navController.topViewController as! ResultsViewController
         let spy = ExaminerSpy()
+        let viewController = ResultsUIComposer.composeWith(examiner: spy, onRestart: {})
         viewController.score = score
+
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.navigationBar.prefersLargeTitles = true
         navController.loadViewIfNeeded()
 
         return (navController, viewController, spy)
