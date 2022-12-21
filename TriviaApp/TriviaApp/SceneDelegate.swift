@@ -4,6 +4,14 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
+    private lazy var navigationController: UINavigationController = {
+        UINavigationController()
+    }()
+
+    private lazy var examiner: ExaminerDelegate = {
+        Examiner(questionsLoader: InMemoryQuestionsLoader())
+    }()
+
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
 
@@ -12,26 +20,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func configureView() {
-        let bundle = Bundle(for: QuizViewController.self)
-        let storyboard = UIStoryboard(name: "Quiz", bundle: bundle)
-        let navController = storyboard.instantiateInitialViewController() as! UINavigationController
-        let quizViewController = navController.topViewController as! QuizViewController
-        let examiner = Examiner(questionsLoader: InMemoryQuestionsLoader())
-        quizViewController.examiner = examiner
-        quizViewController.onFinish = {
-            let bundle2 = Bundle(for: ResultsViewController.self)
-            let storyboard2 = UIStoryboard(name: "Results", bundle: bundle2)
-            let navController2 = storyboard2.instantiateInitialViewController() as! UINavigationController
-            let resultsViewController = navController2.topViewController as! ResultsViewController
-            resultsViewController.score = examiner.evaluate()
-            resultsViewController.onRestart = {
-                self.configureView()
-            }
+        navigateToQuiz()
 
-            navController.viewControllers = [resultsViewController]
-        }
-
-        window?.rootViewController = navController
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+    }
+
+    private func navigateToQuiz() {
+        navigationController.viewControllers = [
+            QuizUIComposer.composeWith(examiner: examiner, onFinish: navigateToResults),
+        ]
+    }
+
+    private func navigateToResults() {
+        navigationController.viewControllers = [
+            ResultsUIComposer.composeWith(examiner: examiner, onRestart: configureView),
+        ]
     }
 }

@@ -22,8 +22,8 @@ class ExaminerSpy: ExaminerDelegate {
         return startResult
     }
 
-    func respond(_: Question, with answer: Answer) -> Question? {
-        answers.append(answer)
+    func respond(_ question: Question, with index: Int) -> Question? {
+        answers.append(question.answers[index])
         return respondResult
     }
 
