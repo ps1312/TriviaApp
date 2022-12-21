@@ -19,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func configureView() {
         navigateToQuiz()
+        navigationController.navigationBar.prefersLargeTitles = false
 
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
