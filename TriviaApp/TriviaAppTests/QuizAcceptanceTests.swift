@@ -50,23 +50,28 @@ class QuizAcceptanceTests: XCTestCase {
         sceneDelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         sceneDelegate.configureView()
 
-        var nav = sceneDelegate.window?.rootViewController as! UINavigationController
+        let nav = sceneDelegate.window?.rootViewController as! UINavigationController
         let sut = nav.topViewController as! QuizViewController
         sut.loadViewIfNeeded()
 
         selectAnswer(in: sut, at: 2)
         selectAnswer(in: sut, at: 2)
 
-        let results = try? XCTUnwrap(nav.topViewController as? ResultsViewController)
-        results?.loadViewIfNeeded()
+        let results = try! XCTUnwrap(nav.topViewController as? ResultsViewController)
+        results.loadViewIfNeeded()
 
-        results?.simulateTapOnPlayAgain()
+        results.simulateTapOnPlayAgain()
 
-        nav = sceneDelegate.window?.rootViewController as! UINavigationController
-        let currentView = try? XCTUnwrap(nav.topViewController as? QuizViewController)
-        currentView?.loadViewIfNeeded()
+        let currentView = try! XCTUnwrap(nav.topViewController as? QuizViewController)
+        currentView.loadViewIfNeeded()
 
-        XCTAssertEqual(currentView?.questionTitleLabel.text, "What is the capital of Brazil?")
+        XCTAssertEqual(currentView.questionTitleLabel.text, "What is the capital of Brazil?")
+
+        selectAnswer(in: currentView, at: 2)
+        selectAnswer(in: currentView, at: 2)
+
+        let secondResults = try! XCTUnwrap(nav.topViewController as? ResultsViewController)
+        XCTAssertEqual(secondResults.numberOfAttempts, 2)
     }
 
     private func makeSUT() -> UINavigationController {

@@ -10,10 +10,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return nav
     }()
 
-    private lazy var examiner: ExaminerDelegate = {
-        Examiner(questionsLoader: InMemoryQuestionsLoader())
-    }()
-
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
 
@@ -29,12 +25,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func navigateToQuiz() {
+        let examiner = Examiner(questionsLoader: InMemoryQuestionsLoader())
+
         navigationController.viewControllers = [
-            QuizUIComposer.composeWith(examiner: examiner, onFinish: navigateToResults),
+            QuizUIComposer.composeWith(examiner: examiner, onFinish: { self.navigateToResults(with: examiner) }),
         ]
     }
 
-    private func navigateToResults() {
+    private func navigateToResults(with examiner: ExaminerDelegate) {
         navigationController.viewControllers = [
             ResultsUIComposer.composeWith(examiner: examiner, onRestart: configureView),
         ]
