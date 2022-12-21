@@ -14,6 +14,7 @@ final class ResultsViewController: UITableViewController {
         title = "Results"
         totalScoreLabel.text = "Your score: \(score.points)"
         playAgainButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
     @objc func tap() {
