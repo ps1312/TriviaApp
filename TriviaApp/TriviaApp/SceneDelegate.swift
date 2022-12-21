@@ -5,7 +5,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     private lazy var navigationController: UINavigationController = {
-        UINavigationController()
+        let nav = UINavigationController()
+        nav.isToolbarHidden = false
+        return nav
     }()
 
     private lazy var examiner: ExaminerDelegate = {

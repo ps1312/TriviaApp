@@ -16,6 +16,11 @@ extension QuizViewController {
         !questionNumberLabel.isHidden
     }
 
+    var isToolbarVisible: Bool {
+        guard let nav = navigationController else { return false }
+        return nav.isToolbarHidden == false
+    }
+
     var questionTitle: String? {
         questionTitleLabel.text
     }

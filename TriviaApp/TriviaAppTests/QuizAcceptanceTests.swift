@@ -21,6 +21,8 @@ class QuizAcceptanceTests: XCTestCase {
 
         let lastOption = sut.simulateOptionIsVisible(at: 3)
         expect(lastOption, toHaveTitle: "São Paulo", isSelected: false)
+
+        XCTAssertTrue(sut.isToolbarVisible, "Expected toolbar to be visible")
     }
 
     func test_quiz_displaysResultsAfterLastQuestionWithAllCorrectAnswers() {
