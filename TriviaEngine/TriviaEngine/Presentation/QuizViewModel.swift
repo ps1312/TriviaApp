@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 public final class QuizViewModel {
@@ -10,19 +11,30 @@ public final class QuizViewModel {
     }
 
     public var questionChanged: ((String, [String], Int) -> Void)?
+    public var loadingChanged: ((Bool) -> Void)?
     public var startFailed: (() -> Void)?
     public var finished: (() -> Void)?
 
     public func load() {
-        do {
-            let question = try examiner.start()
-            let answers = question.answers.map { $0.text }
-            currentQuestion = question
+        loadingChanged?(true)
 
-            questionChanged?(question.title, answers, questionNumber)
-        } catch {
-            startFailed?()
-        }
+        _ = loadPublisher()
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished:
+                    break
+
+                case .failure:
+                    self?.startFailed?()
+                }
+
+                self?.loadingChanged?(false)
+            }, receiveValue: { [weak self] question in
+                guard let self = self else { return }
+                let answers = question.answers.map { $0.text }
+                self.currentQuestion = question
+                self.questionChanged?(question.title, answers, self.questionNumber)
+            })
     }
 
     public func respond(with index: Int) {
@@ -36,5 +48,20 @@ public final class QuizViewModel {
         } else {
             finished?()
         }
+    }
+}
+
+public extension QuizViewModel {
+    func loadPublisher() -> AnyPublisher<Question, Error> {
+        Deferred {
+            Future { completion in
+                do {
+                    let question = try self.examiner.start()
+                    completion(.success(question))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }.eraseToAnyPublisher()
     }
 }
