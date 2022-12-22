@@ -48,6 +48,11 @@ final class QuizViewController: UITableViewController {
     // MARK: - UI Helpers
 
     private func setupBindings() {
+
+        viewModel?.loadingChanged = { [weak self] isLoading in
+            isLoading ? self?.refreshControl?.beginRefreshing() : self?.refreshControl?.endRefreshing()
+        }
+
         viewModel?.startFailed = { [weak self] in
             self?.questionTitleLabel.text = "Something went wrong loading the questions, please try again."
             self?.setupNextButton(title: "Retry", action: #selector(self?.startGame))

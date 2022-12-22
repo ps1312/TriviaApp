@@ -74,6 +74,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="mmO-96-D2f"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="ShZ-Vy-5lL">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
                         <outlet property="questionNumberLabel" destination="DRv-8V-RzA" id="Mja-nk-x2O"/>
                         <outlet property="questionTitleLabel" destination="SZ2-ky-7l4" id="GCt-gq-ZFb"/>
