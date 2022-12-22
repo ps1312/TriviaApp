@@ -48,9 +48,13 @@ final class QuizViewController: UITableViewController {
     // MARK: - UI Helpers
 
     private func setupBindings() {
-
         viewModel?.loadingChanged = { [weak self] isLoading in
-            isLoading ? self?.refreshControl?.beginRefreshing() : self?.refreshControl?.endRefreshing()
+            if isLoading {
+                self?.questionTitleLabel.text = "Loading questions..."
+                self?.refreshControl?.beginRefreshing()
+            } else {
+                self?.refreshControl?.endRefreshing()
+            }
         }
 
         viewModel?.startFailed = { [weak self] in
