@@ -3,11 +3,14 @@ import Foundation
 
 public final class QuizViewModel {
     private let examiner: ExaminerDelegate
+    private let scheduler: AnyDispatchQueueScheduler
     private var currentQuestion: Question?
     private var questionNumber = 1
+    private var cancellable: Cancellable?
 
-    public init(examiner: ExaminerDelegate) {
+    public init(examiner: ExaminerDelegate, scheduler: AnyDispatchQueueScheduler) {
         self.examiner = examiner
+        self.scheduler = scheduler
     }
 
     public var questionChanged: ((String, [String], Int) -> Void)?
@@ -18,11 +21,12 @@ public final class QuizViewModel {
     public func load() {
         loadingChanged?(true)
 
-        _ = loadPublisher()
+        cancellable = loadPublisher()
+            .subscribe(on: scheduler)
+            .receive(on: DispatchQueue.immediateMainQueueScheduler)
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
-                case .finished:
-                    break
+                case .finished: break
 
                 case .failure:
                     self?.startFailed?()

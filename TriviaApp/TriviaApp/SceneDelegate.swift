@@ -10,6 +10,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return nav
     }()
 
+    private lazy var scheduler: AnyDispatchQueueScheduler = DispatchQueue(
+        label: "com.triviaApp.queue",
+        qos: .userInitiated
+    ).eraseToAnyScheduler()
+
+    convenience init(scheduler: AnyDispatchQueueScheduler) {
+        self.init()
+        self.scheduler = scheduler
+    }
+
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
 
@@ -29,7 +39,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let examiner = Examiner(questionsLoader: InMemoryQuestionsLoader())
 
         navigationController.viewControllers = [
-            QuizUIComposer.composeWith(examiner: examiner, onFinish: { self.navigateToResults(with: examiner) }),
+            QuizUIComposer.composeWith(examiner: examiner, onFinish: { self.navigateToResults(with: examiner) }, scheduler: scheduler),
         ]
     }
 

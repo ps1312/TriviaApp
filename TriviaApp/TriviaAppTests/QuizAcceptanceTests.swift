@@ -46,7 +46,8 @@ class QuizAcceptanceTests: XCTestCase {
     }
 
     func test_playAgain_restartsGame() {
-        let sceneDelegate = SceneDelegate()
+        let scheduler = DispatchQueue.immediateMainQueueScheduler.eraseToAnyScheduler()
+        let sceneDelegate = SceneDelegate(scheduler: scheduler)
         sceneDelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         sceneDelegate.configureView()
 
@@ -75,7 +76,8 @@ class QuizAcceptanceTests: XCTestCase {
     }
 
     private func makeSUT() -> UINavigationController {
-        let sceneDelegate = SceneDelegate()
+        let scheduler = DispatchQueue.immediateMainQueueScheduler.eraseToAnyScheduler()
+        let sceneDelegate = SceneDelegate(scheduler: scheduler)
         sceneDelegate.window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         sceneDelegate.configureView()
 

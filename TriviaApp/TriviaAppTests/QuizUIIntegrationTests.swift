@@ -163,7 +163,11 @@ class QuizUIIntegrationTests: XCTestCase {
 
     private func makeSUT(onFinish: @escaping () -> Void = {}, file: StaticString = #filePath, line: UInt = #line) -> (QuizViewController, ExaminerSpy) {
         let spy = ExaminerSpy()
-        let sut = QuizUIComposer.composeWith(examiner: spy, onFinish: onFinish)
+        let sut = QuizUIComposer.composeWith(
+            examiner: spy,
+            onFinish: onFinish,
+            scheduler: DispatchQueue.immediateMainQueueScheduler.eraseToAnyScheduler()
+        )
 
         testMemoryLeak(sut, file: file, line: line)
         testMemoryLeak(spy, file: file, line: line)
