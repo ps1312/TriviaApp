@@ -31,13 +31,11 @@ class QuizSnapshotTests: XCTestCase {
     }
 
     private func makeSUT(onFinish: @escaping () -> Void = {}) -> (UINavigationController, QuizViewController, ExaminerSpy) {
-        let bundle = Bundle(for: QuizViewController.self)
-        let storyboard = UIStoryboard(name: "Quiz", bundle: bundle)
-        let navController = storyboard.instantiateInitialViewController() as! UINavigationController
-        let viewController = navController.topViewController as! QuizViewController
         let spy = ExaminerSpy()
-        viewController.onFinish = onFinish
-        viewController.viewModel = QuizViewModel(examiner: spy)
+        let viewController = QuizUIComposer.composeWith(examiner: spy, onFinish: onFinish, scheduler: DispatchQueue.immediateMainQueueScheduler.eraseToAnyScheduler())
+
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.isToolbarHidden = false
         navController.loadViewIfNeeded()
 
         return (navController, viewController, spy)

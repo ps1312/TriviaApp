@@ -5,11 +5,10 @@ final class QuizViewController: UITableViewController {
     @IBOutlet public private(set) var questionTitleLabel: UILabel!
     @IBOutlet public private(set) var questionNumberLabel: UILabel!
 
-    public var onFinish: (() -> Void)?
-    var optionsControllers = [IndexPath: OptionCellViewController]()
-
-    var selected: IndexPath?
     var viewModel: QuizViewModel?
+    var selected: IndexPath?
+    var optionsControllers = [IndexPath: OptionCellViewController]()
+    var onFinish: (() -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,9 +45,16 @@ final class QuizViewController: UITableViewController {
         return view!.view(tableView, indexPath: indexPath, selected: selected == indexPath)
     }
 
+    // MARK: - UI Helpers
+
     private func setupBindings() {
-        viewModel?.questionChanged = { [weak self] in
-            self?.setupNextQuestion(title: $0, newOptions: $1, questionNumber: $2)
+        viewModel?.loadingChanged = { [weak self] isLoading in
+            if isLoading {
+                self?.questionTitleLabel.text = "Loading questions..."
+                self?.refreshControl?.beginRefreshing()
+            } else {
+                self?.refreshControl?.endRefreshing()
+            }
         }
 
         viewModel?.startFailed = { [weak self] in
@@ -56,13 +62,15 @@ final class QuizViewController: UITableViewController {
             self?.setupNextButton(title: "Retry", action: #selector(self?.startGame))
         }
 
+        viewModel?.questionChanged = { [weak self] in
+            self?.setupNextQuestion(title: $0, newOptions: $1, questionNumber: $2)
+        }
+
         viewModel?.finished = { [weak self] in
             self?.setupNextButton(title: "Submit", isEnabled: false)
             self?.onFinish?()
         }
     }
-
-    // MARK: - UI Helpers
 
     private func setupNextQuestion(title: String, newOptions: [String], questionNumber: Int) {
         questionTitleLabel.text = title

@@ -162,13 +162,12 @@ class QuizUIIntegrationTests: XCTestCase {
     }
 
     private func makeSUT(onFinish: @escaping () -> Void = {}, file: StaticString = #filePath, line: UInt = #line) -> (QuizViewController, ExaminerSpy) {
-        let bundle = Bundle(for: QuizViewController.self)
-        let storyboard = UIStoryboard(name: "Quiz", bundle: bundle)
-        let navController = storyboard.instantiateInitialViewController() as! UINavigationController
-        let sut = navController.topViewController as! QuizViewController
         let spy = ExaminerSpy()
-        sut.onFinish = onFinish
-        sut.viewModel = QuizViewModel(examiner: spy)
+        let sut = QuizUIComposer.composeWith(
+            examiner: spy,
+            onFinish: onFinish,
+            scheduler: DispatchQueue.immediateMainQueueScheduler.eraseToAnyScheduler()
+        )
 
         testMemoryLeak(sut, file: file, line: line)
         testMemoryLeak(spy, file: file, line: line)
