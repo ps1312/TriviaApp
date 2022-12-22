@@ -1,6 +1,5 @@
 import Combine
 import Foundation
-import UIKit
 
 public typealias AnyDispatchQueueScheduler = AnyScheduler<DispatchQueue.SchedulerTimeType, DispatchQueue.SchedulerOptions>
 
