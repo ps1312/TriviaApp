@@ -39,6 +39,10 @@ When the player taps on "play again"
 Then the app should start another round of trivia questions
 ```
 
+
+https://user-images.githubusercontent.com/19872825/209148105-f368d3cb-9ac8-464b-81a8-e3b6ef481c1f.mov
+
+
 ### Question Screen:
 
 <p>
