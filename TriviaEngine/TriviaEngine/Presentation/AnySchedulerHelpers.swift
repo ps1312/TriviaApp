@@ -1,6 +1,6 @@
+import Combine
 import Foundation
 import UIKit
-import Combine
 
 public typealias AnyDispatchQueueScheduler = AnyScheduler<DispatchQueue.SchedulerTimeType, DispatchQueue.SchedulerOptions>
 
@@ -16,7 +16,7 @@ public extension Scheduler {
     }
 }
 
-public struct AnyScheduler<SchedulerTimeType : Strideable, SchedulerOptions> : Scheduler where SchedulerTimeType.Stride : SchedulerTimeIntervalConvertible {
+public struct AnyScheduler<SchedulerTimeType: Strideable, SchedulerOptions>: Scheduler where SchedulerTimeType.Stride: SchedulerTimeIntervalConvertible {
     private let _now: () -> SchedulerTimeType
     private let _minimumTolerance: () -> SchedulerTimeType.Stride
     private let _afterIntervalTolerance: (SchedulerTimeType, SchedulerTimeType.Stride, SchedulerTimeType.Stride, SchedulerOptions?, @escaping () -> Void) -> Cancellable
@@ -26,7 +26,7 @@ public struct AnyScheduler<SchedulerTimeType : Strideable, SchedulerOptions> : S
     public var now: SchedulerTimeType { _now() }
     public var minimumTolerance: SchedulerTimeType.Stride { _minimumTolerance() }
 
-    public init<S>(_ scheduler: S) where SchedulerTimeType == S.SchedulerTimeType, SchedulerOptions == S.SchedulerOptions, S : Scheduler {
+    public init<S>(_ scheduler: S) where SchedulerTimeType == S.SchedulerTimeType, SchedulerOptions == S.SchedulerOptions, S: Scheduler {
         _now = { scheduler.now }
         _minimumTolerance = { scheduler.minimumTolerance }
         _afterIntervalTolerance = scheduler.schedule(after:interval:tolerance:options:_:)

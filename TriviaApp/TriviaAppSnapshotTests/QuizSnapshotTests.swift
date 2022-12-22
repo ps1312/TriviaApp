@@ -32,7 +32,7 @@ class QuizSnapshotTests: XCTestCase {
 
     private func makeSUT(onFinish: @escaping () -> Void = {}) -> (UINavigationController, QuizViewController, ExaminerSpy) {
         let spy = ExaminerSpy()
-        let viewController = QuizUIComposer.composeWith(examiner: spy, onFinish: onFinish)
+        let viewController = QuizUIComposer.composeWith(examiner: spy, onFinish: onFinish, scheduler: DispatchQueue.immediateMainQueueScheduler.eraseToAnyScheduler())
 
         let navController = UINavigationController(rootViewController: viewController)
         navController.isToolbarHidden = false

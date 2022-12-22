@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 public extension DispatchQueue {
     static var immediateMainQueueScheduler = ImmediateMainQueueScheduler.shared
@@ -24,7 +24,7 @@ public extension DispatchQueue {
             return DispatchQueue.getSpecific(key: Self.key) == Self.value
         }
 
-        public func schedule(options: DispatchQueue.SchedulerOptions?, _ action: @escaping () -> Void) {
+        public func schedule(options _: DispatchQueue.SchedulerOptions?, _ action: @escaping () -> Void) {
             guard isMainQueue() else { return DispatchQueue.main.async { action() } }
             action()
         }
